@@ -36,6 +36,8 @@ const Careers = () => {
   const [resumeFile, setResumeFile] = useState(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Scroll to apply form if url contains hash #apply
   useEffect(() => {
@@ -104,27 +106,95 @@ const Careers = () => {
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!resumeFile) {
       alert("Please upload your resume to complete your application.");
       return;
     }
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        position: '',
-        experience: '',
-        linkedin: '',
-        portfolio: '',
-        coverLetter: ''
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const responseKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      if (!responseKey || responseKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
+        throw new Error("Web3Forms Access Key is missing or default. Please configure VITE_WEB3FORMS_ACCESS_KEY in your .env file.");
+      }
+
+      // 1. Upload Resume file to tmpfiles.org to get a public URL (Bypasses Web3Forms paid attachment limit!)
+      const resumeUploadData = new FormData();
+      resumeUploadData.append("file", resumeFile);
+
+      const fileResponse = await fetch("https://tmpfiles.org/api/v1/upload", {
+        method: "POST",
+        body: resumeUploadData
       });
-      setResumeFile(null);
-    }, 4000);
+
+      if (!fileResponse.ok) {
+        throw new Error(`Failed to upload resume to temporary server (${fileResponse.statusText}).`);
+      }
+
+      const fileJson = await fileResponse.json();
+      
+      if (fileJson.status !== "success" || !fileJson.data || !fileJson.data.url) {
+        throw new Error("Resume upload succeeded but failed to retrieve access URL.");
+      }
+
+      const viewUrl = fileJson.data.url;
+      // Change https://tmpfiles.org/wZwLgyEoJ9AA/resume.pdf to https://tmpfiles.org/dl/wZwLgyEoJ9AA/resume.pdf for direct download
+      const downloadUrl = viewUrl.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
+
+      // 2. Prepare Web3Forms submission (Text fields ONLY, which is 100% free!)
+      const web3FormData = new FormData();
+      web3FormData.append("access_key", responseKey);
+      web3FormData.append("from_name", "Spirit Data Solutions (Careers Portal)");
+      web3FormData.append("subject", `New Job Application: ${formData.position} - from ${formData.fullName}`);
+      web3FormData.append("replyto", formData.email);
+
+      web3FormData.append("Full Name", formData.fullName);
+      web3FormData.append("Email", formData.email);
+      web3FormData.append("Phone", formData.phone);
+      web3FormData.append("Position", formData.position);
+      web3FormData.append("Experience", `${formData.experience} Years`);
+      web3FormData.append("LinkedIn Profile", formData.linkedin);
+      web3FormData.append("Portfolio URL", formData.portfolio || "Not Provided");
+      web3FormData.append("Cover Letter / Message", formData.coverLetter || "Not Provided");
+      
+      // Inject the resume URLs as free text fields
+      web3FormData.append("Resume View Link", viewUrl);
+      web3FormData.append("Resume Direct Download Link", downloadUrl);
+      web3FormData.append("System Note", "To protect candidate privacy and bypass Web3Forms free tier limitations, their resume has been safely uploaded to temporary cloud storage. Click the Direct Download link above to view/save their CV.");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: web3FormData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          position: '',
+          experience: '',
+          linkedin: '',
+          portfolio: '',
+          coverLetter: ''
+        });
+        setResumeFile(null);
+      } else {
+        throw new Error(data.message || "Failed to submit application to Web3Forms. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setErrorMessage(error.message || "Something went wrong. Please check your internet connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const openRoles = [
@@ -636,12 +706,32 @@ const Careers = () => {
                     />
                   </div>
 
+                  {/* Error Banner */}
+                  {errorMessage && (
+                    <div className="text-red-600 text-xs font-bold p-3.5 bg-red-50 border border-red-200 rounded leading-relaxed">
+                      ⚠️ {errorMessage}
+                    </div>
+                  )}
+
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 cursor-pointer w-full"
+                    disabled={isSubmitting}
+                    className={`btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${
+                      isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+                    }`}
                   >
-                    Submit Application
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Submitting Application...
+                      </>
+                    ) : (
+                      "Submit Application"
+                    )}
                   </button>
                 </form>
               )}

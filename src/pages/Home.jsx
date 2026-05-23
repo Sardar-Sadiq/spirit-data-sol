@@ -27,17 +27,19 @@ const Home = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Gallery slideshow data
   const gallerySlides = [
     {
-      src: "/team-1.jpg",
+      src: "/team-1.jpeg",
       title: "Collaborator Synergy",
       desc: "Our engineering architects and developers collaborate in cross-functional squads to solve complex technical problems with elegant solutions.",
       label: "Engineering Squad: Spirit Data Solutions"
     },
     {
-      src: "/team-2.jpg",
+      src: "/team-2.jpeg",
       title: "Agile Alignment Workshops",
       desc: "Daily synchronizations and technical architecture reviews guarantee absolute code quality and robust microservices systems.",
       label: "Operations & Delivery: Spirit Data Solutions"
@@ -63,14 +65,48 @@ const Home = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate webform submission
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 4000);
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const responseKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      if (!responseKey || responseKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
+        throw new Error("Web3Forms Access Key is missing or default. Please configure VITE_WEB3FORMS_ACCESS_KEY in your .env file.");
+      }
+
+      const formDataToSend = new FormData();
+      formDataToSend.append("access_key", responseKey);
+      formDataToSend.append("from_name", "Spirit Data Solutions (Contact Form)");
+      formDataToSend.append("subject", `New Inquiry: ${formData.subject} - from ${formData.name}`);
+      formDataToSend.append("replyto", formData.email);
+
+      formDataToSend.append("Name", formData.name);
+      formDataToSend.append("Email", formData.email);
+      formDataToSend.append("Phone", formData.phone || "Not Provided");
+      formDataToSend.append("Subject", formData.subject);
+      formDataToSend.append("Message", formData.message);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formDataToSend
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        throw new Error(data.message || "Failed to submit form to Web3Forms. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setErrorMessage(error.message || "Something went wrong. Please check your internet connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const services = [
@@ -185,7 +221,7 @@ const Home = () => {
             <div className="lg:col-span-7 flex flex-col justify-center text-left">
               <ScrollReveal delay={0.3}>
                 <p className="text-on-surface-variant text-base md:text-lg mb-6 leading-relaxed">
-                  Spirit Software Solutions is committed to delivering quality, integrity, and excellence in everything we do. For years, we have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.
+                  Spirit Software Solutions is committed to delivering quality, integrity, and excellence in everything we do. We have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.
                 </p>
                 <p className="text-on-surface-variant text-base mb-8 leading-relaxed">
                   Our goal is to build long-term relationships with our clients, serving as a trusted technology partner at every step. We thrive on challenges, and we are excited to work with you to bring your digital vision to life.
@@ -227,7 +263,7 @@ const Home = () => {
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {identities.map((item, idx) => (
-                      <div key={idx} className="flex flex-col">
+                      <div key={idx} className="flex flex-col border border-slate-100 rounded-md pt-4 p-2">
                         <span className="text-sm font-semibold text-deep-blue">{item.label}</span>
                         <span className="text-xs text-slate-400 mt-0.5">{item.desc}</span>
                       </div>
@@ -323,7 +359,7 @@ const Home = () => {
               </AnimatePresence>
 
               {/* Overlay shading for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/80 via-deep-blue/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/40 via-deep-blue/10 to-transparent pointer-events-none" />
 
               {/* Overlay Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10 text-left text-white z-10">
@@ -358,7 +394,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. CONTACT FORM & ZURICH MAP SECTION */}
+      {/* 5. CONTACT FORM &  MAP SECTION */}
       <section id="contact" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop bg-surface border-t border-slate-200">
         <div className="max-w-container-max mx-auto">
           <ScrollReveal>
@@ -403,7 +439,7 @@ const Home = () => {
                     <div>
                       <h4 className="text-sm font-bold text-deep-blue">General Inquiries</h4>
                       <p className="text-sm text-on-surface-variant mt-1">
-                        info@spiritdata.com
+                        hr@spiritdatasolutions.com
                       </p>
                     </div>
                   </div>
@@ -415,7 +451,7 @@ const Home = () => {
                     <div>
                       <h4 className="text-sm font-bold text-deep-blue">General Hotline</h4>
                       <p className="text-sm text-on-surface-variant mt-1">
-                        +41 44 123 45 67
+                        +91 6301581529
                       </p>
                     </div>
                   </div>
@@ -494,7 +530,7 @@ const Home = () => {
                           type="tel"
                           id="phone"
                           name="phone"
-                          placeholder="+41 44 000 00 00"
+                          placeholder="+91 63015 81529"
                           value={formData.phone}
                           onChange={handleInputChange}
                           className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
@@ -536,12 +572,32 @@ const Home = () => {
                       />
                     </div>
 
+                    {/* Error Banner */}
+                    {errorMessage && (
+                      <div className="text-red-600 text-xs font-bold p-3.5 bg-red-50 border border-red-200 rounded leading-relaxed">
+                        ⚠️ {errorMessage}
+                      </div>
+                    )}
+
                     {/* Button */}
                     <button
                       type="submit"
-                      className="btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 cursor-pointer w-full"
+                      disabled={isSubmitting}
+                      className={`btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${
+                        isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+                      }`}
                     >
-                      Send Message
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending Inquiry...
+                        </>
+                      ) : (
+                        "Send Message"
+                      )}
                     </button>
                   </form>
                 )}
