@@ -38,8 +38,8 @@ const Header = () => {
     { label: 'Home', path: '/', isSection: false },
     { label: 'About', path: 'about', isSection: true },
     { label: 'Services', path: 'services', isSection: true },
-    { label: 'Projects', path: 'projects', isSection: true },
     { label: 'Gallery', path: 'gallery', isSection: true },
+    { label: 'Projects', path: '/projects', isSection: false },
     { label: 'Careers', path: '/careers', isSection: false },
   ];
 
@@ -50,23 +50,22 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 w-full ${
-        scrolled 
-          ? 'glass-nav shadow-level-1' 
+      className={`sticky top-0 z-50 transition-all duration-300 w-full ${scrolled
+          ? 'glass-nav shadow-level-1'
           : 'glass-nav'
-      }`}
+        }`}
     >
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop h-16 md:h-20 flex items-center justify-between">
         {/* Logo and Brand Title */}
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex items-center gap-3 group"
         >
-          <img 
-            src="/logo.png" 
-            alt="Spirit Data Logo" 
-            className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+          <img
+            src="/logo.png"
+            alt="Spirit Data Logo"
+            className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
           <span className="text-lg md:text-xl font-bold tracking-tight text-deep-blue">
             Spirit <span className="text-primary-blue font-semibold">Data</span>
@@ -88,11 +87,10 @@ const Header = () => {
               <Link
                 key={link.label}
                 to={link.path}
-                className={`font-medium transition-colors duration-200 label-md border-b-2 py-1 px-0.5 ${
-                  isActive(link.path, false)
+                className={`font-medium transition-colors duration-200 label-md border-b-2 py-1 px-0.5 ${isActive(link.path, false)
                     ? 'text-primary-blue border-primary-blue'
                     : 'text-on-surface-variant hover:text-primary-blue border-transparent hover:border-primary-blue/30'
-                }`}
+                  }`}
               >
                 {link.label}
               </Link>
@@ -152,11 +150,10 @@ const Header = () => {
                     key={link.label}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`py-2 font-semibold border-b border-slate-100 ${
-                      isActive(link.path, false)
+                    className={`py-2 font-semibold border-b border-slate-100 ${isActive(link.path, false)
                         ? 'text-primary-blue'
                         : 'text-on-surface-variant hover:text-primary-blue'
-                    }`}
+                      }`}
                   >
                     {link.label}
                   </Link>

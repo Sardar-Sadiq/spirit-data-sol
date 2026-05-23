@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Code, 
-  Cpu, 
-  Terminal, 
-  ShieldCheck, 
-  MapPin, 
-  Mail, 
-  Phone, 
-  ArrowRight, 
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Code,
+  Cpu,
+  Terminal,
+  ShieldCheck,
+  MapPin,
+  Mail,
+  Phone,
+  ArrowRight,
   CheckCircle,
   Eye,
   Rocket,
@@ -26,6 +26,37 @@ const Home = () => {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Gallery slideshow data
+  const gallerySlides = [
+    {
+      src: "/team-1.jpg",
+      title: "Collaborator Synergy",
+      desc: "Our engineering architects and developers collaborate in cross-functional squads to solve complex technical problems with elegant solutions.",
+      label: "Engineering Squad: Spirit Data Solutions"
+    },
+    {
+      src: "/team-2.jpg",
+      title: "Agile Alignment Workshops",
+      desc: "Daily synchronizations and technical architecture reviews guarantee absolute code quality and robust microservices systems.",
+      label: "Operations & Delivery: Spirit Data Solutions"
+    },
+    {
+      src: "/Group-8.jpg",
+      title: "Spirit Data Solutions Innovation Center",
+      desc: "Located in Srinagar Colony, Anantapur, our workspace is engineered to inspire creative breakthroughs and facilitate seamless developer synergy.",
+      label: "Spirit Data Solutions Innovation Center"
+    }
+  ];
+
+  // Auto-rotate slideshow every 3.5 seconds
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % gallerySlides.length);
+    }, 3500);
+    return () => clearInterval(slideTimer);
+  }, [gallerySlides.length]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,17 +109,17 @@ const Home = () => {
 
   return (
     <div className="flex-1 w-full bg-background overflow-hidden">
-      
+
       {/* 1. HERO SECTION */}
       <section className="relative hero-gradient text-white py-24 md:py-32 lg:py-40 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop overflow-hidden">
-        {/* Abstract glassomorphic background overlay circles */}
-        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-sky-400/20 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-blue-600/30 rounded-full blur-[80px] pointer-events-none" />
-        
-        {/* Dynamic diagonal overlay stripes simulating glassmorphism */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-[-50%] left-[-20%] w-[60%] h-[200%] bg-gradient-to-r from-transparent via-white to-transparent transform rotate-45" />
-        </div>
+        {/* Background Image overlay */}
+        <img
+          src="/Group-8.jpg"
+          alt="Spirit Data Zurich Office Workspace"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 select-none pointer-events-none"
+        />
+        {/* Dark linear gradient overlay for readability and premium look */}
+        <div className="absolute inset-0 bg-gradient-to-r from-deep-blue/90 via-deep-blue/70 to-deep-blue/20 z-0 pointer-events-none" />
 
         <div className="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           <div className="lg:col-span-8 flex flex-col items-start text-left">
@@ -104,13 +135,13 @@ const Home = () => {
               Ready to accelerate operations, drive growth, and unlock new markets? We specialize in high-impact software management and cutting-edge custom engineering.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <button 
+              <button
                 onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
                 className="bg-white text-deep-blue text-base font-semibold py-3 px-8 rounded shadow-level-1 hover:bg-sky-50 transition-all duration-300 hover:shadow-level-2 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
               >
                 Get Started
               </button>
-              <button 
+              <button
                 onClick={() => document.getElementById('services').scrollIntoView({ behavior: 'smooth' })}
                 className="border border-white/30 text-white hover:bg-white/10 text-base font-semibold py-3 px-8 rounded transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
               >
@@ -140,9 +171,9 @@ const Home = () => {
             <div className="lg:col-span-5">
               <ScrollReveal delay={0.2}>
                 <div className="relative rounded-lg overflow-hidden shadow-level-2 border border-slate-100 group">
-                  <img 
-                    src="/about-welcome.png" 
-                    alt="Spirit Data Welcoming Abstract Art" 
+                  <img
+                    src="/about-welcome.png"
+                    alt="Spirit Data Welcoming Abstract Art"
                     className="w-full h-auto object-cover transform duration-700 hover:scale-102"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/20 to-transparent pointer-events-none" />
@@ -154,7 +185,7 @@ const Home = () => {
             <div className="lg:col-span-7 flex flex-col justify-center text-left">
               <ScrollReveal delay={0.3}>
                 <p className="text-on-surface-variant text-base md:text-lg mb-6 leading-relaxed">
-                  Spirit Software Solutions is a Swiss-born company, committed to delivering quality, integrity, and excellence in everything we do. For years, we have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.
+                  Spirit Software Solutions is committed to delivering quality, integrity, and excellence in everything we do. For years, we have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.
                 </p>
                 <p className="text-on-surface-variant text-base mb-8 leading-relaxed">
                   Our goal is to build long-term relationships with our clients, serving as a trusted technology partner at every step. We thrive on challenges, and we are excited to work with you to bring your digital vision to life.
@@ -245,7 +276,7 @@ const Home = () => {
                       {svc.description}
                     </p>
                   </div>
-                  <button 
+                  <button
                     onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
                     className="flex items-center gap-1 text-sm font-semibold text-primary-blue group-hover:text-deep-blue transition-colors duration-200 cursor-pointer"
                   >
@@ -270,32 +301,57 @@ const Home = () => {
                 Life at Spirit
               </h2>
               <p className="text-on-surface-variant text-base md:text-lg">
-                A glimpse inside the dynamic, collaborative environment at our Swiss office.
+                A glimpse inside the dynamic, collaborative environment at our Spirit Data Solutions office.
               </p>
             </div>
           </ScrollReveal>
 
-          {/* Large Floating workspace showcase card */}
+          {/* Large Floating workspace showcase card with auto slideshow */}
           <ScrollReveal delay={0.2}>
-            <div className="relative rounded-lg overflow-hidden border border-slate-200 shadow-level-2 group">
-              <img 
-                src="/Group-8.jpg" 
-                alt="Spirit Data Zurich Office Workspace" 
-                className="w-full h-[300px] md:h-[450px] lg:h-[550px] object-cover transition-transform duration-700 group-hover:scale-101"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/60 via-deep-blue/10 to-transparent pointer-events-none" />
-              
+            <div className="relative rounded-lg overflow-hidden border border-slate-200 shadow-level-2 h-[380px] md:h-[480px] lg:h-[560px] group bg-slate-900">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentSlide}
+                  src={gallerySlides[currentSlide].src}
+                  alt={gallerySlides[currentSlide].title}
+                  initial={{ opacity: 0, scale: 1.03 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+                />
+              </AnimatePresence>
+
+              {/* Overlay shading for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/80 via-deep-blue/20 to-transparent pointer-events-none" />
+
               {/* Overlay Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10 text-left text-white flex flex-col sm:flex-row justify-between sm:items-end gap-4">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Swiss Innovation Center</h3>
-                  <p className="text-slate-200 text-sm md:text-base max-w-xl">
-                    Located in the heart of Zurich, our workspace is engineered to inspire creative breakthroughs and facilitate seamless developer synergy.
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10 text-left text-white z-10">
+                <motion.div
+                  key={`content-${currentSlide}`}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="max-w-3xl"
+                >
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{gallerySlides[currentSlide].title}</h3>
+                  <p className="text-slate-200 text-sm md:text-base leading-relaxed">
+                    {gallerySlides[currentSlide].desc}
                   </p>
-                </div>
-                <div className="flex items-center gap-1 text-sky-300 font-medium text-sm md:text-base">
-                  <Users className="h-5 w-5 mr-1" /> Collaborators: Zurich HQ
-                </div>
+                </motion.div>
+              </div>
+
+              {/* Dots Navigation indicators */}
+              <div className="absolute top-4 right-4 flex gap-1.5 z-10 bg-deep-blue/30 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/5">
+                {gallerySlides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentSlide ? 'bg-sky-400 w-5' : 'bg-white/40 hover:bg-white/70'
+                      }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
               </div>
             </div>
           </ScrollReveal>
@@ -317,7 +373,7 @@ const Home = () => {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
-            
+
             {/* Left Side: Contact Information Panel */}
             <div className="lg:col-span-5 flex flex-col justify-between text-left">
               <div>
@@ -325,7 +381,7 @@ const Home = () => {
                 <p className="text-on-surface-variant text-base mb-8 leading-relaxed">
                   Have an ambitious project in mind or need scaling expertise? Reach out to us. Our engineering architects are standing by to scope your vision.
                 </p>
-                
+
                 {/* Contact List Details */}
                 <div className="flex flex-col gap-6">
                   <div className="flex items-start gap-4">
@@ -335,7 +391,7 @@ const Home = () => {
                     <div>
                       <h4 className="text-sm font-bold text-deep-blue">Office Address</h4>
                       <p className="text-sm text-on-surface-variant mt-1">
-                        Bahnhofstrasse 100, 8001 Zürich, Switzerland
+                        2nd floor, BFC Plaza Mano Mini AC function hall, Srinagar Colony, Anantapur, Andhra Pradesh, India
                       </p>
                     </div>
                   </div>
@@ -379,7 +435,7 @@ const Home = () => {
             <div className="lg:col-span-7">
               <div className="bg-white p-6 md:p-8 rounded border border-slate-200 shadow-level-1 text-left">
                 {submitted ? (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex flex-col items-center justify-center text-center py-12"
@@ -409,7 +465,7 @@ const Home = () => {
                           className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
                         />
                       </div>
-                      
+
                       {/* Email input */}
                       <div className="flex flex-col gap-1.5">
                         <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -494,16 +550,16 @@ const Home = () => {
 
           </div>
 
-          {/* Zurich Map Integration */}
+          {/* Map Integration */}
           <ScrollReveal delay={0.3}>
             <div className="rounded-lg overflow-hidden border border-slate-200 shadow-level-1 relative">
               <div className="absolute top-4 left-4 z-10 glass-nav px-4 py-2 rounded shadow-level-1 border border-slate-200/80 hidden sm:flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-primary-blue animate-bounce" />
-                <span className="text-xs font-bold text-deep-blue">Zurich HQ Office</span>
+                <span className="text-xs font-bold text-deep-blue">Spirit Data Solutions Office</span>
               </div>
               <iframe
-                title="Zurich HQ Office Map Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d172935.40552726588!2d8.401174984550186!3d47.37743369655663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900b9749bea219%3A0xe66e8df1e71fdc03!2sZurich%2C%20Switzerland!5e0!3m2!1sen!2sch!4v1716480000000!5m2!1sen!2sch"
+                title="Spirit Data Solutions Office Map Location"
+                src="https://maps.google.com/maps?q=14.663124,77.581231+(Spirit%20Data%20Solutions)&t=&z=18&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="380"
                 style={{ border: 0 }}

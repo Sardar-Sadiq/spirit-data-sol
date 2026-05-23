@@ -10,13 +10,19 @@
     font-family: 'Inter', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply text-deep-blue font-semibold tracking-tight;
   }
 }
 
 /* Custom Lenis Smooth Scrolling classes */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -100,15 +106,15 @@ html.lenis, html.lenis body {
 
 /* Glassmorphism custom classes */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border-bottom: 1px solid #E2E8F0;
 }
 
 /* Precision visual gradients */
 .hero-gradient {
-  background: linear-gradient(135deg, #0A2E5C 0%, #1F6FD1 100%);
+  background: linear-gradient(135deg, #0A2E5C 0%, #1F6FD1 1%);
 }
 
 .btn-gradient {
