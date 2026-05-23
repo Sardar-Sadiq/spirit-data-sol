@@ -43,7 +43,7 @@ function App() {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-    
+
     const animationFrameId = requestAnimationFrame(raf);
 
     // Clean up animation frame and lenis instance on unmount
@@ -56,7 +56,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-background text-on-surface select-none">
-        
+
         {/* Preloader Animation */}
         <AnimatePresence mode="wait">
           {loading && (
@@ -69,30 +69,27 @@ function App() {
               <div className="flex flex-col items-center relative">
                 {/* Animated spinning background ring */}
                 <div className="relative flex items-center justify-center w-28 h-28">
-                  <div className="absolute inset-0 border-[3px] border-primary-blue/10 border-t-primary-blue rounded-full animate-spin duration-1000" />
-                  <motion.img 
+                  <div className="absolute inset-0" />
+                  <motion.img
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: [0.8, 1.1, 1], opacity: 1 }}
                     transition={{ duration: 1.2, ease: "easeOut" }}
-                    src="/logo.png" 
-                    alt="Spirit Data Logo" 
-                    className="h-12 w-12 object-contain"
+                    src="/logo.png"
+                    alt="Spirit Data Logo"
+                    className="h-40 w-40 object-contain"
                   />
                 </div>
-                
+
                 {/* Brand Header */}
-                <h2 className="text-deep-blue font-bold tracking-tight text-2xl mt-6">
-                  Spirit <span className="text-primary-blue font-semibold">Data</span>
+                <h2 className="text-deep-blue font-bold tracking-tight text-2xl -mt-2">
+                  Spirit <span className="text-primary-blue font-semibold">Data Solutions</span>
                 </h2>
-                
-                {/* Dynamic Tech Subtitle */}
-                <span className="text-[10px] text-slate-400 font-bold tracking-[0.2em] uppercase mt-2 animate-pulse">
-                  Precision Minimalist Luxury
-                </span>
-                
+
+
+
                 {/* Progress Bar indicator */}
                 <div className="w-48 h-1 bg-slate-200 rounded-full overflow-hidden mt-6 relative">
-                  <motion.div 
+                  <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1.3, ease: "easeInOut" }}
@@ -106,10 +103,10 @@ function App() {
 
         {/* Scroll resets on route change */}
         <ScrollToTop />
-        
+
         {/* Persistent Premium Glassmorphic Header */}
         <Header />
-        
+
         {/* Interactive Page Body */}
         <main className="flex-grow flex flex-col">
           <Routes>
@@ -120,7 +117,7 @@ function App() {
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
-        
+
         {/* Standard Design-System Bound Footer */}
         <Footer />
       </div>

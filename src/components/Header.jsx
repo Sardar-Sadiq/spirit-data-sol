@@ -51,8 +51,8 @@ const Header = () => {
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 w-full ${scrolled
-          ? 'glass-nav shadow-level-1'
-          : 'glass-nav'
+        ? 'glass-nav shadow-level-1'
+        : 'glass-nav'
         }`}
     >
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop h-16 md:h-20 flex items-center justify-between">
@@ -67,9 +67,12 @@ const Header = () => {
             alt="Spirit Data Logo"
             className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
-          <span className="text-lg md:text-xl font-bold tracking-tight text-deep-blue">
-            Spirit <span className="text-primary-blue font-semibold">Data</span>
-          </span>
+          <div className='flex flex-col'>
+            <span className="text-lg md:text-xl font-bold tracking-tight text-deep-blue">
+              Spirit <span className="text-primary-blue font-semibold">Data</span>
+            </span>
+            <span className='text-lg md:text-xl font-bold tracking-light text-deep-blue'>Solutions</span>
+          </div>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -88,8 +91,8 @@ const Header = () => {
                 key={link.label}
                 to={link.path}
                 className={`font-medium transition-colors duration-200 label-md border-b-2 py-1 px-0.5 ${isActive(link.path, false)
-                    ? 'text-primary-blue border-primary-blue'
-                    : 'text-on-surface-variant hover:text-primary-blue border-transparent hover:border-primary-blue/30'
+                  ? 'text-primary-blue border-primary-blue'
+                  : 'text-on-surface-variant hover:text-primary-blue border-transparent hover:border-primary-blue/30'
                   }`}
               >
                 {link.label}
@@ -151,8 +154,8 @@ const Header = () => {
                     to={link.path}
                     onClick={() => setIsOpen(false)}
                     className={`py-2 font-semibold border-b border-slate-100 ${isActive(link.path, false)
-                        ? 'text-primary-blue'
-                        : 'text-on-surface-variant hover:text-primary-blue'
+                      ? 'text-primary-blue'
+                      : 'text-on-surface-variant hover:text-primary-blue'
                       }`}
                   >
                     {link.label}
