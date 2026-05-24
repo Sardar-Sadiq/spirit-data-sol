@@ -33,13 +33,13 @@ const Home = () => {
   // Gallery slideshow data
   const gallerySlides = [
     {
-      src: "/team-1.jpeg",
+      src: "/team-0.jpg",
       title: "Collaborator Synergy",
       desc: "Our engineering architects and developers collaborate in cross-functional squads to solve complex technical problems with elegant solutions.",
       label: "Engineering Squad: Spirit Data Solutions"
     },
     {
-      src: "/team-2.jpeg",
+      src: "/team-1.png",
       title: "Agile Alignment Workshops",
       desc: "Daily synchronizations and technical architecture reviews guarantee absolute code quality and robust microservices systems.",
       label: "Operations & Delivery: Spirit Data Solutions"
