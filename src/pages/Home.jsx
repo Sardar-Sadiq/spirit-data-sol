@@ -47,7 +47,7 @@ const Home = () => {
     {
       src: "/Group-8.jpg",
       title: "Spirit Data Solutions Innovation Center",
-      desc: "Located in Srinagar Colony, Anantapur, our workspace is engineered to inspire creative breakthroughs and facilitate seamless developer synergy.",
+      desc: "Located in BFC Plaza, Srinagar Colony, Anantapur, our workspace is engineered to inspire creative breakthroughs and facilitate seamless developer synergy.",
       label: "Spirit Data Solutions Innovation Center"
     }
   ];
@@ -615,7 +615,7 @@ const Home = () => {
               </div>
               <iframe
                 title="Spirit Data Solutions Office Map Location"
-                src="https://maps.google.com/maps?q=14.663124,77.581231+(Spirit%20Data%20Solutions)&t=&z=18&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=14.6631453,77.5812019+(BFC%20PLAZA)&t=&z=18&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="380"
                 style={{ border: 0 }}

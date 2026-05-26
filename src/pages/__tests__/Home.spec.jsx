@@ -68,7 +68,7 @@ describe('Home', () => {
   it('should render page sections correctly', () => {
     render(<Home />);
     expect(screen.getByText(/Pioneering Digital/i)).toBeInTheDocument();
-    expect(screen.getByText('Collaborator Synergy')).toBeInTheDocument();
+    expect(screen.getByText('Agile Alignment Workshops')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Your Name')).toBeInTheDocument();
   });
 
@@ -76,7 +76,7 @@ describe('Home', () => {
     render(<Home />);
     
     // First slide should be visible initially
-    expect(screen.getByText('Collaborator Synergy')).toBeInTheDocument();
+    expect(screen.getByText('Agile Alignment Workshops')).toBeInTheDocument();
 
     // Manually trigger the slideshow callback captured by the mock inside act
     if (setIntervalCallback) {
@@ -86,7 +86,7 @@ describe('Home', () => {
     }
 
     // Second slide should now be visible
-    expect(screen.getByText('Agile Alignment Workshops')).toBeInTheDocument();
+    expect(screen.getByText('Collaborator Synergy')).toBeInTheDocument();
   });
 
   it('should handle successful contact form submission', async () => {
