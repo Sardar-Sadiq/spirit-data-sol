@@ -39,7 +39,7 @@ const Home = () => {
       label: "Operations & Delivery: Spirit Data Solutions"
     },
     {
-      src: "/team-0.png",
+      src: "/team-2.png",
       title: "Collaborator Synergy",
       desc: "Our engineering architects and developers collaborate in cross-functional squads to solve complex technical problems with elegant solutions.",
       label: "Engineering Squad: Spirit Data Solutions"
@@ -583,9 +583,8 @@ const Home = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className={`btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${
-                        isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
-                      }`}
+                      className={`btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+                        }`}
                     >
                       {isSubmitting ? (
                         <>
