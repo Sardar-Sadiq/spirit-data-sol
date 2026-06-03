@@ -45,7 +45,7 @@ const Home = () => {
       label: "Engineering Squad: Spirit Data Solutions"
     },
     {
-      src: "/Group-8.jpg",
+      src: "/office.jpeg",
       title: "Spirit Data Solutions Innovation Center",
       desc: "Located in BFC Plaza, Srinagar Colony, Anantapur, our workspace is engineered to inspire creative breakthroughs and facilitate seamless developer synergy.",
       label: "Spirit Data Solutions Innovation Center"
