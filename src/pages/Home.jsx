@@ -16,6 +16,8 @@ import {
   Users
 } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
+import Logo3D from '../components/Logo3D';
+
 
 const Home = () => {
   const [formData, setFormData] = useState({
@@ -202,23 +204,24 @@ const Home = () => {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Glowing 3D Glass Sculpture Image */}
-            <div className="lg:col-span-5">
-              <ScrollReveal delay={0.2}>
-                <div className="relative rounded-lg overflow-hidden shadow-level-2 border border-slate-100 group">
-                  <img
-                    src="/about-welcome.png"
-                    alt="Spirit Data Welcoming Abstract Art"
-                    className="w-full h-auto object-cover transform duration-700 hover:scale-102"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/20 to-transparent pointer-events-none" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12" style={{ alignItems: 'stretch' }}>
+            {/* Left Column: 3D Logo — transparent, equal width, full height */}
+            <div className="flex flex-col" style={{ minHeight: '100%' }}>
+              <ScrollReveal delay={0.2} className="flex flex-col flex-1 h-full">
+                <div
+                  className="relative rounded-2xl overflow-hidden group"
+                  style={{ flex: 1, minHeight: '480px' }}
+                >
+                  {/* The 3D logo canvas — transparent background */}
+                  <div className="absolute inset-0">
+                    <Logo3D />
+                  </div>
                 </div>
               </ScrollReveal>
             </div>
 
             {/* Right Column: Narrative Paragraphs + Mission-Vision Grid */}
-            <div className="lg:col-span-7 flex flex-col justify-center text-left">
+            <div className="flex flex-col justify-center text-left">
               <ScrollReveal delay={0.3}>
                 <p className="text-on-surface-variant text-base md:text-lg mb-6 leading-relaxed">
                   Spirit Software Solutions is committed to delivering quality, integrity, and excellence in everything we do. We have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.

@@ -41,6 +41,12 @@ vi.mock('../../components/ScrollReveal', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
+// Mock Logo3D to prevent WebGL/R3F rendering issues in JSDOM environment
+vi.mock('../../components/Logo3D', () => ({
+  default: () => <div data-testid="logo-3d">3D Logo</div>,
+}));
+
+
 describe('Home', () => {
   let originalKey;
   let setIntervalCallback;
