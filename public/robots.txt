@@ -1,0 +1,12 @@
+# robots.txt for Spirit Data Solutions
+# https://www.spiritdatasolutions.com/
+
+User-agent: *
+Allow: /
+
+# Point Google to the sitemap
+Sitemap: https://www.spiritdatasolutions.com/sitemap.xml
+
+# Block any development/admin paths if present
+Disallow: /api/
+Disallow: /.env
