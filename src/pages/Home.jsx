@@ -199,7 +199,7 @@ const Home = () => {
                 Who We Are
               </span>
               <h2 className="headline-xl mt-4 mb-6">
-                We are pleased to welcome you to Spirit Software Solutions
+                We are pleased to welcome you to <br /> <span className="text-primary-blue transition-all duration-300 hover:text-secondary-blue">Spirit Data Solutions</span>
               </h2>
             </div>
           </ScrollReveal>
@@ -224,7 +224,7 @@ const Home = () => {
             <div className="flex flex-col justify-center text-left">
               <ScrollReveal delay={0.3}>
                 <p className="text-on-surface-variant text-base md:text-lg mb-6 leading-relaxed">
-                  Spirit Software Solutions is committed to delivering quality, integrity, and excellence in everything we do. We have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.
+                  Spirit Data Solutions is committed to delivering quality, integrity, and excellence in everything we do. We have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.
                 </p>
                 <p className="text-on-surface-variant text-base mb-8 leading-relaxed">
                   Our goal is to build long-term relationships with our clients, serving as a trusted technology partner at every step. We thrive on challenges, and we are excited to work with you to bring your digital vision to life.
@@ -610,11 +610,7 @@ const Home = () => {
 
           {/* Map Integration */}
           <ScrollReveal delay={0.3}>
-            <div className="rounded-lg overflow-hidden border border-slate-200 shadow-level-1 relative">
-              <div className="absolute top-4 left-4 z-10 glass-nav px-4 py-2 rounded shadow-level-1 border border-slate-200/80 hidden sm:flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-primary-blue animate-bounce" />
-                <span className="text-xs font-bold text-deep-blue">Spirit Data Solutions Office</span>
-              </div>
+            <div className="rounded-lg overflow-hidden border border-slate-200 shadow-level-1">
               <iframe
                 title="Spirit Data Solutions Office Map Location"
                 src="https://maps.google.com/maps?q=14.6631453,77.5812019+(BFC%20PLAZA)&t=&z=18&ie=UTF8&iwloc=&output=embed"
@@ -626,6 +622,11 @@ const Home = () => {
                 referrerPolicy="no-referrer-when-downgrade"
                 className="grayscale opacity-90 contrast-110"
               />
+            </div>
+            {/* Office label — below the map, left-aligned */}
+            <div className="mt-3 flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary-blue animate-bounce flex-shrink-0" />
+              <span className="text-xs font-bold text-deep-blue">Spirit Data Solutions Office</span>
             </div>
           </ScrollReveal>
         </div>
