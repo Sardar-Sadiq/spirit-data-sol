@@ -4,74 +4,63 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const handleLinkClick = (hashId) => {
-    const element = document.getElementById(hashId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(hashId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <footer className="bg-white border-t border-slate-200 py-12">
+    <footer
+      className="py-12 border-t"
+      style={{
+        background: 'var(--bg-card)',
+        borderColor: 'var(--border)',
+        transition: 'background 0.4s ease, border-color 0.4s ease',
+      }}
+    >
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col items-center justify-center gap-6">
-        
+
         {/* Logo and Brand */}
         <div className="flex items-center gap-2.5">
-          <img 
-            src="/logo.png" 
-            alt="Spirit Data Logo" 
-            className="h-7 w-auto object-contain"
-          />
-          <span className="text-base font-bold text-deep-blue tracking-tight">
+          <img src="/logo.png" alt="Spirit Data Logo" className="h-7 w-auto object-contain" />
+          <span className="text-base font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             Spirit <span className="text-primary-blue font-semibold">Data</span>
           </span>
         </div>
 
-        {/* Footer Navigation Links */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-on-surface-variant font-medium">
-          <button 
-            onClick={() => handleLinkClick('services')} 
-            className="hover:text-primary-blue transition-colors duration-200 cursor-pointer"
-          >
-            Services
-          </button>
-          <button 
-            onClick={() => handleLinkClick('projects')} 
-            className="hover:text-primary-blue transition-colors duration-200 cursor-pointer"
-          >
-            Portfolio
-          </button>
-          <Link 
-            to="/privacy" 
-            className="hover:text-primary-blue transition-colors duration-200"
-          >
-            Privacy Policy
-          </Link>
-          <Link 
-            to="/terms" 
-            className="hover:text-primary-blue transition-colors duration-200"
-          >
-            Terms
-          </Link>
-          <a 
-            href="https://linkedin.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-primary-blue transition-colors duration-200"
-          >
-            LinkedIn
-          </a>
-          <a 
-            href="https://twitter.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-primary-blue transition-colors duration-200"
-          >
-            Twitter
-          </a>
+        {/* Footer Nav */}
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+          {[
+            { type: 'btn', id: 'services', label: 'Services' },
+            { type: 'btn', id: 'projects', label: 'Portfolio' },
+          ].map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => handleLinkClick(id)}
+              className="hover:text-primary-blue transition-colors duration-200 cursor-pointer"
+            >
+              {label}
+            </button>
+          ))}
+          {[
+            { to: '/privacy', label: 'Privacy Policy' },
+            { to: '/terms',   label: 'Terms' },
+          ].map(({ to, label }) => (
+            <Link key={to} to={to} className="hover:text-primary-blue transition-colors duration-200">
+              {label}
+            </Link>
+          ))}
+          {[
+            { href: 'https://linkedin.com', label: 'LinkedIn' },
+            { href: 'https://twitter.com',  label: 'Twitter'  },
+          ].map(({ href, label }) => (
+            <a key={href} href={href} target="_blank" rel="noopener noreferrer"
+              className="hover:text-primary-blue transition-colors duration-200">
+              {label}
+            </a>
+          ))}
         </div>
 
-        {/* Copyright Text */}
-        <div className="text-xs text-slate-400 text-center tracking-wide mt-2">
+        {/* Copyright */}
+        <div className="text-xs text-center tracking-wide mt-2" style={{ color: 'var(--text-muted)' }}>
           &copy; {currentYear} Spirit Data Solutions. Precision Minimalist Luxury. All rights reserved.
         </div>
       </div>

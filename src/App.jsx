@@ -3,6 +3,10 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 
+// Theme system
+import { ThemeProvider } from './context/ThemeContext';
+import ThemeRipple from './components/ThemeRipple';
+
 // Layout & Navigation Components
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -13,14 +17,14 @@ import Home from './pages/Home';
 import Careers from './pages/Careers';
 import ProjectsComingSoon from './pages/ProjectsComingSoon';
 
-function App() {
+function AppInner() {
   const [loading, setLoading] = useState(true);
 
   // Preloader State Timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500); //snappy yet elegant 1.5s visual preloader
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -28,7 +32,7 @@ function App() {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // premium exponential easing
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
@@ -38,7 +42,6 @@ function App() {
       infinite: false,
     });
 
-    // Request Animation Frame RAF loop
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -46,7 +49,6 @@ function App() {
 
     const animationFrameId = requestAnimationFrame(raf);
 
-    // Clean up animation frame and lenis instance on unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
@@ -55,8 +57,13 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-background text-on-surface select-none">
+      {/* Water-ripple theme transition overlay */}
+      <ThemeRipple />
 
+      <div
+        className="min-h-screen flex flex-col select-none"
+        style={{ background: 'var(--bg)', color: 'var(--text-primary)' }}
+      >
         {/* Preloader Animation */}
         <AnimatePresence mode="wait">
           {loading && (
@@ -64,35 +71,32 @@ function App() {
               initial={{ opacity: 1 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
-              className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background"
+              className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+              style={{ background: 'var(--bg)' }}
             >
               <div className="flex flex-col items-center relative">
-                {/* Animated spinning background ring */}
                 <div className="relative flex items-center justify-center w-28 h-28">
                   <div className="absolute inset-0" />
                   <motion.img
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: [0.8, 1.1, 1], opacity: 1 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
                     src="/logo.png"
                     alt="Spirit Data Logo"
                     className="h-40 w-40 object-contain"
                   />
                 </div>
 
-                {/* Brand Header */}
-                <h2 className="text-deep-blue font-bold tracking-tight text-2xl -mt-2">
+                <h2 className="font-bold tracking-tight text-2xl -mt-2" style={{ color: 'var(--text-primary)' }}>
                   Spirit <span className="text-primary-blue font-semibold">Data Solutions</span>
                 </h2>
 
-
-
-                {/* Progress Bar indicator */}
-                <div className="w-48 h-1 bg-slate-200 rounded-full overflow-hidden mt-6 relative">
+                {/* Progress Bar */}
+                <div className="w-48 h-1 rounded-full overflow-hidden mt-6 relative" style={{ background: 'var(--border)' }}>
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 1.3, ease: "easeInOut" }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 1.3, ease: 'easeInOut' }}
                     className="h-full bg-gradient-to-r from-primary-blue to-deep-blue"
                   />
                 </div>
@@ -101,27 +105,29 @@ function App() {
           )}
         </AnimatePresence>
 
-        {/* Scroll resets on route change */}
         <ScrollToTop />
-
-        {/* Persistent Premium Glassmorphic Header */}
         <Header />
 
-        {/* Interactive Page Body */}
         <main className="flex-grow flex flex-col">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/projects" element={<ProjectsComingSoon />} />
-            {/* Fallback route back to home */}
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
 
-        {/* Standard Design-System Bound Footer */}
         <Footer />
       </div>
     </Router>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
   );
 }
 
