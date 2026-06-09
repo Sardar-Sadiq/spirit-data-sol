@@ -52,6 +52,25 @@ html.dark {
 }
 
 /* =========================================================
+   THEME FADE TRANSITION
+   Applied temporarily by ThemeContext when switching modes.
+   Forces all colour-bearing properties to cross-fade smoothly.
+   ========================================================= */
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition:
+    background-color 0.35s ease,
+    background      0.35s ease,
+    color           0.30s ease,
+    border-color    0.30s ease,
+    fill            0.30s ease,
+    stroke          0.30s ease,
+    box-shadow      0.30s ease !important;
+}
+
+
+/* =========================================================
    BASE — apply custom properties globally
    ========================================================= */
 @layer base {

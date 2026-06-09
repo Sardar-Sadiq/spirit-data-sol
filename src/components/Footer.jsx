@@ -20,7 +20,7 @@ const Footer = () => {
 
         {/* Logo and Brand */}
         <div className="flex flex-col items-center gap-2.5">
-          <img src="/logo.png" alt="Spirit Data Logo" className="h-16 w-auto object-contain" />
+          <img src="/spirit-svg.png" alt="Spirit Data Logo" className="h-16 w-auto object-contain" />
           <span className="text-base font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             Spirit <span className="text-primary-blue font-semibold">Data Solutions</span>
           </span>

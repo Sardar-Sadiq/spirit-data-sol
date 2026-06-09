@@ -283,23 +283,31 @@ const Careers = () => {
     }
   ];
 
+  /* ── shared inline styles ── */
+  const cardStyle = { background: 'var(--bg-card)', borderColor: 'var(--border)', transition: 'background 0.4s ease, border-color 0.4s ease' };
+  const textPrimary  = { color: 'var(--text-primary)' };
+  const textSecondary = { color: 'var(--text-secondary)' };
+  const textMuted    = { color: 'var(--text-muted)' };
+  const sectionBg   = { background: 'var(--bg)',        transition: 'background 0.4s ease' };
+  const surfaceBg   = { background: 'var(--bg-surface)', transition: 'background 0.4s ease' };
+
   return (
-    <div className="flex-1 w-full bg-background overflow-hidden">
+    <div className="flex-1 w-full overflow-hidden" style={sectionBg}>
       
       {/* 1. HERO SECTION */}
-      <section className="py-16 md:py-24 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop bg-white">
+      <section className="py-16 md:py-24 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop" style={surfaceBg}>
         <div className="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Text Column */}
           <div className="lg:col-span-6 text-left flex flex-col items-start">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-blue/10 text-primary-blue mb-5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-blue/10 text-primary-blue dark:text-accent-sky mb-5">
               <Sparkles className="h-3 w-3" /> Join Our Vision
             </span>
-            <h1 className="headline-xl lg:text-5xl font-bold text-deep-blue leading-tight mb-5">
+            <h1 className="headline-xl lg:text-5xl font-bold leading-tight mb-5" style={textPrimary}>
               Build the Future <br />
-              <span className="text-primary-blue">With Us</span>
+              <span className="text-primary-blue dark:text-accent-sky">With Us</span>
             </h1>
-            <p className="text-on-surface-variant text-base md:text-lg mb-8 leading-relaxed">
+            <p className="text-base md:text-lg mb-8 leading-relaxed" style={textSecondary}>
               Join a passionate team building innovative digital solutions for modern businesses. We're looking for thinkers, builders, and dreamers to push the boundaries of enterprise engineering.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
@@ -311,7 +319,8 @@ const Careers = () => {
               </button>
               <button 
                 onClick={() => document.getElementById('benefits').scrollIntoView({ behavior: 'smooth' })}
-                className="bg-white text-deep-blue border border-slate-200 text-base font-semibold py-3 px-8 rounded hover:bg-slate-50 transition-all duration-300 hover:shadow-level-1 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
+                className="border text-base font-semibold py-3 px-8 rounded transition-all duration-300 hover:shadow-level-1 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer hover:opacity-90"
+                style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
               >
                 Our Culture
               </button>
@@ -320,7 +329,7 @@ const Careers = () => {
 
           {/* Right Image Frame Column */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-lg overflow-hidden border border-slate-100 shadow-level-2 group">
+            <div className="relative rounded-lg overflow-hidden border shadow-level-2 group" style={{ borderColor: 'var(--border)' }}>
               <img 
                 src="/careers-hero.png" 
                 alt="Spirit Data Team Meeting" 
@@ -328,7 +337,7 @@ const Careers = () => {
               />
               {/* Abstract Floating Tag Layer */}
               <div className="absolute inset-0 bg-gradient-to-tr from-deep-blue/40 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute top-4 left-4 glass-nav px-4 py-2 rounded text-xs font-semibold text-deep-blue tracking-wide border border-white/20">
+              <div className="absolute top-4 left-4 glass-nav px-4 py-2 rounded text-xs font-semibold tracking-wide border border-white/20" style={textPrimary}>
                 BUILD THE FUTURE WITH US
               </div>
             </div>
@@ -337,14 +346,14 @@ const Careers = () => {
       </section>
 
       {/* 2. WHY SPIRIT DATA SOLUTIONS? BENEFIT GRID */}
-      <section id="benefits" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop bg-surface border-t border-slate-200">
+      <section id="benefits" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop border-t" style={{ ...sectionBg, borderTopColor: 'var(--border)' }}>
         <div className="max-w-container-max mx-auto">
           <ScrollReveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="headline-xl text-deep-blue mb-4">
+              <h2 className="headline-xl mb-4" style={textPrimary}>
                 Why Spirit Data Solutions?
               </h2>
-              <p className="text-on-surface-variant text-base md:text-lg">
+              <p className="text-base md:text-lg" style={textSecondary}>
                 We believe in empowering our employees with a work environment that fosters creativity, continuous growth, and a true sense of belonging.
               </p>
             </div>
@@ -354,12 +363,12 @@ const Careers = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((item, idx) => (
               <ScrollReveal key={idx} delay={idx * 0.1}>
-                <div className="p-6 bg-white rounded border border-slate-200 hover:border-primary-blue/20 shadow-level-1 hover:shadow-level-2 transform hover:-translate-y-1 transition-all duration-300 text-left h-full flex flex-col items-start">
+                <div className="p-6 rounded border hover:border-primary-blue/20 shadow-level-1 hover:shadow-level-2 transform hover:-translate-y-1 transition-all duration-300 text-left h-full flex flex-col items-start" style={cardStyle}>
                   <div className="p-3 bg-primary-blue/5 rounded-full w-fit mb-5">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-deep-blue mb-3">{item.title}</h3>
-                  <p className="text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
+                  <h3 className="text-lg font-bold mb-3" style={textPrimary}>{item.title}</h3>
+                  <p className="text-sm leading-relaxed" style={textSecondary}>{item.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -368,12 +377,12 @@ const Careers = () => {
       </section>
 
       {/* 3. OPEN ROLES ACCORDION SYSTEM */}
-      <section id="open-roles" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop bg-white border-t border-slate-200">
+      <section id="open-roles" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop border-t" style={{ ...surfaceBg, borderTopColor: 'var(--border)' }}>
         <div className="max-w-container-max mx-auto">
           <ScrollReveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="headline-xl text-deep-blue mb-4">Open Roles</h2>
-              <p className="text-on-surface-variant text-base md:text-lg">
+              <h2 className="headline-xl mb-4" style={textPrimary}>Open Roles</h2>
+              <p className="text-base md:text-lg" style={textSecondary}>
                 Find the perfect place to start your next chapter. All positions are remote-friendly.
               </p>
             </div>
@@ -385,16 +394,16 @@ const Careers = () => {
               const isExpanded = expandedIndex === idx;
               return (
                 <ScrollReveal key={idx} delay={idx * 0.05}>
-                  <div className="bg-white rounded border border-slate-200 overflow-hidden shadow-level-1 hover:shadow-level-2 transition-all duration-300">
+                  <div className="rounded border overflow-hidden shadow-level-1 hover:shadow-level-2 transition-all duration-300" style={cardStyle}>
                     
                     {/* Header bar */}
                     <button
                       onClick={() => toggleAccordion(idx)}
-                      className="w-full px-6 py-5 md:py-6 flex items-center justify-between hover:bg-slate-50 transition-colors duration-200 focus:outline-none cursor-pointer"
+                      className="w-full px-6 py-5 md:py-6 flex items-center justify-between hover:bg-slate-100/10 dark:hover:bg-white/5 transition-colors duration-200 focus:outline-none cursor-pointer"
                     >
                       <div className="flex flex-col gap-1 items-start text-left">
-                        <h3 className="text-base md:text-lg font-bold text-deep-blue">{role.title}</h3>
-                        <span className="text-[10px] md:text-xs font-bold text-primary-blue bg-primary-blue/5 px-2 py-0.5 rounded-full border border-primary-blue/15 tracking-wider">
+                        <h3 className="text-base md:text-lg font-bold" style={textPrimary}>{role.title}</h3>
+                        <span className="text-[10px] md:text-xs font-bold text-primary-blue dark:text-accent-sky bg-primary-blue/5 px-2 py-0.5 rounded-full border border-primary-blue/15 tracking-wider">
                           {role.meta}
                         </span>
                       </div>
@@ -415,23 +424,24 @@ const Careers = () => {
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="border-t border-slate-100"
+                          className="border-t"
+                          style={{ borderTopColor: 'var(--border)' }}
                         >
-                          <div className="p-6 bg-slate-50/50 flex flex-col gap-6 text-left">
+                          <div className="p-6 flex flex-col gap-6 text-left" style={{ background: 'var(--bg-surface)' }}>
                             
                             {/* Role Narrative */}
                             <div>
-                              <h4 className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-2">Role Overview</h4>
-                              <p className="text-sm md:text-base text-on-surface-variant leading-relaxed">{role.desc}</p>
+                              <h4 className="text-xs font-extrabold uppercase tracking-widest mb-2" style={textMuted}>Role Overview</h4>
+                              <p className="text-sm md:text-base leading-relaxed" style={textSecondary}>{role.desc}</p>
                             </div>
 
                             {/* Requirements Bullet Points */}
                             <div>
-                              <h4 className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-3">Key Requirements</h4>
+                              <h4 className="text-xs font-extrabold uppercase tracking-widest mb-3" style={textMuted}>Key Requirements</h4>
                               <ul className="flex flex-col gap-2.5">
                                 {role.requirements.map((req, rIdx) => (
-                                  <li key={rIdx} className="text-sm text-on-surface-variant flex items-start gap-2.5">
-                                    <span className="mt-1 w-1.5 h-1.5 bg-primary-blue rounded-full shrink-0" />
+                                  <li key={rIdx} className="text-sm flex items-start gap-2.5" style={textSecondary}>
+                                    <span className="mt-1 w-1.5 h-1.5 bg-primary-blue dark:bg-accent-sky rounded-full shrink-0" />
                                     <span>{req}</span>
                                   </li>
                                 ))}
@@ -439,14 +449,15 @@ const Careers = () => {
                             </div>
 
                             {/* Tech Badges & Apply Shortcut */}
-                            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-4 border-t border-slate-100">
+                            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-4 border-t" style={{ borderTopColor: 'var(--border)' }}>
                               <div>
-                                <h4 className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-3">Technologies Stack</h4>
+                                <h4 className="text-xs font-extrabold uppercase tracking-widest mb-3" style={textMuted}>Technologies Stack</h4>
                                 <div className="flex flex-wrap gap-2">
                                   {role.tech.map((techItem, tIdx) => (
                                     <span 
                                       key={tIdx} 
-                                      className="text-xs font-medium text-slate-600 bg-white border border-slate-200 px-2.5 py-1 rounded"
+                                      className="text-xs font-medium border px-2.5 py-1 rounded"
+                                      style={{ color: 'var(--text-secondary)', background: 'var(--bg-card)', borderColor: 'var(--border)' }}
                                     >
                                       {techItem}
                                     </span>
@@ -476,19 +487,19 @@ const Careers = () => {
       </section>
 
       {/* 4. APPLICATION INTAKE PORTAL */}
-      <section id="apply-form" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop bg-surface border-t border-slate-200">
+      <section id="apply-form" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop border-t" style={{ ...sectionBg, borderTopColor: 'var(--border)' }}>
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <h2 className="headline-xl text-deep-blue mb-4">Ready to join the spirit?</h2>
-              <p className="text-on-surface-variant text-base md:text-lg">
+              <h2 className="headline-xl mb-4" style={textPrimary}>Ready to join the spirit?</h2>
+              <p className="text-base md:text-lg" style={textSecondary}>
                 Complete the form below and start your journey with us.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <div className="bg-white p-6 md:p-8 rounded border border-slate-200 shadow-level-1 text-left">
+            <div className="p-6 md:p-8 rounded border shadow-level-1 text-left" style={cardStyle}>
               {submitted ? (
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -496,8 +507,8 @@ const Careers = () => {
                   className="flex flex-col items-center justify-center text-center py-16"
                 >
                   <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
-                  <h3 className="text-2xl font-bold text-deep-blue mb-2">Application Submitted</h3>
-                  <p className="text-sm text-on-surface-variant max-w-sm">
+                  <h3 className="text-2xl font-bold mb-2" style={textPrimary}>Application Submitted</h3>
+                  <p className="text-sm max-w-sm" style={textSecondary}>
                     Thank you for applying to Spirit Data Solutions! Our recruitment team will carefully analyze your resume and get back to you within 5 working days.
                   </p>
                 </motion.div>
@@ -507,7 +518,7 @@ const Careers = () => {
                   {/* Grid fields: Full Name & Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                         Full Name
                       </label>
                       <input
@@ -518,12 +529,13 @@ const Careers = () => {
                         placeholder="John Doe"
                         value={formData.fullName}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                        className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                        style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                       />
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                         Email Address
                       </label>
                       <input
@@ -534,7 +546,8 @@ const Careers = () => {
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                        className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                        style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                       />
                     </div>
                   </div>
@@ -542,7 +555,7 @@ const Careers = () => {
                   {/* Grid fields: Phone & Position */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                         Phone Number
                       </label>
                       <input
@@ -553,12 +566,13 @@ const Careers = () => {
                         placeholder="+1 (555) 000-0000"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                        className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                        style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                       />
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="position" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <label htmlFor="position" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                         Position Applied For
                       </label>
                       <select
@@ -567,11 +581,12 @@ const Careers = () => {
                         required
                         value={formData.position}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                        className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                        style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                       >
-                        <option value="" disabled>Select a position</option>
+                        <option value="" disabled style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>Select a position</option>
                         {openRoles.map((role, rIdx) => (
-                          <option key={rIdx} value={role.title}>{role.title}</option>
+                          <option key={rIdx} value={role.title} style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>{role.title}</option>
                         ))}
                       </select>
                     </div>
@@ -580,7 +595,7 @@ const Careers = () => {
                   {/* Grid fields: Experience & LinkedIn */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="experience" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <label htmlFor="experience" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                         Years of Experience
                       </label>
                       <input
@@ -592,12 +607,13 @@ const Careers = () => {
                         placeholder="e.g. 5"
                         value={formData.experience}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                        className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                        style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                       />
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="linkedin" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <label htmlFor="linkedin" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                         LinkedIn Profile
                       </label>
                       <input
@@ -608,14 +624,15 @@ const Careers = () => {
                         placeholder="linkedin.com/in/username"
                         value={formData.linkedin}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                        className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                        style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                       />
                     </div>
                   </div>
 
                   {/* Portfolio field */}
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="portfolio" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                    <label htmlFor="portfolio" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                       Portfolio Link (Optional)
                     </label>
                     <input
@@ -625,13 +642,14 @@ const Careers = () => {
                       placeholder="behance.net/username"
                       value={formData.portfolio}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
 
                   {/* Drag and Drop File Upload Zone */}
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                    <span className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                       Resume Upload
                     </span>
                     <div 
@@ -639,11 +657,11 @@ const Careers = () => {
                       onDragOver={handleDrag}
                       onDragLeave={handleDrag}
                       onDrop={handleDrop}
-                      className={`border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-3 transition-all duration-200 text-center relative ${
-                        isDragActive 
-                          ? 'border-primary-blue bg-primary-blue/5' 
-                          : 'border-slate-200 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-300'
-                      }`}
+                      className="border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-3 transition-all duration-200 text-center relative hover:border-slate-300 dark:hover:border-slate-700"
+                      style={{
+                        background: isDragActive ? 'rgba(31, 111, 209, 0.05)' : 'var(--input-bg)',
+                        borderColor: isDragActive ? 'var(--toggle-active)' : 'var(--border)'
+                      }}
                     >
                       <input
                         type="file"
@@ -654,11 +672,11 @@ const Careers = () => {
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                       />
                       {resumeFile ? (
-                        <div className="flex items-center gap-3 bg-white p-3 border border-slate-200 rounded shadow-level-1 relative z-20">
+                        <div className="flex items-center gap-3 p-3 border rounded shadow-level-1 relative z-20" style={cardStyle}>
                           <FileText className="h-8 w-8 text-primary-blue shrink-0" />
                           <div className="text-left">
-                            <p className="text-sm font-semibold text-deep-blue max-w-[200px] truncate">{resumeFile.name}</p>
-                            <p className="text-xs text-slate-400">{(resumeFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+                            <p className="text-sm font-semibold max-w-[200px] truncate" style={textPrimary}>{resumeFile.name}</p>
+                            <p className="text-xs" style={textMuted}>{(resumeFile.size / (1024 * 1024)).toFixed(2)} MB</p>
                           </div>
                           <button
                             type="button"
@@ -678,10 +696,10 @@ const Careers = () => {
                             <UploadCloud className="h-6 w-6" />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-deep-blue">
+                            <p className="text-sm font-semibold" style={textPrimary}>
                               Drag and drop your resume here, or <span className="text-primary-blue hover:underline">browse</span>
                             </p>
-                            <p className="text-xs text-slate-400 mt-1">
+                            <p className="text-xs mt-1" style={textMuted}>
                               PDF, DOC, DOCX (Max 10MB)
                             </p>
                           </div>
@@ -692,7 +710,7 @@ const Careers = () => {
 
                   {/* Message/Cover Letter Cover Text */}
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="coverLetter" className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                    <label htmlFor="coverLetter" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                       Message / Cover Letter
                     </label>
                     <textarea
@@ -702,7 +720,8 @@ const Careers = () => {
                       placeholder="Tell us why you are a great fit..."
                       value={formData.coverLetter}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border border-slate-200 rounded text-sm text-on-surface placeholder-slate-400 bg-slate-50/50 hover:bg-slate-50 focus:bg-white input-focus-ring transition-all duration-200 resize-none"
+                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200 resize-none"
+                      style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
 

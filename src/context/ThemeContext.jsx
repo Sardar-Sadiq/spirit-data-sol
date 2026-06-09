@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const ThemeContext = createContext(null);
 
@@ -9,10 +9,6 @@ export function ThemeProvider({ children }) {
 
   // Derived: is dark actually active right now?
   const [isDark, setIsDark] = useState(false);
-
-  // Ripple state
-  const [ripple, setRipple] = useState(null); // { x, y, toTheme }
-  const rippleRef = useRef(null);
 
   const getSystemDark = () =>
     window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -42,30 +38,26 @@ export function ThemeProvider({ children }) {
   }, [mode, applyTheme]);
 
   /**
-   * Switch theme with a water-ripple effect originating from the toggle element.
+   * Switch theme with a smooth fade transition.
+   * Temporarily adds `.theme-transitioning` to <html> so all CSS custom
+   * property consumers cross-fade, then removes it once the transition ends.
+   *
    * @param {string} newMode - 'light' | 'dark' | 'system'
-   * @param {DOMRect} rect   - bounding rect of the clicked button
    */
   const switchTheme = useCallback(
-    (newMode, rect) => {
+    (newMode) => {
       if (newMode === mode) return;
 
-      const centerX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
-      const centerY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+      // Add transitioning class — CSS rule in index.css handles the fade
+      document.documentElement.classList.add('theme-transitioning');
 
-      // Compute the new effective dark state BEFORE applying
-      const willBeDark =
-        newMode === 'dark' ||
-        (newMode === 'system' && getSystemDark());
+      // Apply the new theme immediately so colours start transitioning
+      setMode(newMode);
 
-      // Trigger ripple
-      setRipple({ x: centerX, y: centerY, dark: willBeDark });
-
-      // After ripple animation (~600ms) apply the actual theme change
+      // Remove the class after the transition duration (350ms)
       const timeout = setTimeout(() => {
-        setMode(newMode);
-        setRipple(null);
-      }, 650);
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 400);
 
       return () => clearTimeout(timeout);
     },
@@ -73,7 +65,7 @@ export function ThemeProvider({ children }) {
   );
 
   return (
-    <ThemeContext.Provider value={{ mode, isDark, switchTheme, ripple }}>
+    <ThemeContext.Provider value={{ mode, isDark, switchTheme }}>
       {children}
     </ThemeContext.Provider>
   );

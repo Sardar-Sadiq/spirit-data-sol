@@ -81,7 +81,7 @@ function AppInner() {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: [0.8, 1.1, 1], opacity: 1 }}
                     transition={{ duration: 1.2, ease: 'easeOut' }}
-                    src="/logo.png"
+                    src="/spirit-svg.png"
                     alt="Spirit Data Logo"
                     className="h-40 w-40 object-contain"
                   />

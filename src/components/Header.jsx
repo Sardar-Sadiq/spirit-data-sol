@@ -47,7 +47,7 @@ const Header = () => {
           className="flex items-center gap-3 group"
         >
           <img
-            src="/logo.png"
+            src="/spirit-svg.png"
             alt="Spirit Data Logo"
             className="h-10 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
