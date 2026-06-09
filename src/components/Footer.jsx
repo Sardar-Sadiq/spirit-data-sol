@@ -19,10 +19,10 @@ const Footer = () => {
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col items-center justify-center gap-6">
 
         {/* Logo and Brand */}
-        <div className="flex items-center gap-2.5">
-          <img src="/logo.png" alt="Spirit Data Logo" className="h-7 w-auto object-contain" />
+        <div className="flex flex-col items-center gap-2.5">
+          <img src="/logo.png" alt="Spirit Data Logo" className="h-16 w-auto object-contain" />
           <span className="text-base font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-            Spirit <span className="text-primary-blue font-semibold">Data</span>
+            Spirit <span className="text-primary-blue font-semibold">Data Solutions</span>
           </span>
         </div>
 
@@ -42,7 +42,7 @@ const Footer = () => {
           ))}
           {[
             { to: '/privacy', label: 'Privacy Policy' },
-            { to: '/terms',   label: 'Terms' },
+            { to: '/terms', label: 'Terms' },
           ].map(({ to, label }) => (
             <Link key={to} to={to} className="hover:text-primary-blue transition-colors duration-200">
               {label}
@@ -50,7 +50,7 @@ const Footer = () => {
           ))}
           {[
             { href: 'https://linkedin.com', label: 'LinkedIn' },
-            { href: 'https://twitter.com',  label: 'Twitter'  },
+            { href: 'https://twitter.com', label: 'Twitter' },
           ].map(({ href, label }) => (
             <a key={href} href={href} target="_blank" rel="noopener noreferrer"
               className="hover:text-primary-blue transition-colors duration-200">
@@ -60,8 +60,8 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-center tracking-wide mt-2" style={{ color: 'var(--text-muted)' }}>
-          &copy; {currentYear} Spirit Data Solutions. Precision Minimalist Luxury. All rights reserved.
+        <div className="text-xs text-center tracking-wide mt-1" style={{ color: 'var(--text-muted)' }}>
+          &copy; {currentYear} Spirit Data Solutions.
         </div>
       </div>
     </footer>
