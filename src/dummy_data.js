@@ -10,7 +10,7 @@ export const dummyEmployeeData = {
     contactUtilityData: {
       email: "jonsnow@spiritdatasolutions.com",
       officeLocation: "2nd floor, BFC Plaza Mano Mini AC function hall, Srinagar Colony, Anantapur, Andhra Pradesh, India",
-      emergencyContact: "8341243323"
+      emergencyContact: "9100261224"
     }
   }
 };

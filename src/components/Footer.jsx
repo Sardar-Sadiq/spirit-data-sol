@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
           {[
             { type: 'btn', id: 'services', label: 'Services' },
-            { type: 'btn', id: 'projects', label: 'Portfolio' },
+
           ].map(({ id, label }) => (
             <button
               key={id}
@@ -50,7 +50,7 @@ const Footer = () => {
           ))}
           {[
             { href: 'https://linkedin.com', label: 'LinkedIn' },
-            { href: 'https://twitter.com', label: 'Twitter' },
+
           ].map(({ href, label }) => (
             <a key={href} href={href} target="_blank" rel="noopener noreferrer"
               className="hover:text-primary-blue transition-colors duration-200">
