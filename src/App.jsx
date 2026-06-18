@@ -16,6 +16,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Careers from './pages/Careers';
 import ProjectsComingSoon from './pages/ProjectsComingSoon';
+import EmployeeLogin from './pages/EmployeeLogin';
 import EmployeeVerification from './pages/EmployeeVerification';
 
 function AppInner() {
@@ -114,6 +115,7 @@ function AppInner() {
             <Route path="/" element={<Home />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/projects" element={<ProjectsComingSoon />} />
+            <Route path="/employees" element={<EmployeeLogin />} />
             <Route path="/employees/:id" element={<EmployeeVerification />} />
             <Route path="*" element={<Home />} />
           </Routes>

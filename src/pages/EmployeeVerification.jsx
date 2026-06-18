@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { dummyEmployeeData } from '../dummy_data';
+import { supabase } from '../supabaseClient';
 
 const EmployeeVerification = () => {
   const { id } = useParams();
@@ -9,15 +9,29 @@ const EmployeeVerification = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate a brief network request
-    const timer = setTimeout(() => {
-      if (id && dummyEmployeeData[id]) {
-        setEmployee(dummyEmployeeData[id]);
-      }
-      setLoading(false);
-    }, 600);
+    const fetchEmployee = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('Employees Details')
+          .select('*')
+          .eq('Employee_ID', id)
+          .maybeSingle();
 
-    return () => clearTimeout(timer);
+        if (error) throw error;
+        setEmployee(data);
+      } catch (err) {
+        console.error('Error fetching employee:', err);
+        setEmployee(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchEmployee();
+    } else {
+      setLoading(false);
+    }
   }, [id]);
 
   if (loading) {
@@ -85,27 +99,27 @@ const EmployeeVerification = () => {
             <dl className="space-y-6">
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Name</dt>
-                <dd className="body-lg font-medium text-[var(--text-primary)]">{employee.publicVerification.name}</dd>
+                <dd className="body-lg font-medium text-[var(--text-primary)]">{employee['Full Name']}</dd>
               </div>
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">ID</dt>
-                <dd className="body-lg font-medium text-[var(--text-primary)] font-mono">{employee.publicVerification.id}</dd>
+                <dd className="body-lg font-medium text-[var(--text-primary)] font-mono">{employee['Employee_ID']}</dd>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Job Title</dt>
-                  <dd className="body-lg font-medium text-[var(--text-primary)]">{employee.publicVerification.jobTitle}</dd>
+                  <dd className="body-lg font-medium text-[var(--text-primary)]">{employee['Job Title/Designation']}</dd>
                 </div>
                 <div>
                   <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Department</dt>
-                  <dd className="body-lg font-medium text-[var(--text-primary)]">{employee.publicVerification.department}</dd>
+                  <dd className="body-lg font-medium text-[var(--text-primary)]">{employee['Department']}</dd>
                 </div>
               </div>
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Current Status</dt>
                 <dd className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-full text-sm font-semibold border border-green-500/20">
                   <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                  {employee.publicVerification.status}
+                  {employee['Employee Status'] || 'Working'}
                 </dd>
               </div>
             </dl>
@@ -131,22 +145,22 @@ const EmployeeVerification = () => {
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Company Email Address</dt>
                 <dd className="body-lg font-medium text-[var(--text-primary)]">
-                  <a href={`mailto:${employee.contactUtilityData.email}`} className="text-[#1F6FD1] hover:underline">
-                    {employee.contactUtilityData.email}
+                  <a href={`mailto:${employee['Full Name']?.replace(' ', '.').toLowerCase()}@spiritdatasolutions.com`} className="text-[#1F6FD1] hover:underline">
+                    {employee['Full Name']?.replace(' ', '.').toLowerCase()}@spiritdatasolutions.com
                   </a>
                 </dd>
               </div>
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Office Location</dt>
                 <dd className="body-lg font-medium text-[var(--text-primary)] leading-relaxed">
-                  {employee.contactUtilityData.officeLocation}
+                  2nd floor, BFC Plaza Mano Mini AC function hall, Srinagar Colony, Anantapur, Andhra Pradesh, India
                 </dd>
               </div>
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Emergency Contact</dt>
                 <dd className="body-lg font-medium text-[var(--text-primary)]">
-                  <a href={`tel:${employee.contactUtilityData.emergencyContact}`} className="text-[var(--text-primary)] hover:text-[#1F6FD1] transition-colors">
-                    {employee.contactUtilityData.emergencyContact}
+                  <a href={`tel:${employee['Emergency_Contact']}`} className="text-[var(--text-primary)] hover:text-[#1F6FD1] transition-colors">
+                    {employee['Emergency_Contact']}
                   </a>
                 </dd>
               </div>
