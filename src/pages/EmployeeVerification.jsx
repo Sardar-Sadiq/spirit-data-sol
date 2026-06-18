@@ -73,7 +73,7 @@ const EmployeeVerification = () => {
             <span className="w-2 h-2 rounded-full bg-[#1F6FD1] animate-pulse"></span>
             Verified Record
           </div>
-          <h1 className="display-lg mb-4">Employee Verification</h1>
+          <h1 className="display-lg mb-4">Employee Details</h1>
           <p className="body-lg text-[var(--text-secondary)] max-w-2xl">
             This page provides official verification of employment status and contact utility data for Spirit Data Solutions.
           </p>
