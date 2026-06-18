@@ -81,7 +81,7 @@ const EmployeeVerification = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Public Verification Card */}
-          <motion.div 
+          <motion.div
             className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ const EmployeeVerification = () => {
               </div>
               <h2 className="headline-md">Public Verification</h2>
             </div>
-            
+
             <dl className="space-y-6">
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Name</dt>
@@ -126,7 +126,7 @@ const EmployeeVerification = () => {
           </motion.div>
 
           {/* Contact & Utility Data Card */}
-          <motion.div 
+          <motion.div
             className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -140,16 +140,16 @@ const EmployeeVerification = () => {
               </div>
               <h2 className="headline-md">Contact & Utility Data</h2>
             </div>
-            
+
             <dl className="space-y-6">
-              <div>
+              {/* <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Company Email Address</dt>
                 <dd className="body-lg font-medium text-[var(--text-primary)]">
                   <a href={`mailto:${employee['Full Name']?.replace(' ', '.').toLowerCase()}@spiritdatasolutions.com`} className="text-[#1F6FD1] hover:underline">
                     {employee['Full Name']?.replace(' ', '.').toLowerCase()}@spiritdatasolutions.com
                   </a>
                 </dd>
-              </div>
+              </div> */}
               <div>
                 <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Office Location</dt>
                 <dd className="body-lg font-medium text-[var(--text-primary)] leading-relaxed">
