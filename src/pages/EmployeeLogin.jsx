@@ -34,8 +34,8 @@ const EmployeeLogin = () => {
     try {
       // Query Supabase to find the employee by their ID
       const { data, error: dbError } = await supabase
-        .from('Employees Details')
-        .select('Employee_ID')
+        .from('EmployeeDetails')
+        .select('Employee_ID, qr_token')
         .eq('Employee_ID', employeeId.trim())
         .maybeSingle();
 
@@ -45,8 +45,8 @@ const EmployeeLogin = () => {
         return;
       }
 
-      // Redirect to the verification page using the ID
-      navigate(`/employees/${data.Employee_ID}`);
+      // Redirect to the verification page using the qr_token
+      navigate(`/employees/${data.qr_token}`);
     } catch (err) {
       console.error(err);
       setError('An error occurred during verification. Please try again later.');

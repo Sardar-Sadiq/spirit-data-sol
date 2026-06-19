@@ -12,9 +12,9 @@ const EmployeeVerification = () => {
     const fetchEmployee = async () => {
       try {
         const { data, error } = await supabase
-          .from('Employees Details')
+          .from('EmployeeDetails')
           .select('*')
-          .eq('Employee_ID', id)
+          .eq('qr_token', id)
           .maybeSingle();
 
         if (error) throw error;
@@ -52,7 +52,7 @@ const EmployeeVerification = () => {
         </div>
         <h1 className="headline-xl mb-4">Verification Failed</h1>
         <p className="body-lg text-[var(--text-secondary)] mb-8 max-w-md">
-          We could not find an active employee record matching the provided ID ({id}).
+          We could not find an active employee record matching the provided verification link.
         </p>
         <Link to="/" className="px-6 py-3 bg-[var(--text-primary)] text-[var(--bg)] font-medium rounded-lg hover:opacity-90 transition-opacity">
           Return Home
