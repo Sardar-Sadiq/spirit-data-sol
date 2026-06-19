@@ -11,6 +11,22 @@ const EmployeeLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "Employee Login | Spirit Data Solutions";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", "Secure employee login portal for Spirit Data Solutions staff. Access your employment records and details here.");
+    }
+    
+    let link = document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', 'https://spiritdatasolutions.com/employees');
+  }, []);
+
   // Replace this with your actual Cloudflare Turnstile Site Key
   // '1x00000000000000000000AA' is a testing sitekey that always passes
   const SITE_KEY = '1x00000000000000000000AA';
