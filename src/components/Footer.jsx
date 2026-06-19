@@ -41,6 +41,7 @@ const Footer = () => {
             </button>
           ))}
           {[
+            { to: '/employees', label: 'Employee Verification' },
             { to: '/privacy', label: 'Privacy Policy' },
             { to: '/terms', label: 'Terms' },
           ].map(({ to, label }) => (

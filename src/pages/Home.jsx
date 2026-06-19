@@ -231,15 +231,15 @@ const Home = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <div className="relative rounded-lg overflow-hidden border shadow-level-2 h-[320px] md:h-[480px] lg:h-[560px] group bg-slate-950"
+            <div className="relative rounded-lg overflow-hidden border shadow-level-2 h-[380px] md:h-[480px] lg:h-[560px] group bg-slate-900"
               style={{ borderColor: 'var(--border)' }}>
               <AnimatePresence mode="wait">
                 <motion.img key={currentSlide} src={gallerySlides[currentSlide].src} alt={gallerySlides[currentSlide].title}
                   initial={{ opacity: 0, scale: 1.03 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.8, ease: "easeInOut" }}
-                  className="absolute inset-0 w-full h-full object-contain md:object-cover select-none pointer-events-none" />
+                  className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" />
               </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/60 via-deep-blue/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/40 via-deep-blue/10 to-transparent pointer-events-none" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10 text-left text-white z-10">
                 <motion.div key={`c-${currentSlide}`} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="max-w-3xl">
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{gallerySlides[currentSlide].title}</h3>

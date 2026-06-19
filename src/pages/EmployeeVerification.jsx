@@ -9,30 +9,6 @@ const EmployeeVerification = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Employee Verification | Spirit Data Solutions";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", "Official employment verification and details for Spirit Data Solutions.");
-    }
-
-    let link = document.querySelector("link[rel='canonical']");
-    const newLinkCreated = !link;
-    if (newLinkCreated) {
-      link = document.createElement('link');
-      link.setAttribute('rel', 'canonical');
-      document.head.appendChild(link);
-    }
-    link.setAttribute('href', `https://spiritdatasolutions.com/employees/${id || ''}`);
-
-    return () => {
-      // Cleanup to prevent polluting other pages
-      if (newLinkCreated && link && link.parentNode) {
-        link.parentNode.removeChild(link);
-      }
-    };
-  }, [id]);
-
-  useEffect(() => {
     const fetchEmployee = async () => {
       try {
         const { data, error } = await supabase
