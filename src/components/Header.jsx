@@ -17,11 +17,21 @@ const Header = () => {
   }, []);
 
   const handleNavClick = (sectionId) => {
-    setIsOpen(false);
-    if (location.pathname !== '/') {
-      navigate(`/#${sectionId}`);
+    if (isOpen) {
+      setIsOpen(false);
+      if (location.pathname !== '/') {
+        navigate(`/#${sectionId}`);
+      } else {
+        setTimeout(() => {
+          document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
     } else {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      if (location.pathname !== '/') {
+        navigate(`/#${sectionId}`);
+      } else {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -123,7 +133,7 @@ const Header = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="lg:hidden w-full"
+            className="lg:hidden absolute top-full left-0 w-full overflow-hidden shadow-lg"
             style={{
               borderTop: '1px solid var(--border)',
               background: 'var(--bg-card)',
@@ -135,7 +145,7 @@ const Header = () => {
                   <button
                     key={link.label}
                     onClick={() => handleNavClick(link.path)}
-                    className="text-left py-2 font-medium border-b cursor-pointer"
+                    className="text-left py-3 font-medium border-b cursor-pointer w-full block"
                     style={{ color: 'var(--text-secondary)', borderColor: 'var(--border-light)' }}
                   >
                     {link.label}
@@ -144,8 +154,13 @@ const Header = () => {
                   <Link
                     key={link.label}
                     to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`py-2 font-semibold border-b ${isActive(link.path) ? 'text-primary-blue' : ''}`}
+                    onClick={() => {
+                      setIsOpen(false);
+                      if (link.path === '/') {
+                        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 300);
+                      }
+                    }}
+                    className={`py-3 font-semibold border-b w-full block ${isActive(link.path) ? 'text-primary-blue' : ''}`}
                     style={{
                       color: isActive(link.path) ? undefined : 'var(--text-secondary)',
                       borderColor: 'var(--border-light)',
@@ -159,9 +174,13 @@ const Header = () => {
                 onClick={() => {
                   setIsOpen(false);
                   if (location.pathname !== '/careers') navigate('/careers#apply');
-                  else document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth' });
+                  else {
+                    setTimeout(() => {
+                      document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                  }
                 }}
-                className="btn-gradient text-white text-center font-semibold py-3 px-6 rounded mt-2 cursor-pointer shadow-level-1"
+                className="btn-gradient w-full block text-white text-center font-semibold py-3 px-6 rounded mt-2 cursor-pointer shadow-level-1"
               >
                 Apply Now
               </button>

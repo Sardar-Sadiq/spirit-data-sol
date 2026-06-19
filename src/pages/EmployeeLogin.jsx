@@ -34,7 +34,7 @@ const EmployeeLogin = () => {
     try {
       // Query Supabase to find the employee by their ID
       const { data, error: dbError } = await supabase
-        .from('EmployeeDetails')
+        .from('EmployeesDetails')
         .select('Employee_ID, qr_token')
         .eq('Employee_ID', employeeId.trim())
         .maybeSingle();

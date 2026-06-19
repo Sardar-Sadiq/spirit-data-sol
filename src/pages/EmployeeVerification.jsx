@@ -12,7 +12,7 @@ const EmployeeVerification = () => {
     const fetchEmployee = async () => {
       try {
         const { data, error } = await supabase
-          .from('EmployeeDetails')
+          .from('EmployeesDetails')
           .select('*')
           .eq('qr_token', id)
           .maybeSingle();
