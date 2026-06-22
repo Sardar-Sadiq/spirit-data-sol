@@ -11,8 +11,7 @@ const EmployeeLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Replace this with your actual Cloudflare Turnstile Site Key
-  // '1x00000000000000000000AA' is a testing sitekey that always passes
+  // Using Cloudflare's official testing dummy key that automatically approves
   const SITE_KEY = '1x00000000000000000000AA';
 
   const handleSubmit = async (e) => {
@@ -112,11 +111,10 @@ const EmployeeLogin = () => {
           <button
             type="submit"
             disabled={loading || !captchaToken}
-            className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${
-              loading || !captchaToken
-                ? 'bg-[var(--border)] text-[var(--text-muted)] cursor-not-allowed'
-                : 'bg-[#1F6FD1] text-white hover:bg-[#1A5BB0] shadow-sm hover:shadow-md'
-            }`}
+            className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${loading || !captchaToken
+              ? 'bg-[var(--border)] text-[var(--text-muted)] cursor-not-allowed'
+              : 'bg-[#1F6FD1] text-white hover:bg-[#1A5BB0] shadow-sm hover:shadow-md'
+              }`}
           >
             {loading ? 'Verifying...' : 'Access Records'}
           </button>
