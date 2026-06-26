@@ -19,6 +19,7 @@ env
 .env.*
 .agents
 DESIGN.md
+artifacts
 
 # Editor directories and files
 .vscode/*
