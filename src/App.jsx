@@ -18,6 +18,8 @@ import Careers from './pages/Careers';
 import ProjectsComingSoon from './pages/ProjectsComingSoon';
 import EmployeeLogin from './pages/EmployeeLogin';
 import EmployeeVerification from './pages/EmployeeVerification';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 
 function AppInner() {
   const [loading, setLoading] = useState(true);
@@ -117,6 +119,8 @@ function AppInner() {
             <Route path="/projects" element={<ProjectsComingSoon />} />
             <Route path="/employees" element={<EmployeeLogin />} />
             <Route path="/employees/:id" element={<EmployeeVerification />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </main>

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../supabaseClient';
+const BadgeCard3D = lazy(() => import('../components/BadgeCard3D'));
 
 
 const EmployeeVerification = () => {
@@ -83,23 +84,47 @@ const EmployeeVerification = () => {
         {/* Two-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow min-h-0">
 
-          {/* Left: Digital ID Placeholder */}
-          <motion.div
-            className="border border-[var(--border)] rounded-2xl shadow-sm overflow-hidden flex items-center justify-center"
-            style={{ height: '580px', background: 'var(--bg-card)' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="flex flex-col items-center gap-3 text-center px-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#1F6FD1]/10 border border-[#1F6FD1]/20 flex items-center justify-center">
-                <svg className="w-7 h-7 text-[#1F6FD1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0M9 11h.01M15 11h.01M9 15h6" />
-                </svg>
+          {/* Left Column: 3D Badge Card & Current Status */}
+          <div className="flex flex-col gap-5">
+            <motion.div
+              className="border border-[var(--border)] rounded-2xl shadow-sm overflow-hidden aspect-square w-full"
+              style={{ background: 'var(--bg-card)' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Suspense fallback={
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[#1F6FD1] rounded-full animate-spin" />
+                </div>
+              }>
+                <BadgeCard3D />
+              </Suspense>
+            </motion.div>
+
+            {/* Current Status Card */}
+            <motion.div
+              className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <span className="label-md text-[var(--text-muted)] uppercase tracking-wider font-semibold">Current Status</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-full text-sm font-semibold border border-green-500/20">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                  {employee['Employee Status'] || 'Working'}
+                </div>
               </div>
-              <p className="body-lg text-[var(--text-muted)] font-medium">The Digital ID will display here</p>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* Right: Info Cards (scrollable internally) */}
           <div className="flex flex-col gap-5 overflow-y-auto pb-2 pr-1">
@@ -138,13 +163,6 @@ const EmployeeVerification = () => {
                     <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Department</dt>
                     <dd className="body-lg font-medium text-[var(--text-primary)]">{employee['Department']}</dd>
                   </div>
-                </div>
-                <div>
-                  <dt className="label-md text-[var(--text-muted)] mb-1 uppercase tracking-wider">Current Status</dt>
-                  <dd className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-full text-sm font-semibold border border-green-500/20">
-                    <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                    {employee['Employee Status'] || 'Working'}
-                  </dd>
                 </div>
               </dl>
             </motion.div>
