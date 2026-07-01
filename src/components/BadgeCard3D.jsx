@@ -5,7 +5,7 @@ import { Physics, RigidBody, CuboidCollider, useSphericalJoint } from '@react-th
 import { animate, useMotionValue } from 'framer-motion';
 import * as THREE from 'three';
 
-const GLB = '/3dCardModal.glb';
+const GLB = '/3Dcard.glb';
 useGLTF.preload(GLB);
 
 const GRAVITY = -25;
@@ -90,7 +90,7 @@ function CameraAim({ y }) {
   return null;
 }
 
-function Scene({ strapMotionY, motionY, started, onLoad }) {
+function Scene({ strapMotionY, motionY, started, onLoad, cardImage }) {
   const { scene } = useGLTF(GLB);
   const { camera } = useThree();
   const anchorRef = useRef();
@@ -98,9 +98,63 @@ function Scene({ strapMotionY, motionY, started, onLoad }) {
   const meshRef = useRef();
   const [dims, setDims] = useState(null);
   const opacityRef = useRef(0);
+  const [texture, setTexture] = useState(null);
 
   const onLoadRef = useRef(onLoad);
   useEffect(() => { onLoadRef.current = onLoad; }, [onLoad]);
+
+  useEffect(() => {
+    if (cardImage) {
+      const loader = new THREE.TextureLoader();
+      loader.setCrossOrigin('anonymous');
+      loader.load(
+        cardImage,
+        (tex) => {
+          if (THREE.SRGBColorSpace) {
+            tex.colorSpace = THREE.SRGBColorSpace;
+          } else {
+            tex.encoding = 3001; // sRGBEncoding
+          }
+          tex.flipY = false;
+          tex.minFilter = THREE.LinearFilter;
+          setTexture(tex);
+        },
+        undefined,
+        (err) => {
+          console.error('Scene: Failed to load card image texture:', err);
+        }
+      );
+    } else {
+      setTexture(null);
+    }
+  }, [cardImage]);
+
+  useEffect(() => {
+    if (!scene) return;
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        const nameLower = child.name.toLowerCase();
+        if (nameLower === "plane.002" || nameLower === "plane_002" || nameLower === "plane002") {
+          if (texture) {
+            if (!child.userData.originalMaterial) {
+              child.userData.originalMaterial = child.material;
+            }
+            const newMaterial = child.userData.originalMaterial.clone();
+            newMaterial.map = texture;
+            if (newMaterial.color) {
+              newMaterial.color.set('#ffffff');
+            }
+            newMaterial.transparent = true;
+            newMaterial.opacity = opacityRef.current;
+            newMaterial.needsUpdate = true;
+            child.material = newMaterial;
+          } else if (child.userData.originalMaterial) {
+            child.material = child.userData.originalMaterial;
+          }
+        }
+      }
+    });
+  }, [scene, texture]);
 
   useEffect(() => {
     try {
@@ -174,7 +228,7 @@ function Scene({ strapMotionY, motionY, started, onLoad }) {
   );
 }
 
-export default function BadgeCard3D() {
+export default function BadgeCard3D({ cardImage }) {
   const [dims, setDims] = useState(null);
   const [started, setStarted] = useState(false);
 
@@ -217,6 +271,7 @@ export default function BadgeCard3D() {
             motionY={motionY}
             started={started}
             onLoad={handleLoad}
+            cardImage={cardImage}
           />
 
           <ContactShadows position={[0, -1.8, 0]} opacity={0.18} scale={5} blur={2} far={4} />

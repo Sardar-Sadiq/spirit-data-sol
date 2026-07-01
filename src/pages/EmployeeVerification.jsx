@@ -98,7 +98,7 @@ const EmployeeVerification = () => {
                   <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[#1F6FD1] rounded-full animate-spin" />
                 </div>
               }>
-                <BadgeCard3D />
+                <BadgeCard3D cardImage={employee?.card_image} />
               </Suspense>
             </motion.div>
 
