@@ -27,18 +27,30 @@ function Anchor({ anchorRef, motionY }) {
   );
 }
 
-function CardBody({ anchorRef, cardRef, halfW, halfH, halfD, spawnX, spawnY, spawnZ }) {
+function CardBody({ anchorRef, cardRef, halfW, halfH, halfD, spawnX, spawnY, spawnZ, anchorY, motionY, started }) {
   useSphericalJoint(anchorRef, cardRef, [
     [0, 0, 0],
     [0, halfH, 0],
   ]);
 
   const initQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.7, 0, 0.25));
+  const jointOffsetY = anchorY - spawnY;
+
+  useFrame(() => {
+    if (started || !cardRef.current) return;
+    const currentY = motionY.get();
+    cardRef.current.setNextKinematicTranslation({
+      x: spawnX,
+      y: currentY - jointOffsetY,
+      z: spawnZ
+    });
+    cardRef.current.setNextKinematicRotation(initQ);
+  });
 
   return (
     <RigidBody
       ref={cardRef}
-      type="dynamic"
+      type={started ? "dynamic" : "kinematicPosition"}
       position={[spawnX, spawnY, spawnZ]}
       rotation={[initQ.x, initQ.y, initQ.z, initQ.w]}
       linearDamping={LIN_DAMP}
@@ -52,12 +64,12 @@ function CardBody({ anchorRef, cardRef, halfW, halfH, halfD, spawnX, spawnY, spa
 
 function CameraAim({ y }) {
   useFrame((state) => {
-    state.camera.lookAt(0, y + 0.3, 0); // Focus slightly higher to keep strap visible
+    state.camera.lookAt(0, y + 0.2, 0); // Focus slightly higher to keep strap visible
   });
   return null;
 }
 
-function Scene({ strapMotionY, motionY, started, onLoad, cardImage, isHovered }) {
+function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
   const { scene } = useGLTF(GLB);
   const { camera } = useThree();
   const anchorRef = useRef();
@@ -203,7 +215,7 @@ function Scene({ strapMotionY, motionY, started, onLoad, cardImage, isHovered })
 
     // 1. Position the scene group: slides down during intro, stays static afterwards
     if (meshRef.current) {
-      const currentY = started ? motionY.get() : strapMotionY.get();
+      const currentY = motionY.get();
       meshRef.current.position.set(dims.offsetX, currentY - dims.unscaledCardPivotY * SCALE, 0);
       meshRef.current.scale.set(SCALE, SCALE, SCALE);
     }
@@ -257,7 +269,7 @@ function Scene({ strapMotionY, motionY, started, onLoad, cardImage, isHovered })
           anchorRef={anchorRef}
           motionY={motionY}
         />
-        {started && dims && (
+        {dims && (
           <CardBody
             anchorRef={anchorRef}
             cardRef={cardRef}
@@ -267,6 +279,9 @@ function Scene({ strapMotionY, motionY, started, onLoad, cardImage, isHovered })
             spawnX={dims.spawnX}
             spawnY={dims.spawnY}
             spawnZ={dims.spawnZ}
+            anchorY={dims.anchorY}
+            motionY={motionY}
+            started={started}
           />
         )}
       </Physics>
@@ -279,21 +294,18 @@ export default function BadgeCard3D({ cardImage }) {
   const [started, setStarted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const strapMotionY = useMotionValue(-10);
   const motionY = useMotionValue(-10);
 
   const handleLoad = (computedDims) => {
     if (started) return;
     setDims(computedDims);
 
-    strapMotionY.set(computedDims.anchorY + DROP_HEIGHT);
     motionY.set(computedDims.anchorY + DROP_HEIGHT);
 
-    animate(strapMotionY, computedDims.anchorY, {
+    animate(motionY, computedDims.anchorY, {
       duration: 0.8,
       ease: [0.16, 1, 0.3, 1], // ease-out
       onComplete: () => {
-        motionY.set(computedDims.anchorY);
         setStarted(true);
       },
     });
@@ -317,7 +329,6 @@ export default function BadgeCard3D({ cardImage }) {
           <pointLight position={[-3, 2, 3]} intensity={0.5} color="#5599ff" />
 
           <Scene
-            strapMotionY={strapMotionY}
             motionY={motionY}
             started={started}
             onLoad={handleLoad}
