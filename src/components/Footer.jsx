@@ -50,7 +50,7 @@ const Footer = () => {
             </Link>
           ))}
           {[
-            { href: 'https://linkedin.com', label: 'LinkedIn' },
+            { href: 'https://www.linkedin.com/company/spiritdatasolutions/', label: 'LinkedIn' },
 
           ].map(({ href, label }) => (
             <a key={href} href={href} target="_blank" rel="noopener noreferrer"
