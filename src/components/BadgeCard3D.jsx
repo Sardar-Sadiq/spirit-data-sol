@@ -64,7 +64,7 @@ function CardBody({ anchorRef, cardRef, halfW, halfH, halfD, spawnX, spawnY, spa
 
 function CameraAim({ y }) {
   useFrame((state) => {
-    state.camera.lookAt(0, y + 0.2, 0); // Focus slightly higher to keep strap visible
+    state.camera.lookAt(0, y + 0.6, 0); // Focus slightly higher to keep strap visible
   });
   return null;
 }
@@ -166,7 +166,7 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
         : 2.4676;
 
       const unscaledCardCenterY = unscaledCardPivotY - cardH / 2;
-      const Y_OFFSET = -0.5; // Centers card vertically in viewport
+      const Y_OFFSET = -0.85; // Push card down so strap is ~20-30% visible at top
 
       // Offsets to center the visual system correctly
       const offsetY = Y_OFFSET - unscaledCardCenterY * SCALE;
@@ -324,9 +324,9 @@ export default function BadgeCard3D({ cardImage }) {
         style={{ width: '100%', height: '100%' }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.8} />
-          <directionalLight position={[3, 8, 5]} intensity={1.5} castShadow shadow-mapSize={[1024, 1024]} />
-          <pointLight position={[-3, 2, 3]} intensity={0.5} color="#5599ff" />
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[3, 5, 2]} intensity={1.2} castShadow shadow-mapSize={[1024, 1024]} />
+          <pointLight position={[-3, 2, -2]} intensity={0.4} color="#4f7fff" />
 
           <Scene
             motionY={motionY}

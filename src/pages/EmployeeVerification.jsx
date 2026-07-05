@@ -87,15 +87,21 @@ const EmployeeVerification = () => {
           {/* Left Column: 3D Badge Card & Current Status */}
           <div className="flex flex-col gap-5">
             <motion.div
-              className="border border-[var(--border)] rounded-2xl shadow-sm overflow-hidden aspect-square w-full"
-              style={{ background: 'var(--bg-card)' }}
+              className="badge-box-gradient relative border border-[var(--border)] rounded-2xl shadow-lg overflow-hidden aspect-square w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
             >
+              {/* Contact shadow overlay at the bottom of the box */}
+              <div
+                className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/4 z-10"
+                style={{
+                  background: 'radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,0,0,0.18), transparent 70%)',
+                }}
+              />
               <Suspense fallback={
                 <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[#1F6FD1] rounded-full animate-spin" />
+                  <div className="w-10 h-10 border-4 border-[#dde5f2] border-t-[#1F6FD1] rounded-full animate-spin" />
                 </div>
               }>
                 <BadgeCard3D cardImage={employee?.card_image} />
