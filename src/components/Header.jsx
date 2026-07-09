@@ -36,19 +36,19 @@ const Header = () => {
   };
 
   const navLinks = [
-    { label: 'Home',     path: '/',        isSection: false },
-    { label: 'About',    path: 'about',    isSection: true  },
-    { label: 'Services', path: 'services', isSection: true  },
-    { label: 'Gallery',  path: 'gallery',  isSection: true  },
+    { label: 'Home', path: '/', isSection: false },
+    { label: 'About', path: 'about', isSection: true },
+    { label: 'Services', path: 'services', isSection: true },
+    { label: 'Gallery', path: 'gallery', isSection: true },
     { label: 'Projects', path: '/projects', isSection: false },
-    { label: 'Careers',  path: '/careers',  isSection: false },
+    { label: 'Careers', path: '/careers', isSection: false },
   ];
 
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className={`sticky top-0 z-50 w-full transition-all duration-300 glass-nav ${scrolled ? 'shadow-level-1' : ''}`}>
-      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop h-16 md:h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-transparent px-4 sm:px-6 lg:px-8 py-3 md:py-4 transition-all duration-300">
+      <div className={`max-w-container-max mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between glass-nav rounded-full transition-all duration-300 ${scrolled ? 'shadow-level-2 bg-opacity-95' : 'shadow-level-1'}`}>
 
         {/* Logo */}
         <Link
@@ -81,11 +81,10 @@ const Header = () => {
               <Link
                 key={link.label}
                 to={link.path}
-                className={`font-medium transition-colors duration-200 label-md border-b-2 py-1 px-0.5 ${
-                  isActive(link.path)
+                className={`font-medium transition-colors duration-200 label-md border-b-2 py-1 px-0.5 ${isActive(link.path)
                     ? 'text-primary-blue border-primary-blue'
                     : 'border-transparent'
-                }`}
+                  }`}
                 style={!isActive(link.path) ? { color: 'var(--text-secondary)' } : {}}
               >
                 {link.label}
@@ -129,14 +128,14 @@ const Header = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="lg:hidden absolute top-full left-0 w-full overflow-hidden shadow-lg"
+            className="lg:hidden absolute top-[calc(100%-8px)] left-4 right-4 overflow-hidden rounded-3xl shadow-lg border backdrop-blur-md"
             style={{
-              borderTop: '1px solid var(--border)',
-              background: 'var(--bg-card)',
+              borderColor: 'var(--border)',
+              background: 'var(--glass-bg)',
             }}
           >
             <div className="flex flex-col gap-4 py-6 px-margin-mobile">

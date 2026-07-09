@@ -10,7 +10,7 @@ function readGlbJson(filePath) {
 }
 
 try {
-    const gltf = readGlbJson('public/3dCardModal.glb');
+    const gltf = readGlbJson('public/IDmodal.glb');
 
     console.log('--- DETAILED MATERIALS ---');
     gltf.materials?.forEach((mat, i) => {

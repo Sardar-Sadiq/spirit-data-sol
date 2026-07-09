@@ -64,7 +64,7 @@ function CardBody({ anchorRef, cardRef, halfW, halfH, halfD, spawnX, spawnY, spa
 
 function CameraAim({ y }) {
   useFrame((state) => {
-    state.camera.lookAt(0, y + 0.6, 0); // Focus slightly higher to keep strap visible
+    state.camera.lookAt(0, y + 0.3, 0); // Focus slightly higher to keep strap visible
   });
   return null;
 }
@@ -114,6 +114,8 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
     scene.traverse((child) => {
       if (child.isMesh) {
         const nameLower = child.name.toLowerCase();
+
+        // Handle ID card face texture replacement
         if (nameLower === "plane.002" || nameLower === "plane_002" || nameLower === "plane002") {
           if (texture) {
             if (!child.userData.originalMaterial) {
@@ -131,6 +133,42 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
           } else if (child.userData.originalMaterial) {
             child.material = child.userData.originalMaterial;
           }
+        }
+
+        // Handle strap material: change color to jetblack with a gradient effect
+        if (nameLower === "plane" || nameLower === "strap") {
+          if (!child.userData.customStrapMaterial) {
+            // Create a dynamic canvas gradient texture for a premium jetblack look
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            // Draw a high-fidelity linear gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+            gradient.addColorStop(0, '#040404');    // Deep jet black
+            gradient.addColorStop(0.3, '#0e0e0e');  // Dark charcoal
+            gradient.addColorStop(0.5, '#1b1b1b');  // Subtle lighter highlight
+            gradient.addColorStop(0.7, '#0e0e0e');  // Dark charcoal
+            gradient.addColorStop(1, '#040404');    // Deep jet black
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 512, 512);
+
+            const gradTexture = new THREE.CanvasTexture(canvas);
+            if (THREE.SRGBColorSpace) {
+              gradTexture.colorSpace = THREE.SRGBColorSpace;
+            }
+
+            child.userData.customStrapMaterial = new THREE.MeshStandardMaterial({
+              map: gradTexture,
+              roughness: 0.38,
+              metalness: 0.15,
+              transparent: true,
+              opacity: opacityRef.current,
+            });
+          }
+          child.material = child.userData.customStrapMaterial;
         }
       }
     });

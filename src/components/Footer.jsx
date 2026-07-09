@@ -41,9 +41,10 @@ const Footer = () => {
             </button>
           ))}
           {[
-            { to: '/employees', label: "Employee's Portal" },
+
             { to: '/privacy', label: 'Privacy Policy' },
             { to: '/terms', label: 'Terms' },
+            { to: '/employees', label: "Employee's Portal" },
           ].map(({ to, label }) => (
             <Link key={to} to={to} className="hover:text-primary-blue transition-colors duration-200">
               {label}
