@@ -64,7 +64,7 @@ function CardBody({ anchorRef, cardRef, halfW, halfH, halfD, spawnX, spawnY, spa
 
 function CameraAim({ y }) {
   useFrame((state) => {
-    state.camera.lookAt(0, y + 0.3, 0); // Focus slightly higher to keep strap visible
+    state.camera.lookAt(0, y + 0.6, 0); // Focus slightly higher to keep strap visible
   });
   return null;
 }
