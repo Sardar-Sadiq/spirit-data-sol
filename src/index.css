@@ -187,9 +187,8 @@ html.lenis body {
    ========================================================= */
 .glass-nav {
   background: var(--glass-bg);
-  @apply backdrop-blur-md;
+  @apply backdrop-blur-md transition-all duration-300 ease-in-out;
   border: 1px solid var(--glass-border);
-  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
 /* =========================================================

@@ -47,8 +47,8 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className={`sticky top-0 z-50 w-full bg-transparent px-4 sm:px-6 lg:px-8 transition-all duration-350 ${scrolled ? 'py-1.5 md:py-2' : 'py-3 md:py-4'}`}>
-      <div className={`max-w-container-max mx-auto px-6 md:px-10 flex items-center justify-between glass-nav rounded-full transition-all duration-350 ${scrolled ? 'h-12 md:h-14 shadow-level-2 bg-opacity-95' : 'h-14 md:h-16 shadow-level-1'}`}>
+    <header className={`sticky top-0 z-50 w-full bg-transparent px-4 sm:px-6 lg:px-8 transition-all duration-300 ease-in-out ${scrolled ? 'py-1.5 md:py-2' : 'py-3 md:py-4'}`}>
+      <div className={`max-w-container-max mx-auto px-6 md:px-10 flex items-center justify-between glass-nav rounded-full transition-all duration-300 ease-in-out ${scrolled ? 'h-12 md:h-14 shadow-level-2 bg-opacity-95' : 'h-14 md:h-16 shadow-level-1'}`}>
 
         {/* Logo */}
         <Link
@@ -59,7 +59,7 @@ const Header = () => {
           <img
             src="/spirit-svg.png"
             alt="Spirit Data Logo"
-            className={`w-auto object-contain transition-all duration-350 group-hover:scale-105 ${scrolled ? 'h-7 md:h-8' : 'h-8 md:h-10'}`}
+            className={`w-auto object-contain transition-all duration-300 ease-in-out group-hover:scale-105 ${scrolled ? 'h-7 md:h-8' : 'h-8 md:h-10'}`}
           />
         </Link>
 
