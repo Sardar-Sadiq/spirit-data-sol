@@ -4,9 +4,9 @@ import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MODES = [
-  { value: 'light', Icon: Sun, label: 'Light' },
-  { value: 'system', Icon: Monitor, label: 'System' },
-  { value: 'dark', Icon: Moon, label: 'Dark' },
+  { value: 'light', label: 'Light', Icon: Sun },
+  { value: 'system', label: 'System', Icon: Monitor },
+  { value: 'dark', label: 'Dark', Icon: Moon },
 ];
 
 export default function ThemeToggle() {
@@ -43,7 +43,8 @@ export default function ThemeToggle() {
       {/* Trigger button — shows current theme icon */}
       <button
         type="button"
-        aria-label={`Current theme: ${current.label}. Hover to change.`}
+        onClick={() => setOpen(!open)}
+        aria-label={`Current theme: ${current.label}. Click to change.`}
         className="w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-300 cursor-pointer shadow-sm hover:scale-105 active:scale-95"
         style={{
           backgroundColor: 'var(--glass-bg)',
@@ -62,11 +63,10 @@ export default function ThemeToggle() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute right-0 top-full mt-2 p-1 rounded-xl flex flex-col gap-1 shadow-lg border backdrop-blur-md"
+            className="absolute flex flex-row right-0 top-full mt-2 p-1.5 rounded-xl gap-1 shadow-lg border backdrop-blur-md"
             style={{
               backgroundColor: 'var(--glass-bg)',
               borderColor: 'var(--glass-border)',
-              minWidth: '110px',
             }}
             role="group"
             aria-label="Theme selector"
@@ -76,9 +76,10 @@ export default function ThemeToggle() {
                 key={value}
                 type="button"
                 onClick={() => handleSwitch(value)}
-                aria-label={`Switch to ${label} mode`}
                 aria-pressed={mode === value}
-                className={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                aria-label={label}
+                title={label}
+                className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-200 cursor-pointer ${
                   mode === value
                     ? 'bg-primary-blue text-white shadow-sm'
                     : 'hover:bg-black/5 dark:hover:bg-white/5'
@@ -86,10 +87,8 @@ export default function ThemeToggle() {
                 style={{
                   color: mode === value ? '#ffffff' : 'var(--text-secondary)',
                 }}
-                title={label}
               >
                 <Icon size={14} strokeWidth={2.2} />
-                <span>{label}</span>
               </button>
             ))}
           </motion.div>
