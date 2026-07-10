@@ -47,8 +47,8 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-transparent px-4 sm:px-6 lg:px-8 py-3 md:py-4 transition-all duration-300">
-      <div className={`max-w-container-max mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between glass-nav rounded-full transition-all duration-300 ${scrolled ? 'shadow-level-2 bg-opacity-95' : 'shadow-level-1'}`}>
+    <header className={`sticky top-0 z-50 w-full bg-transparent px-4 sm:px-6 lg:px-8 transition-all duration-350 ${scrolled ? 'py-1.5 md:py-2' : 'py-3 md:py-4'}`}>
+      <div className={`max-w-container-max mx-auto px-6 md:px-10 flex items-center justify-between glass-nav rounded-full transition-all duration-350 ${scrolled ? 'h-12 md:h-14 shadow-level-2 bg-opacity-95' : 'h-14 md:h-16 shadow-level-1'}`}>
 
         {/* Logo */}
         <Link
@@ -59,7 +59,7 @@ const Header = () => {
           <img
             src="/spirit-svg.png"
             alt="Spirit Data Logo"
-            className="h-10 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            className={`w-auto object-contain transition-all duration-350 group-hover:scale-105 ${scrolled ? 'h-7 md:h-8' : 'h-8 md:h-10'}`}
           />
         </Link>
 
@@ -82,8 +82,8 @@ const Header = () => {
                 key={link.label}
                 to={link.path}
                 className={`font-medium transition-colors duration-200 label-md border-b-2 py-1 px-0.5 ${isActive(link.path)
-                    ? 'text-primary-blue border-primary-blue'
-                    : 'border-transparent'
+                  ? 'text-primary-blue border-primary-blue'
+                  : 'border-transparent'
                   }`}
                 style={!isActive(link.path) ? { color: 'var(--text-secondary)' } : {}}
               >
