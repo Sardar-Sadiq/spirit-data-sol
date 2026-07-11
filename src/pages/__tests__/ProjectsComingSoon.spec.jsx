@@ -14,6 +14,11 @@ vi.mock('framer-motion', () => ({
   },
 }));
 
+// Mock react-confetti
+vi.mock('react-confetti', () => ({
+  default: () => <div data-testid="mock-confetti">Confetti</div>,
+}));
+
 // Mock components
 vi.mock('../../components/ScrollReveal', () => ({
   default: ({ children }) => <div>{children}</div>,

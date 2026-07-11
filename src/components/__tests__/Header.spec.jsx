@@ -22,10 +22,18 @@ vi.mock('framer-motion', () => ({
   AnimatePresence: ({ children }) => <>{children}</>,
 }));
 
+// Mock ThemeToggle to avoid ThemeContext provider dependency in header tests
+vi.mock('../ThemeToggle', () => ({
+  default: () => <div data-testid="theme-toggle">ThemeToggle</div>,
+}));
+
 // Mock lucide-react
 vi.mock('lucide-react', () => ({
   Menu: () => <span data-testid="menu-icon">Menu</span>,
   X: () => <span data-testid="x-icon">X</span>,
+  Sun: () => <span data-testid="sun-icon">Sun</span>,
+  Monitor: () => <span data-testid="monitor-icon">Monitor</span>,
+  Moon: () => <span data-testid="moon-icon">Moon</span>,
 }));
 
 describe('Header', () => {
