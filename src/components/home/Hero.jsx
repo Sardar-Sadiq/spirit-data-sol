@@ -11,10 +11,10 @@ const Hero = () => {
 
   return (
     <section className="relative hero-gradient text-white py-24 md:py-32 lg:py-40 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop overflow-hidden">
-      <img 
-        src="/Group-8.jpg" 
+      <img
+        src="/Group-8.jpg"
         alt="Spirit Data Zurich Office Workspace"
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 select-none pointer-events-none" 
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 select-none pointer-events-none"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-deep-blue/90 via-deep-blue/70 to-deep-blue/20 z-0 pointer-events-none" />
       <div className="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
@@ -31,13 +31,13 @@ const Hero = () => {
             Ready to accelerate operations, drive growth, and unlock new markets? We specialize in high-impact software management and cutting-edge custom engineering.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <button 
+            <button
               onClick={() => scrollToSection('contact')}
               className="bg-white text-deep-blue text-base font-semibold py-3 px-8 rounded shadow-level-1 hover:bg-sky-50 transition-all duration-300 hover:shadow-level-2 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
             >
               Get Started
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('services')}
               className="border border-white/30 text-white hover:bg-white/10 text-base font-semibold py-3 px-8 rounded transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
             >
