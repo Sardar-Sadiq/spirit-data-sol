@@ -150,6 +150,54 @@
   letter-spacing: 0.02em;
 }
 
+/* Base Layer (Outside Spotlight) Text Styles */
+.hero-title-base {
+  color: rgba(0, 0, 0);
+  /* Darker, high-contrast black in light mode */
+  transition: color 0.3s ease;
+}
+
+html.dark .hero-title-base {
+  color: var(--text-muted);
+  /* Muted gray in dark mode */
+}
+
+.hero-tagline-base {
+  color: rgba(0, 0, 0);
+  transition: color 0.3s ease;
+}
+
+html.dark .hero-tagline-base {
+  color: var(--text-muted);
+}
+
+/* Reveal Layer (Inside Spotlight) Text Styles */
+.hero-title-reveal {
+  color: #000000;
+  /* Pure black in light mode */
+  text-shadow: none;
+  /* No hazy blue overlay in light mode */
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+html.dark .hero-title-reveal {
+  color: #ffffff;
+  /* Pure white in dark mode */
+  text-shadow: 0 0 35px rgba(88, 181, 255, 0.35);
+  /* Premium glow in dark mode */
+}
+
+.hero-tagline-reveal {
+  color: #1f6fd1;
+  /* High-contrast blue accent in light mode */
+  transition: color 0.3s ease;
+}
+
+html.dark .hero-tagline-reveal {
+  color: #58b5ff;
+  /* Glow light blue in dark mode */
+}
+
 /* Scroll-down pulsing dot */
 .hero-scroll-dot {
   display: block;

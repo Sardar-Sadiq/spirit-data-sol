@@ -96,12 +96,12 @@ const Hero = () => {
 
     const handleMouseEnter = () => {
       isHovering = true;
-      gsap.to(container, { '--radius': '200px', duration: 0.6, ease: 'power2.out' });
+      gsap.to(container, { '--radius': '270px', duration: 0.8, ease: 'power3.out' });
     };
 
     const handleMouseLeave = () => {
       isHovering = false;
-      gsap.to(container, { '--radius': '140px', duration: 0.8, ease: 'power2.out' });
+      gsap.to(container, { '--radius': '140px', duration: 0.9, ease: 'power3.out' });
     };
 
     // Support touch interactions for mobile screens
@@ -116,12 +116,12 @@ const Hero = () => {
 
     const handleTouchStart = () => {
       isHovering = true;
-      gsap.to(container, { '--radius': '160px', duration: 0.5, ease: 'power2.out' });
+      gsap.to(container, { '--radius': '220px', duration: 0.6, ease: 'power3.out' });
     };
 
     const handleTouchEnd = () => {
       isHovering = false;
-      gsap.to(container, { '--radius': '140px', duration: 0.8, ease: 'power2.out' });
+      gsap.to(container, { '--radius': '140px', duration: 0.9, ease: 'power3.out' });
     };
 
     trackingArea.addEventListener('mousemove', handleMouseMove);
@@ -148,8 +148,8 @@ const Hero = () => {
   return (
     <section className="hero-section relative w-full flex flex-col items-center justify-between" style={{ background: 'var(--bg)' }}>
       {/* ── Main hero block: double layers for fluid reveal ── */}
-      <div 
-        ref={containerRef} 
+      <div
+        ref={containerRef}
         className="hero-canvas-block relative w-full flex items-center justify-center overflow-hidden flex-1"
       >
         {/* Layer 1: Base Layer (Outside the Spotlight)
@@ -158,10 +158,10 @@ const Hero = () => {
         */}
         <div className="absolute inset-0 z-0 w-full h-full flex flex-col items-center justify-center bg-[var(--bg)]">
           <div className="flex flex-col items-center justify-center text-center pointer-events-none select-none py-16 md:py-20 lg:py-24 px-4">
-            <h1 className="italiana hero-title" style={{ color: 'var(--text-muted)' }}>
+            <h1 className="italiana hero-title hero-title-base">
               SPIRIT<br />DATA SOLUTIONS
             </h1>
-            <p className="poppins-italic hero-tagline" style={{ color: 'var(--text-muted)' }}>
+            <p className="poppins-italic hero-tagline hero-tagline-base">
               Pioneering Digital Excellence For Global Enterprises
             </p>
           </div>
@@ -173,7 +173,7 @@ const Hero = () => {
             - Masked by CSS radial-gradient using GSAP-animated coordinates.
             - Contains the 3D Canvas (revealed inside the circle) and duplicate high-contrast text overlay.
         */}
-        <div 
+        <div
           ref={canvasRef}
           className="absolute inset-0 z-10 w-full h-full pointer-events-none"
           style={{
@@ -189,10 +189,10 @@ const Hero = () => {
 
           {/* Duplicate Text overlay — Centers perfectly and aligns with Layer 1, but colored with premium contrast */}
           <div className="relative z-10 flex flex-col items-center justify-center text-center pointer-events-none select-none w-full h-full py-16 md:py-20 lg:py-24 px-4">
-            <h1 className="italiana hero-title" style={{ color: 'var(--text-primary)', textShadow: '0 0 30px rgba(88, 181, 255, 0.15)' }}>
+            <h1 className="italiana hero-title hero-title-reveal">
               SPIRIT<br />DATA SOLUTIONS
             </h1>
-            <p className="poppins-italic hero-tagline" style={{ color: 'var(--toggle-active)' }}>
+            <p className="poppins-italic hero-tagline hero-tagline-reveal">
               Pioneering Digital Excellence For Global Enterprises
             </p>
           </div>
@@ -200,10 +200,10 @@ const Hero = () => {
       </div>
 
       {/* ── Scroll Down indicator ── */}
-      <div className="hero-scroll-indicator flex flex-col items-center gap-1 py-16" style={{ color: 'var(--text-muted)' }}>
+      <div className="hero-scroll-indicator flex flex-col items-center gap-1 pb-32" style={{ color: 'var(--text-muted)' }}>
         <span className="text-sm tracking-widest uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Scroll Down</span>
         <span className="hero-scroll-dot" />
-        <span className="text-base">↓</span>
+        <span className="text-base animate-bounce">↓</span>
       </div>
     </section>
   );
