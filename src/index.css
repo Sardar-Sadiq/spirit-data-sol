@@ -82,7 +82,7 @@
   font-style: italic;
 }
 
-.poppins-regular-italic {
+.poppins-italic {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-style: italic;
@@ -122,6 +122,57 @@
 
 
 
+
+/* =========================================================
+   HERO SECTION
+   ========================================================= */
+.hero-section {
+  min-height: 100vh;
+}
+
+.hero-canvas-block {
+  width: 100%;
+  min-height: 70vh;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.hero-tagline {
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  letter-spacing: 0.02em;
+}
+
+/* Scroll-down pulsing dot */
+.hero-scroll-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: heroPulse 2s ease-in-out infinite;
+}
+
+@keyframes heroPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+}
 
 /* =========================================================
    CSS CUSTOM PROPERTIES — Light & Dark tokens

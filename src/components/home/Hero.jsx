@@ -1,50 +1,209 @@
-import React from 'react';
-import { Rocket } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import Logo3D from '../Logo3D';
 
 const Hero = () => {
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const containerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [showCanvas, setShowCanvas] = useState(false);
+
+  // Only mount the 3D model when the hero section is in view
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowCanvas(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // GSAP animation for fluid mouse cursor tracking and automatic drifting
+  useGSAP(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Track cursor over the entire full-width hero section
+    const trackingArea = container.closest('.hero-section') || container;
+
+    let rect = container.getBoundingClientRect();
+    let width = rect.width;
+    let height = rect.height;
+
+    const handleResize = () => {
+      if (!container) return;
+      rect = container.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Starting positions in the center of the block
+    let currentX = width / 2;
+    let currentY = height / 2;
+    let targetX = width / 2;
+    let targetY = height / 2;
+    let isHovering = false;
+    let time = 0;
+
+    // Set initial custom variables
+    gsap.set(container, {
+      '--x': `${currentX}px`,
+      '--y': `${currentY}px`,
+      '--radius': '140px',
+    });
+
+    // Tick handler for smooth lerped following and gentle auto-drifting
+    const tick = () => {
+      if (!isHovering) {
+        // Slow Lissajous figure-8 pattern drift to make the page feel alive when idle
+        time += 0.012;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const ampX = Math.min(width * 0.25, 220);
+        const ampY = Math.min(height * 0.18, 90);
+
+        targetX = centerX + Math.sin(time) * ampX;
+        targetY = centerY + Math.cos(time * 0.7) * ampY;
+      }
+
+      // Smooth interpolation (lerp) for heavy, fluid weight
+      const ease = isHovering ? 0.08 : 0.035;
+      currentX += (targetX - currentX) * ease;
+      currentY += (targetY - currentY) * ease;
+
+      container.style.setProperty('--x', `${currentX}px`);
+      container.style.setProperty('--y', `${currentY}px`);
+    };
+
+    gsap.ticker.add(tick);
+
+    const handleMouseMove = (e) => {
+      isHovering = true;
+      const r = container.getBoundingClientRect();
+      targetX = e.clientX - r.left;
+      targetY = e.clientY - r.top;
+    };
+
+    const handleMouseEnter = () => {
+      isHovering = true;
+      gsap.to(container, { '--radius': '200px', duration: 0.6, ease: 'power2.out' });
+    };
+
+    const handleMouseLeave = () => {
+      isHovering = false;
+      gsap.to(container, { '--radius': '140px', duration: 0.8, ease: 'power2.out' });
+    };
+
+    // Support touch interactions for mobile screens
+    const handleTouchMove = (e) => {
+      isHovering = true;
+      if (e.touches && e.touches[0]) {
+        const r = container.getBoundingClientRect();
+        targetX = e.touches[0].clientX - r.left;
+        targetY = e.touches[0].clientY - r.top;
+      }
+    };
+
+    const handleTouchStart = () => {
+      isHovering = true;
+      gsap.to(container, { '--radius': '160px', duration: 0.5, ease: 'power2.out' });
+    };
+
+    const handleTouchEnd = () => {
+      isHovering = false;
+      gsap.to(container, { '--radius': '140px', duration: 0.8, ease: 'power2.out' });
+    };
+
+    trackingArea.addEventListener('mousemove', handleMouseMove);
+    trackingArea.addEventListener('mouseenter', handleMouseEnter);
+    trackingArea.addEventListener('mouseleave', handleMouseLeave);
+    trackingArea.addEventListener('touchmove', handleTouchMove, { passive: true });
+    trackingArea.addEventListener('touchstart', handleTouchStart, { passive: true });
+    trackingArea.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      gsap.ticker.remove(tick);
+      if (trackingArea) {
+        trackingArea.removeEventListener('mousemove', handleMouseMove);
+        trackingArea.removeEventListener('mouseenter', handleMouseEnter);
+        trackingArea.removeEventListener('mouseleave', handleMouseLeave);
+        trackingArea.removeEventListener('touchmove', handleTouchMove);
+        trackingArea.removeEventListener('touchstart', handleTouchStart);
+        trackingArea.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
+  }, { scope: containerRef });
 
   return (
-    <section className="relative hero-gradient text-white py-24 md:py-32 lg:py-40 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop overflow-hidden">
-      <img
-        src="/Group-8.jpg"
-        alt="Spirit Data Zurich Office Workspace"
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 select-none pointer-events-none"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-deep-blue/90 via-deep-blue/70 to-deep-blue/20 z-0 pointer-events-none" />
-      <div className="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        <div className="lg:col-span-8 flex flex-col items-start text-left">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 text-sky-200 border border-white/20 mb-6 backdrop-blur-md">
-            <Rocket className="h-3 w-3" /> Beyond Boundaries
-          </span>
-          <h1 className="text-white display-lg mb-6 leading-tight">
-            Pioneering Digital <br />
-            <span className="text-sky-300">Excellence</span> for <br />
-            Global Enterprises
-          </h1>
-          <p className="text-sky-100 text-lg md:text-xl font-normal max-w-2xl mb-8 leading-relaxed">
-            Ready to accelerate operations, drive growth, and unlock new markets? We specialize in high-impact software management and cutting-edge custom engineering.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="bg-white text-deep-blue text-base font-semibold py-3 px-8 rounded shadow-level-1 hover:bg-sky-50 transition-all duration-300 hover:shadow-level-2 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
-            >
-              Get Started
-            </button>
-            <button
-              onClick={() => scrollToSection('services')}
-              className="border border-white/30 text-white hover:bg-white/10 text-base font-semibold py-3 px-8 rounded transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
-            >
-              Our Services
-            </button>
+    <section className="hero-section relative w-full flex flex-col items-center justify-between" style={{ background: 'var(--bg)' }}>
+      {/* ── Main hero block: double layers for fluid reveal ── */}
+      <div 
+        ref={containerRef} 
+        className="hero-canvas-block relative w-full flex items-center justify-center overflow-hidden flex-1"
+      >
+        {/* Layer 1: Base Layer (Outside the Spotlight)
+            - Has a solid background (var(--bg)) to hide the 3D canvas completely.
+            - Displays the text in a muted/secondary style.
+        */}
+        <div className="absolute inset-0 z-0 w-full h-full flex flex-col items-center justify-center bg-[var(--bg)]">
+          <div className="flex flex-col items-center justify-center text-center pointer-events-none select-none py-16 md:py-20 lg:py-24 px-4">
+            <h1 className="italiana hero-title" style={{ color: 'var(--text-muted)' }}>
+              SPIRIT<br />DATA SOLUTIONS
+            </h1>
+            <p className="poppins-italic hero-tagline" style={{ color: 'var(--text-muted)' }}>
+              Pioneering Digital Excellence For Global Enterprises
+            </p>
           </div>
         </div>
+
+        {/* Layer 2: Reveal Layer (Inside the Spotlight)
+            - Rendered on top of Layer 1.
+            - Transparent background so it sits neatly over Layer 1.
+            - Masked by CSS radial-gradient using GSAP-animated coordinates.
+            - Contains the 3D Canvas (revealed inside the circle) and duplicate high-contrast text overlay.
+        */}
+        <div 
+          ref={canvasRef}
+          className="absolute inset-0 z-10 w-full h-full pointer-events-none"
+          style={{
+            background: 'transparent',
+            maskImage: 'radial-gradient(circle var(--radius) at var(--x) var(--y), black 30%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(circle var(--radius) at var(--x) var(--y), black 30%, transparent 100%)',
+          }}
+        >
+          {/* 3D Model — Sit behind text but inside this reveal layer */}
+          <div className="absolute inset-0 z-0">
+            {showCanvas && <Logo3D />}
+          </div>
+
+          {/* Duplicate Text overlay — Centers perfectly and aligns with Layer 1, but colored with premium contrast */}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center pointer-events-none select-none w-full h-full py-16 md:py-20 lg:py-24 px-4">
+            <h1 className="italiana hero-title" style={{ color: 'var(--text-primary)', textShadow: '0 0 30px rgba(88, 181, 255, 0.15)' }}>
+              SPIRIT<br />DATA SOLUTIONS
+            </h1>
+            <p className="poppins-italic hero-tagline" style={{ color: 'var(--toggle-active)' }}>
+              Pioneering Digital Excellence For Global Enterprises
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Scroll Down indicator ── */}
+      <div className="hero-scroll-indicator flex flex-col items-center gap-1 py-16" style={{ color: 'var(--text-muted)' }}>
+        <span className="text-sm tracking-widest uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Scroll Down</span>
+        <span className="hero-scroll-dot" />
+        <span className="text-base">↓</span>
       </div>
     </section>
   );
