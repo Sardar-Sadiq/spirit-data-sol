@@ -249,8 +249,8 @@ html.dark .hero-tagline-reveal {
 
 html.dark {
   --bg: #0E0E0E;
-  --bg-card: #161616;
-  --bg-surface: #111111;
+  --bg-card: #0E0E0E;
+  --bg-surface: #0E0E0E;
   --text-primary: #eef1f3;
   --text-secondary: #b0b8c4;
   --text-muted: #6b7280;
@@ -491,7 +491,7 @@ html.lenis body {
 }
 
 html.dark .badge-box-gradient {
-  background: #161616;
+  background: #0E0E0E;
 }
 
 /* =========================================================
