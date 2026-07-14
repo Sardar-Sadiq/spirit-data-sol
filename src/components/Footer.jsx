@@ -44,6 +44,7 @@ const Footer = () => {
 
             { to: '/privacy', label: 'Privacy Policy' },
             { to: '/terms', label: 'Terms' },
+            { to: '/disclaimer', label: 'Disclaimer' },
             { to: '/employees', label: "Employee's Portal" },
           ].map(({ to, label }) => (
             <Link key={to} to={to} className="hover:text-primary-blue transition-colors duration-200">

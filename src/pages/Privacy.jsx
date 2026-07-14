@@ -129,6 +129,15 @@ const Privacy = () => {
                 <p>
                   We use Your Personal Data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the Privacy Policy Generator.
                 </p>
+                <div className="p-4 rounded-lg bg-primary-blue/5 border border-primary-blue/20 flex items-start gap-3 mt-2">
+                  <AlertTriangle className="w-5 h-5 text-primary-blue shrink-0 mt-0.5" />
+                  <p className="text-xs md:text-sm text-[var(--text-secondary)]">
+                    Looking for our liability limitations, fair use, or general disclaimers? Please review our full{' '}
+                    <Link to="/disclaimer" className="text-primary-blue font-semibold hover:underline">
+                      Disclaimer
+                    </Link>.
+                  </p>
+                </div>
               </div>
             </motion.section>
 

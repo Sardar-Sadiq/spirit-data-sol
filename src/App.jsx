@@ -21,6 +21,7 @@ import EmployeeLogin from './pages/EmployeeLogin';
 import EmployeeVerification from './pages/EmployeeVerification';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import Disclaimer from './pages/Disclaimer';
 
 // LOADER DURATION in ms — must be >= ScreenLoader animation total length
 const LOADER_DURATION = 2800;
@@ -103,6 +104,7 @@ function AppInner() {
             <Route path="/employees/:id" element={<EmployeeVerification />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
