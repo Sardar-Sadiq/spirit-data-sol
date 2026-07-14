@@ -1,6 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
 
 /* ─── Wave colour stops ────────────────────────────────────────────── */
 const LAYER1_STOPS = [
@@ -38,7 +42,38 @@ const COMPANY_LINKS = [
 ];
 
 /* ─── Wave SVG (3 layers) ──────────────────────────────────────────── */
+const WAVE_PATH = "M1978.03 20.467C1835.61 74.9059 1836.46 217.6 1765.74 226.841C1674.53 238.76 1609.43 114.186 1350.2 363.034C1169.95 510.966 972.346 446.701 675.054 399.556C437.221 361.841 195.36 485.44 104.16 551.954L20.3513 634.564 L20.3513 800 L1978.03 800 Z";
+const OPEN_WAVE_PATH = "M1978.03 20.467C1835.61 74.9059 1836.46 217.6 1765.74 226.841C1674.53 238.76 1609.43 114.186 1350.2 363.034C1169.95 510.966 972.346 446.701 675.054 399.556C437.221 361.841 195.36 485.44 104.16 551.954L20.3513 634.564";
+
 function WaveStack() {
+  const layer1Ref = useRef(null);
+  const layer2Ref = useRef(null);
+  const layer3Ref = useRef(null);
+
+  useGSAP(() => {
+    // Continuous right-to-left seamless flow animation
+    // The pattern spans from 20 to 3935.3 (width 3915.3).
+    // Translating x by -3915.3 SVG units loops it seamlessly.
+    gsap.to(layer1Ref.current, {
+      x: -3915.3,
+      duration: 18,
+      ease: 'none',
+      repeat: -1,
+    });
+    gsap.to(layer2Ref.current, {
+      x: -3915.3,
+      duration: 25,
+      ease: 'none',
+      repeat: -1,
+    });
+    gsap.to(layer3Ref.current, {
+      x: -3915.3,
+      duration: 32,
+      ease: 'none',
+      repeat: -1,
+    });
+  });
+
   return (
     <div
       className="absolute bottom-0 left-0 w-full overflow-hidden"
@@ -47,13 +82,12 @@ function WaveStack() {
     >
       {/* Layer 1 */}
       <svg
-        viewBox="0 0 1440 320"
+        viewBox="20 0 1958 800"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
         className="absolute bottom-0 left-0 w-full h-full"
         style={{
-          filter: 'drop-shadow(0px 4px 2px rgba(0,0,0,0.55)) blur(1.5px)',
-          animation: 'waveFloat1 8s ease-in-out infinite',
+          filter: 'drop-shadow(0px 10px 2px rgba(0,0,0,0.55)) blur(2px)',
         }}
       >
         <defs>
@@ -61,39 +95,70 @@ function WaveStack() {
             {LAYER1_STOPS.map((s) => <stop key={s.offset} offset={s.offset} stopColor={s.color} />)}
           </linearGradient>
         </defs>
-        <path d="M0,160 C180,240 360,80 540,140 C720,200 900,60 1080,130 C1260,200 1380,120 1440,160 L1440,320 L0,320 Z" fill="url(#wg1)" />
+        <g ref={layer1Ref}>
+          <g>
+            <path d={WAVE_PATH} fill="url(#wg1)" />
+            <path d={WAVE_PATH} fill="url(#wg1)" transform="translate(3956, 0) scale(-1, 1)" />
+          </g>
+          <g transform="translate(3915.3, 0)">
+            <path d={WAVE_PATH} fill="url(#wg1)" />
+            <path d={WAVE_PATH} fill="url(#wg1)" transform="translate(3956, 0) scale(-1, 1)" />
+          </g>
+        </g>
       </svg>
 
       {/* Layer 2 */}
       <svg
-        viewBox="0 0 1440 320"
+        viewBox="20 0 1958 800"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
         className="absolute bottom-0 left-0 w-full h-full"
-        style={{ filter: 'blur(3px)', animation: 'waveFloat2 10s ease-in-out infinite' }}
+        style={{ filter: 'blur(4px)' }}
       >
         <defs>
           <linearGradient id="wg2" x1="0%" y1="0%" x2="100%" y2="0%">
             {LAYER2_STOPS.map((s) => <stop key={s.offset} offset={s.offset} stopColor={s.color} />)}
           </linearGradient>
         </defs>
-        <path d="M0,200 C200,120 400,270 600,190 C800,110 1000,240 1200,175 C1350,125 1420,195 1440,200 L1440,320 L0,320 Z" fill="url(#wg2)" stroke="#98C3F5" strokeWidth="0.78" />
+        <g ref={layer2Ref}>
+          <g>
+            <path d={WAVE_PATH} fill="url(#wg2)" />
+            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" />
+            <path d={WAVE_PATH} fill="url(#wg2)" transform="translate(3956, 0) scale(-1, 1)" />
+            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" transform="translate(3956, 0) scale(-1, 1)" />
+          </g>
+          <g transform="translate(3915.3, 0)">
+            <path d={WAVE_PATH} fill="url(#wg2)" />
+            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" />
+            <path d={WAVE_PATH} fill="url(#wg2)" transform="translate(3956, 0) scale(-1, 1)" />
+            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" transform="translate(3956, 0) scale(-1, 1)" />
+          </g>
+        </g>
       </svg>
 
       {/* Layer 3 */}
       <svg
-        viewBox="0 0 1440 320"
+        viewBox="20 0 1958 800"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
         className="absolute bottom-0 left-0 w-full h-full"
-        style={{ filter: 'blur(4.5px)', animation: 'waveFloat3 12s ease-in-out infinite' }}
+        style={{ filter: 'blur(6px)' }}
       >
         <defs>
           <linearGradient id="wg3" x1="0%" y1="0%" x2="100%" y2="0%">
             {LAYER3_STOPS.map((s) => <stop key={s.offset} offset={s.offset} stopColor={s.color} />)}
           </linearGradient>
         </defs>
-        <path d="M0,220 C160,150 320,290 520,210 C720,130 920,270 1120,200 C1300,140 1400,220 1440,230 L1440,320 L0,320 Z" fill="url(#wg3)" />
+        <g ref={layer3Ref}>
+          <g>
+            <path d={WAVE_PATH} fill="url(#wg3)" />
+            <path d={WAVE_PATH} fill="url(#wg3)" transform="translate(3956, 0) scale(-1, 1)" />
+          </g>
+          <g transform="translate(3915.3, 0)">
+            <path d={WAVE_PATH} fill="url(#wg3)" />
+            <path d={WAVE_PATH} fill="url(#wg3)" transform="translate(3956, 0) scale(-1, 1)" />
+          </g>
+        </g>
       </svg>
     </div>
   );
@@ -137,36 +202,6 @@ function BrandSVG({ color }) {
 /* ─── Main Footer ──────────────────────────────────────────────────── */
 const Footer = () => {
   const { isDark } = useTheme();
-
-  /* Inject wave keyframes once */
-  useEffect(() => {
-    const id = 'footer-wave-keyframes';
-    if (document.getElementById(id)) return;
-    const style = document.createElement('style');
-    style.id = id;
-    style.textContent = `
-      @keyframes waveFloat1 {
-        0%,100% { transform: translateX(0) scaleY(1); }
-        25%      { transform: translateX(-18px) scaleY(1.04); }
-        50%      { transform: translateX(14px) scaleY(0.97); }
-        75%      { transform: translateX(-8px) scaleY(1.02); }
-      }
-      @keyframes waveFloat2 {
-        0%,100% { transform: translateX(0) scaleY(1); }
-        30%      { transform: translateX(22px) scaleY(1.05); }
-        60%      { transform: translateX(-16px) scaleY(0.96); }
-        80%      { transform: translateX(10px) scaleY(1.03); }
-      }
-      @keyframes waveFloat3 {
-        0%,100% { transform: translateX(0) scaleY(1); }
-        20%      { transform: translateX(-26px) scaleY(1.06); }
-        50%      { transform: translateX(18px) scaleY(0.95); }
-        80%      { transform: translateX(-12px) scaleY(1.04); }
-      }
-    `;
-    document.head.appendChild(style);
-  }, []);
-
   /* Theme tokens */
   const textPrimary = isDark ? '#F7FAFC' : '#161616';
   const bg = isDark ? '#0E0E0E' : '#F7FAFC';  // same as page bg
