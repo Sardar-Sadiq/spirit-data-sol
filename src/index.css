@@ -524,3 +524,37 @@ html.dark ::-webkit-scrollbar-thumb {
 html.dark ::-webkit-scrollbar {
   width: 8px;
 }
+
+/* =========================================================
+   FOOTER LINKS & BRAND HOVER EFFECTS
+   ========================================================= */
+
+/* Footer Links Hover (Slide Underline & Theme Accent Color) */
+.footer-link {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--toggle-active) !important;
+  transform: translateY(-1px);
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #3787C2, #1C579A);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.footer-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}

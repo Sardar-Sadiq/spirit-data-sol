@@ -53,6 +53,8 @@ function RouteLoader() {
 }
 
 function AppInner() {
+  const location = useLocation();
+
   // Global Lenis Smooth Scrolling Initialization
   useEffect(() => {
     const lenis = new Lenis({
@@ -80,8 +82,10 @@ function AppInner() {
     };
   }, []);
 
+  const isEmployeeLogin = location.pathname === '/employees' || location.pathname === '/EmployeePortal';
+
   return (
-    <Router>
+    <>
       {/* Water-ripple theme transition overlay */}
       <ThemeRipple />
 
@@ -101,6 +105,7 @@ function AppInner() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/projects" element={<ProjectsComingSoon />} />
             <Route path="/employees" element={<EmployeeLogin />} />
+            <Route path="/EmployeePortal" element={<EmployeeLogin />} />
             <Route path="/employees/:id" element={<EmployeeVerification />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -109,16 +114,18 @@ function AppInner() {
           </Routes>
         </main>
 
-        <Footer />
+        {!isEmployeeLogin && <Footer />}
       </div>
-    </Router>
+    </>
   );
 }
 
 function App() {
   return (
     <ThemeProvider>
-      <AppInner />
+      <Router>
+        <AppInner />
+      </Router>
     </ThemeProvider>
   );
 }

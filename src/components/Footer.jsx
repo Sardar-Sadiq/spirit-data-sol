@@ -1,28 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
 
-gsap.registerPlugin(useGSAP);
-
-/* ─── Wave colour stops ────────────────────────────────────────────── */
-const LAYER1_STOPS = [
-  { offset: '0%', color: '#009DFF' },
-  { offset: '64%', color: '#4AB7FF' },
-  { offset: '98%', color: '#9EE7FF' },
-];
-const LAYER2_STOPS = [
-  { offset: '0%', color: '#009DFF' },
-  { offset: '47%', color: '#4AB7FF' },
-  { offset: '63%', color: '#86D9FF' },
-  { offset: '100%', color: '#9EE7FF' },
-];
-const LAYER3_STOPS = [
-  { offset: '0%', color: '#009DFF' },
-  { offset: '58%', color: '#4AB7FF' },
-  { offset: '98%', color: '#9EE7FF' },
-];
 
 /* ─── Nav data ─────────────────────────────────────────────────────── */
 const MENU_LINKS = [
@@ -39,127 +18,23 @@ const COMPANY_LINKS = [
   { to: '/terms', label: 'Terms & Condition' },
   { to: '/privacy', label: 'Privacy & Policy' },
   { to: '/disclaimer', label: 'Diclamier' },
+  { to: '/EmployeePortal', label: 'Employee Portal' },
 ];
 
-/* ─── Wave SVG (3 layers) ──────────────────────────────────────────── */
-const WAVE_PATH = "M1978.03 20.467C1835.61 74.9059 1836.46 217.6 1765.74 226.841C1674.53 238.76 1609.43 114.186 1350.2 363.034C1169.95 510.966 972.346 446.701 675.054 399.556C437.221 361.841 195.36 485.44 104.16 551.954L20.3513 634.564 L20.3513 800 L1978.03 800 Z";
-const OPEN_WAVE_PATH = "M1978.03 20.467C1835.61 74.9059 1836.46 217.6 1765.74 226.841C1674.53 238.76 1609.43 114.186 1350.2 363.034C1169.95 510.966 972.346 446.701 675.054 399.556C437.221 361.841 195.36 485.44 104.16 551.954L20.3513 634.564";
-
+/* ─── Wave Image ───────────────────────────────────────────────────── */
 function WaveStack() {
-  const layer1Ref = useRef(null);
-  const layer2Ref = useRef(null);
-  const layer3Ref = useRef(null);
-
-  useGSAP(() => {
-    // Continuous right-to-left seamless flow animation
-    // The pattern spans from 20 to 3935.3 (width 3915.3).
-    // Translating x by -3915.3 SVG units loops it seamlessly.
-    gsap.to(layer1Ref.current, {
-      x: -3915.3,
-      duration: 18,
-      ease: 'none',
-      repeat: -1,
-    });
-    gsap.to(layer2Ref.current, {
-      x: -3915.3,
-      duration: 25,
-      ease: 'none',
-      repeat: -1,
-    });
-    gsap.to(layer3Ref.current, {
-      x: -3915.3,
-      duration: 32,
-      ease: 'none',
-      repeat: -1,
-    });
-  });
-
   return (
     <div
       className="absolute bottom-0 left-0 w-full overflow-hidden"
       style={{ height: '60%', pointerEvents: 'none', borderRadius: '0 0 16px 16px' }}
       aria-hidden="true"
     >
-      {/* Layer 1 */}
-      <svg
-        viewBox="20 0 1958 800"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute bottom-0 left-0 w-full h-full"
-        style={{
-          filter: 'drop-shadow(0px 10px 2px rgba(0,0,0,0.55)) blur(2px)',
-        }}
-      >
-        <defs>
-          <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="0%">
-            {LAYER1_STOPS.map((s) => <stop key={s.offset} offset={s.offset} stopColor={s.color} />)}
-          </linearGradient>
-        </defs>
-        <g ref={layer1Ref}>
-          <g>
-            <path d={WAVE_PATH} fill="url(#wg1)" />
-            <path d={WAVE_PATH} fill="url(#wg1)" transform="translate(3956, 0) scale(-1, 1)" />
-          </g>
-          <g transform="translate(3915.3, 0)">
-            <path d={WAVE_PATH} fill="url(#wg1)" />
-            <path d={WAVE_PATH} fill="url(#wg1)" transform="translate(3956, 0) scale(-1, 1)" />
-          </g>
-        </g>
-      </svg>
-
-      {/* Layer 2 */}
-      <svg
-        viewBox="20 0 1958 800"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute bottom-0 left-0 w-full h-full"
-        style={{ filter: 'blur(4px)' }}
-      >
-        <defs>
-          <linearGradient id="wg2" x1="0%" y1="0%" x2="100%" y2="0%">
-            {LAYER2_STOPS.map((s) => <stop key={s.offset} offset={s.offset} stopColor={s.color} />)}
-          </linearGradient>
-        </defs>
-        <g ref={layer2Ref}>
-          <g>
-            <path d={WAVE_PATH} fill="url(#wg2)" />
-            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" />
-            <path d={WAVE_PATH} fill="url(#wg2)" transform="translate(3956, 0) scale(-1, 1)" />
-            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" transform="translate(3956, 0) scale(-1, 1)" />
-          </g>
-          <g transform="translate(3915.3, 0)">
-            <path d={WAVE_PATH} fill="url(#wg2)" />
-            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" />
-            <path d={WAVE_PATH} fill="url(#wg2)" transform="translate(3956, 0) scale(-1, 1)" />
-            <path d={OPEN_WAVE_PATH} fill="none" stroke="#98C3F5" strokeWidth="10" strokeLinecap="round" transform="translate(3956, 0) scale(-1, 1)" />
-          </g>
-        </g>
-      </svg>
-
-      {/* Layer 3 */}
-      <svg
-        viewBox="20 0 1958 800"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute bottom-0 left-0 w-full h-full"
-        style={{ filter: 'blur(6px)' }}
-      >
-        <defs>
-          <linearGradient id="wg3" x1="0%" y1="0%" x2="100%" y2="0%">
-            {LAYER3_STOPS.map((s) => <stop key={s.offset} offset={s.offset} stopColor={s.color} />)}
-          </linearGradient>
-        </defs>
-        <g ref={layer3Ref}>
-          <g>
-            <path d={WAVE_PATH} fill="url(#wg3)" />
-            <path d={WAVE_PATH} fill="url(#wg3)" transform="translate(3956, 0) scale(-1, 1)" />
-          </g>
-          <g transform="translate(3915.3, 0)">
-            <path d={WAVE_PATH} fill="url(#wg3)" />
-            <path d={WAVE_PATH} fill="url(#wg3)" transform="translate(3956, 0) scale(-1, 1)" />
-          </g>
-        </g>
-      </svg>
+      <img
+        src="/footerwave.svg"
+        alt="Footer Waves"
+        className="absolute bottom-0 left-0  w-120% h-120%"
+        style={{ objectFit: 'fill', pointerEvents: 'none' }}
+      />
     </div>
   );
 }
@@ -202,6 +77,7 @@ function BrandSVG({ color }) {
 /* ─── Main Footer ──────────────────────────────────────────────────── */
 const Footer = () => {
   const { isDark } = useTheme();
+
   /* Theme tokens */
   const textPrimary = isDark ? '#F7FAFC' : '#161616';
   const bg = isDark ? '#0E0E0E' : '#F7FAFC';  // same as page bg
@@ -272,7 +148,7 @@ const Footer = () => {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="poppins-medium block transition-opacity duration-200 hover:opacity-50"
+                    className="poppins-medium block footer-link"
                     style={{ fontSize: bodySize, color: textPrimary }}
                   >
                     {label}
@@ -301,7 +177,7 @@ const Footer = () => {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="poppins-medium block transition-opacity duration-200 hover:opacity-50"
+                    className="poppins-medium block footer-link"
                     style={{ fontSize: bodySize, color: textPrimary }}
                   >
                     {label}
@@ -328,7 +204,7 @@ const Footer = () => {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="poppins-medium block transition-opacity duration-200 hover:opacity-50"
+                    className="poppins-medium block footer-link"
                     style={{ fontSize: bodySize, color: textPrimary }}
                   >
                     {label}

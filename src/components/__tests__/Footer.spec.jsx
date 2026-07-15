@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import Footer from '../Footer';
 
@@ -7,36 +7,31 @@ vi.mock('react-router-dom', () => ({
   Link: ({ children, to }) => <a href={to} data-testid="router-link">{children}</a>,
 }));
 
+// Mock ThemeContext
+vi.mock('../../context/ThemeContext', () => ({
+  useTheme: () => ({ isDark: false }),
+}));
+
 describe('Footer', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('should render brand logo and title correctly', () => {
+  it('should render brand title correctly', () => {
     render(<Footer />);
-    expect(screen.getByAltText('Spirit Data Logo')).toBeInTheDocument();
     expect(screen.getByText('Spirit')).toBeInTheDocument();
   });
 
-  it('should render current year correctly in copyright text', () => {
+  it('should render menu columns and links correctly', () => {
     render(<Footer />);
-    const currentYear = new Date().getFullYear().toString();
-    expect(screen.getByText(new RegExp(currentYear))).toBeInTheDocument();
-  });
+    expect(screen.getByText('MENU')).toBeInTheDocument();
+    expect(screen.getByText('SOCIAL')).toBeInTheDocument();
+    expect(screen.getByText('COMPANY')).toBeInTheDocument();
 
-  it('should trigger scrollIntoView when service or project buttons are clicked', () => {
-    const scrollMock = vi.fn();
-    
-    // Mock document.getElementById
-    const mockElement = { scrollIntoView: scrollMock };
-    const getElementSpy = vi.spyOn(document, 'getElementById').mockReturnValue(mockElement);
-
-    render(<Footer />);
-    
-    const servicesButton = screen.getByRole('button', { name: /services/i });
-    fireEvent.click(servicesButton);
-
-    expect(getElementSpy).toHaveBeenCalledWith('services');
-    expect(scrollMock).toHaveBeenCalledWith({ behavior: 'smooth' });
+    // Check presence of some key links
+    expect(screen.getByText('HOME')).toBeInTheDocument();
+    expect(screen.getByText('SERVICES')).toBeInTheDocument();
+    expect(screen.getByText('LINKEDIN')).toBeInTheDocument();
+    expect(screen.getByText('Privacy & Policy')).toBeInTheDocument();
   });
 });
