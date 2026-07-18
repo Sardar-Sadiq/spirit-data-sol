@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 /* ─── Nav data ─────────────────────────────────────────────────────── */
 const MENU_LINKS = [
   { to: '/', label: 'HOME' },
-  { to: '/#about', label: 'ABOUT' },
+  { to: '/about', label: 'ABOUT' },
   { to: '/#services', label: 'SERVICES' },
   { to: '/projects', label: 'PROJECTS' },
   { to: '/careers', label: 'CARRERS' },
@@ -54,7 +54,7 @@ function BrandSVG({ color }) {
       preserveAspectRatio="xMinYMax meet"
       xmlns="http://www.w3.org/2000/svg"
       className="absolute bottom-0 left-0 w-full select-none z-10"
-      style={{ display: 'block', height: '51%' }}
+      style={{ display: 'block', height: '51%', pointerEvents: 'none' }}
       aria-hidden="true"
     >
       <text
@@ -148,7 +148,7 @@ const Footer = () => {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="poppins-medium block footer-link"
+                    className="poppins-medium inline-block relative transition-all duration-300 hover:!text-[var(--toggle-active)] hover:-translate-y-[1px] after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-[#3787C2] after:to-[#1C579A] after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
                     style={{ fontSize: bodySize, color: textPrimary }}
                   >
                     {label}
@@ -177,7 +177,7 @@ const Footer = () => {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="poppins-medium block footer-link"
+                    className="poppins-medium inline-block relative transition-all duration-300 hover:!text-[var(--toggle-active)] hover:-translate-y-[1px] after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-[#3787C2] after:to-[#1C579A] after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
                     style={{ fontSize: bodySize, color: textPrimary }}
                   >
                     {label}
@@ -204,7 +204,7 @@ const Footer = () => {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="poppins-medium block footer-link"
+                    className="poppins-medium inline-block relative transition-all duration-300 hover:!text-[var(--toggle-active)] hover:-translate-y-[1px] after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-[#3787C2] after:to-[#1C579A] after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
                     style={{ fontSize: bodySize, color: textPrimary }}
                   >
                     {label}

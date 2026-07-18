@@ -107,7 +107,7 @@ const OpenRoles = ({ onApplyClick, openRoles }) => {
                             
                             <button
                               onClick={() => onApplyClick(role.title)}
-                              className="btn-gradient text-white text-sm font-semibold py-2.5 px-6 rounded shadow-level-1 hover:shadow-level-2 transition-all duration-300 shrink-0 cursor-pointer"
+                              className="bg-gradient-to-b from-primary-blue to-deep-blue text-white text-sm font-semibold py-2.5 px-6 rounded shadow-level-1 hover:shadow-level-2 transition-all duration-300 shrink-0 cursor-pointer"
                             >
                               Apply for this Role
                             </button>

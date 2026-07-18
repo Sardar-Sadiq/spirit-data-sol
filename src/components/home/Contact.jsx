@@ -10,10 +10,10 @@ const Contact = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const cardStyle = { background: 'var(--bg-card)', borderColor: 'var(--border)', transition: 'background 0.4s ease, border-color 0.4s ease' };
-  const textPrimary  = { color: 'var(--text-primary)' };
+  const textPrimary = { color: 'var(--text-primary)' };
   const textSecondary = { color: 'var(--text-secondary)' };
-  const textMuted    = { color: 'var(--text-muted)' };
-  const surfaceBg   = { background: 'var(--bg-surface)', transition: 'background 0.4s ease' };
+  const textMuted = { color: 'var(--text-muted)' };
+  const surfaceBg = { background: 'var(--bg-surface)', transition: 'background 0.4s ease' };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +39,7 @@ const Contact = () => {
       fd.append("Phone", formData.phone || "Not Provided");
       fd.append("Subject", formData.subject);
       fd.append("Message", formData.message);
-      
+
       const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: fd });
       const data = await response.json();
       if (data.success) {
@@ -56,7 +56,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop border-t" style={{ ...surfaceBg, borderColor: 'var(--border)' }}>
+    <section id="contact" className="py-20 md:py-28 px-margin-mobile md:px-margin-tablet lg:px-margin-desktop" style={surfaceBg}>
       <div className="max-w-container-max mx-auto">
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -74,8 +74,8 @@ const Contact = () => {
               <div className="flex flex-col gap-6">
                 {[
                   { icon: <MapPin className="h-5 w-5" />, label: 'Office Address', text: '2nd floor, BFC Plaza Mano Mini AC function hall, Srinagar Colony, Anantapur, Andhra Pradesh, India' },
-                  { icon: <Mail className="h-5 w-5" />,   label: 'General Inquiries', text: 'hr@spiritdatasolutions.com' },
-                  { icon: <Phone className="h-5 w-5" />,  label: 'General Hotline', text: '+91 6301581529' },
+                  { icon: <Mail className="h-5 w-5" />, label: 'General Inquiries', text: 'hr@spiritdatasolutions.com' },
+                  { icon: <Phone className="h-5 w-5" />, label: 'General Hotline', text: '+91 6301581529' },
                 ].map(({ icon, label, text }) => (
                   <div key={label} className="flex items-start gap-4">
                     <div className="p-3 bg-primary-blue/5 rounded border border-primary-blue/10 text-primary-blue mt-1">{icon}</div>
@@ -109,28 +109,28 @@ const Contact = () => {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {[
-                      { id: 'name',  label: 'Full Name',      type: 'text',  placeholder: 'Your Name'  },
-                      { id: 'email', label: 'Email Address',  type: 'email', placeholder: 'Your Email' },
+                      { id: 'name', label: 'Full Name', type: 'text', placeholder: 'Your Name' },
+                      { id: 'email', label: 'Email Address', type: 'email', placeholder: 'Your Email' },
                     ].map(({ id, label, type, placeholder }) => (
                       <div key={id} className="flex flex-col gap-1.5">
                         <label htmlFor={id} className="text-xs font-bold uppercase tracking-wider" style={textMuted}>{label}</label>
                         <input type={type} id={id} name={id} required placeholder={placeholder}
                           value={formData[id]} onChange={handleInputChange}
-                          className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                          className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                           style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }} />
                       </div>
                     ))}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {[
-                      { id: 'phone',   label: 'Phone Number', type: 'tel',  placeholder: '+91 63015 81529',    required: false },
-                      { id: 'subject', label: 'Subject',       type: 'text', placeholder: 'How can we help?',  required: true },
+                      { id: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+91 63015 81529', required: false },
+                      { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?', required: true },
                     ].map(({ id, label, type, placeholder, required }) => (
                       <div key={id} className="flex flex-col gap-1.5">
                         <label htmlFor={id} className="text-xs font-bold uppercase tracking-wider" style={textMuted}>{label}</label>
                         <input type={type} id={id} name={id} required={required} placeholder={placeholder}
                           value={formData[id]} onChange={handleInputChange}
-                          className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                          className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                           style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }} />
                       </div>
                     ))}
@@ -140,7 +140,7 @@ const Contact = () => {
                     <textarea id="message" name="message" required rows="4"
                       placeholder="Tell us about your project requirements..."
                       value={formData.message} onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200 resize-none"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200 resize-none"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }} />
                   </div>
                   {errorMessage && (
@@ -150,7 +150,7 @@ const Contact = () => {
                     </div>
                   )}
                   <button type="submit" disabled={isSubmitting}
-                    className={`btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}>
+                    className={`bg-gradient-to-b from-primary-blue to-deep-blue text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}>
                     {isSubmitting ? (
                       <><svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -172,7 +172,7 @@ const Contact = () => {
               src="https://maps.google.com/maps?q=14.6631453,77.5812019+(BFC%20PLAZA)&t=&z=18&ie=UTF8&iwloc=&output=embed"
               width="100%" height="380" style={{ border: 0 }}
               allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-              className="map-frame grayscale opacity-90 contrast-110"
+              className="grayscale opacity-90 contrast-110 dark:invert dark:hue-rotate-180 dark:brightness-[0.85]"
             />
           </div>
           <div className="mt-3 flex items-center gap-2">

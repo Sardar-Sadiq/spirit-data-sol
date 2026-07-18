@@ -176,13 +176,13 @@ const ProjectsComingSoon = () => {
                     placeholder="Enter your corporate email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-grow px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                    className="flex-grow px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                     style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                   />
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`btn-gradient text-white text-sm font-semibold py-2.5 px-6 rounded cursor-pointer transition-all duration-300 hover:opacity-95 text-center flex-shrink-0 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                    className={`bg-gradient-to-b from-primary-blue to-deep-blue text-white text-sm font-semibold py-2.5 px-6 rounded cursor-pointer transition-all duration-300 hover:opacity-95 text-center flex-shrink-0 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                       }`}
                   >
                     {isSubmitting ? (

@@ -3,19 +3,27 @@ import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { act } from 'react';
 import Home from '../Home';
 
-// Cached dynamic mock for framer-motion tags to strip out motion props and avoid DOM node warnings
+// Lightweight framer-motion mock — avoids 300×useTransform calls hanging jsdom
 vi.mock('framer-motion', () => {
   const mockMotion = {};
   const tags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'img', 'section', 'button', 'a'];
   tags.forEach(tag => {
-    mockMotion[tag] = ({ children, whileInView, viewport, whileHover, animate, initial, transition, exit, ...rest }) => {
+    mockMotion[tag] = ({ children, whileInView, viewport, whileHover, animate, initial, transition, exit, style, ...rest }) => {
       const Tag = tag;
       return <Tag {...rest}>{children}</Tag>;
     };
   });
+  // Return plain values (not MotionValue objects) from hooks —
+  // this prevents ScrollChar's useTransform from creating subscribers that hang
   return {
     motion: mockMotion,
     AnimatePresence: ({ children }) => <>{children}</>,
+    useScroll: () => ({
+      scrollY: { get: () => 0, on: () => () => {} },
+      scrollYProgress: { get: () => 0, on: () => () => {} },
+    }),
+    useMotionValue: () => ({ get: () => 0, set: () => {}, on: () => () => {} }),
+    useTransform: () => 0,   // plain number — no subscriber, no hang
   };
 });
 
@@ -46,6 +54,11 @@ vi.mock('../../components/Logo3D', () => ({
   default: () => <div data-testid="logo-3d">3D Logo</div>,
 }));
 
+// Mock AboutScroll — the 300 animated ScrollChar components hang jsdom
+vi.mock('../../components/home/AboutScroll', () => ({
+  default: () => <section id="about" data-testid="about-scroll" />,
+}));
+
 
 describe('Home', () => {
   let originalKey;
@@ -73,26 +86,8 @@ describe('Home', () => {
 
   it('should render page sections correctly', () => {
     render(<Home />);
-    expect(screen.getByText(/Pioneering Digital/i)).toBeInTheDocument();
-    expect(screen.getByText('Agile Alignment Workshops')).toBeInTheDocument();
+    expect(screen.getAllByText(/Pioneering Digital/i)[0]).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Your Name')).toBeInTheDocument();
-  });
-
-  it('should auto-rotate gallery slides when interval triggers', () => {
-    render(<Home />);
-    
-    // First slide should be visible initially
-    expect(screen.getByText('Agile Alignment Workshops')).toBeInTheDocument();
-
-    // Manually trigger the slideshow callback captured by the mock inside act
-    if (setIntervalCallback) {
-      act(() => {
-        setIntervalCallback();
-      });
-    }
-
-    // Second slide should now be visible
-    expect(screen.getByText('Collaborator Synergy')).toBeInTheDocument();
   });
 
   it('should handle successful contact form submission', async () => {

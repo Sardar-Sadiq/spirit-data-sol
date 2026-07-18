@@ -37,7 +37,7 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', path: '/', isSection: false },
-    { label: 'About', path: 'about', isSection: true },
+    { label: 'About', path: '/about', isSection: false },
     { label: 'Services', path: 'services', isSection: true },
     { label: 'Gallery', path: 'gallery', isSection: true },
     { label: 'Projects', path: '/projects', isSection: false },
@@ -48,7 +48,7 @@ const Header = () => {
 
   return (
     <header className={`sticky top-0 z-50 w-full bg-transparent px-4 sm:px-6 lg:px-8 transition-all duration-300 ease-in-out ${scrolled ? 'py-1.5 md:py-2' : 'py-3 md:py-4'}`}>
-      <div className={`max-w-container-max mx-auto px-6 md:px-10 flex items-center justify-between glass-nav rounded-full transition-all duration-300 ease-in-out ${scrolled ? 'h-12 md:h-14 shadow-level-2 bg-opacity-95' : 'h-14 md:h-16 shadow-level-1'}`}>
+      <div className={`max-w-container-max mx-auto px-6 md:px-10 flex items-center justify-between bg-[var(--glass-bg)] border border-[var(--glass-border)] backdrop-blur-md rounded-full transition-all duration-300 ease-in-out ${scrolled ? 'h-12 md:h-14 shadow-level-2 bg-opacity-95' : 'h-14 md:h-16 shadow-level-1'}`}>
 
         {/* Logo */}
         <Link
@@ -104,7 +104,7 @@ const Header = () => {
                 document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="btn-gradient text-white text-sm font-semibold py-2.5 px-6 rounded hover:opacity-95 transition-all duration-300 shadow-level-1 hover:shadow-level-2 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="bg-gradient-to-b from-primary-blue to-deep-blue text-white text-sm font-semibold py-2.5 px-6 rounded hover:opacity-95 transition-all duration-300 shadow-level-1 hover:shadow-level-2 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             Apply Now
           </button>
@@ -179,7 +179,7 @@ const Header = () => {
                     }, 300);
                   }
                 }}
-                className="btn-gradient w-full block text-white text-center font-semibold py-3 px-6 rounded mt-2 cursor-pointer shadow-level-1"
+                className="bg-gradient-to-b from-primary-blue to-deep-blue w-full block text-white text-center font-semibold py-3 px-6 rounded mt-2 cursor-pointer shadow-level-1"
               >
                 Apply Now
               </button>

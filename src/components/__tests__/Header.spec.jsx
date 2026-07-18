@@ -89,10 +89,10 @@ describe('Header', () => {
 
     render(<Header />);
     
-    const aboutButton = screen.getByRole('button', { name: 'About' });
-    fireEvent.click(aboutButton);
+    const servicesButton = screen.getByRole('button', { name: 'Services' });
+    fireEvent.click(servicesButton);
 
-    expect(getElementSpy).toHaveBeenCalledWith('about');
+    expect(getElementSpy).toHaveBeenCalledWith('services');
     expect(scrollMock).toHaveBeenCalledWith({ behavior: 'smooth' });
   });
 });

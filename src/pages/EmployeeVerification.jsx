@@ -87,7 +87,7 @@ const EmployeeVerification = () => {
           {/* Left Column: 3D Badge Card & Current Status */}
           <div className="flex flex-col gap-5">
             <motion.div
-              className="badge-box-gradient relative border border-[var(--border)] rounded-2xl shadow-lg overflow-hidden aspect-square w-full"
+              className="bg-[radial-gradient(circle_at_50%_35%,#eef2f9_0%,#dde5f2_55%,#cdd8ec_100%)] dark:bg-[#0E0E0E] relative border border-[var(--border)] rounded-2xl shadow-lg overflow-hidden aspect-square w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}

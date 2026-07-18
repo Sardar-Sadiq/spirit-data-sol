@@ -146,11 +146,11 @@ const Hero = () => {
   }, { scope: containerRef });
 
   return (
-    <section className="hero-section relative w-full flex flex-col items-center justify-between" style={{ background: 'var(--bg)' }}>
+    <section className="min-h-screen relative w-full flex flex-col items-center justify-between" style={{ background: 'var(--bg)' }}>
       {/* ── Main hero block: double layers for fluid reveal ── */}
       <div
         ref={containerRef}
-        className="hero-canvas-block relative w-full flex items-center justify-center overflow-hidden flex-1"
+        className="w-full min-h-[70vh] max-w-[960px] mx-auto relative flex items-center justify-center overflow-hidden flex-1"
       >
         {/* Layer 1: Base Layer (Outside the Spotlight)
             - Has a solid background (var(--bg)) to hide the 3D canvas completely.
@@ -158,10 +158,10 @@ const Hero = () => {
         */}
         <div className="absolute inset-0 z-0 w-full h-full flex flex-col items-center justify-center bg-[var(--bg)]">
           <div className="flex flex-col items-center justify-center text-center pointer-events-none select-none py-16 md:py-20 lg:py-24 px-4">
-            <h1 className="italiana hero-title hero-title-base">
+            <h1 className="italiana text-[clamp(3rem,8vw,7rem)] leading-[1.05] tracking-[0.04em] uppercase mb-5 text-black dark:text-[var(--text-muted)] transition-colors duration-300">
               SPIRIT<br />DATA SOLUTIONS
             </h1>
-            <p className="poppins-italic hero-tagline hero-tagline-base">
+            <p className="poppins-italic text-[clamp(0.875rem,1.5vw,1.125rem)] tracking-[0.02em] text-black dark:text-[var(--text-muted)] transition-colors duration-300">
               Pioneering Digital Excellence For Global Enterprises
             </p>
           </div>
@@ -189,10 +189,10 @@ const Hero = () => {
 
           {/* Duplicate Text overlay — Centers perfectly and aligns with Layer 1, but colored with premium contrast */}
           <div className="relative z-10 flex flex-col items-center justify-center text-center pointer-events-none select-none w-full h-full py-16 md:py-20 lg:py-24 px-4">
-            <h1 className="italiana hero-title hero-title-reveal">
+            <h1 className="italiana text-[clamp(3rem,8vw,7rem)] leading-[1.05] tracking-[0.04em] uppercase mb-5 text-black dark:text-white dark:[text-shadow:0_0_35px_rgba(88,181,255,0.35)] transition-all duration-300">
               SPIRIT<br />DATA SOLUTIONS
             </h1>
-            <p className="poppins-italic hero-tagline hero-tagline-reveal">
+            <p className="poppins-italic text-[clamp(0.875rem,1.5vw,1.125rem)] tracking-[0.02em] text-primary-blue dark:text-accent-sky transition-colors duration-300">
               Pioneering Digital Excellence For Global Enterprises
             </p>
           </div>
@@ -200,7 +200,7 @@ const Hero = () => {
       </div>
 
       {/* ── Scroll Down indicator ── */}
-      <div className="hero-scroll-indicator flex flex-col items-center gap-1 pb-32" style={{ color: 'var(--text-muted)' }}>
+      <div className="flex flex-col items-center gap-1 pb-32" style={{ color: 'var(--text-muted)' }}>
         <span className="text-sm tracking-widest uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Scroll Down</span>
         <span className="hero-scroll-dot" />
         <span className="text-base animate-bounce">↓</span>

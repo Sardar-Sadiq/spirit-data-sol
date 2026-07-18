@@ -208,7 +208,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                       placeholder="John Doe"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
@@ -225,7 +225,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                       placeholder="john@example.com"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
@@ -245,7 +245,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                       placeholder="+1 (555) 000-0000"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
@@ -260,7 +260,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                       required
                       value={formData.position}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     >
                       <option value="" disabled style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>Select a position</option>
@@ -286,7 +286,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                       placeholder="e.g. 5"
                       value={formData.experience}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
@@ -303,7 +303,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                       placeholder="linkedin.com/in/username"
                       value={formData.linkedin}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                      className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                       style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     />
                   </div>
@@ -321,7 +321,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                     placeholder="behance.net/username"
                     value={formData.portfolio}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200"
+                    className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                     style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                   />
                 </div>
@@ -399,7 +399,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                     placeholder="Tell us why you are a great fit..."
                     value={formData.coverLetter}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2.5 border rounded text-sm input-focus-ring transition-all duration-200 resize-none"
+                    className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200 resize-none"
                     style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                   />
                 </div>
@@ -415,7 +415,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`btn-gradient text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${
+                  className={`bg-gradient-to-b from-primary-blue to-deep-blue text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${
                     isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
                   }`}
                 >

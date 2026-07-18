@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import Lenis from 'lenis';
+import { ReactLenis } from 'lenis/react';
+import 'lenis/dist/lenis.css';
 
 // Theme system
 import { ThemeProvider } from './context/ThemeContext';
@@ -15,6 +16,7 @@ import ScreenLoader from './components/ScreenLoader';
 
 // Page Components
 import Home from './pages/Home';
+import AboutPage from './pages/About';
 import Careers from './pages/Careers';
 import ProjectsComingSoon from './pages/ProjectsComingSoon';
 import EmployeeLogin from './pages/EmployeeLogin';
@@ -55,37 +57,17 @@ function RouteLoader() {
 function AppInner() {
   const location = useLocation();
 
-  // Global Lenis Smooth Scrolling Initialization
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1.0,
-      smoothTouch: false,
-      touchMultiplier: 2.0,
-      infinite: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    const animationFrameId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      lenis.destroy();
-    };
-  }, []);
-
   const isEmployeeLogin = location.pathname === '/employees' || location.pathname === '/EmployeePortal';
 
   return (
-    <>
+    <ReactLenis
+      root
+      options={{
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      }}
+    >
       {/* Water-ripple theme transition overlay */}
       <ThemeRipple />
 
@@ -102,6 +84,7 @@ function AppInner() {
         <main className="flex-grow flex flex-col">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/projects" element={<ProjectsComingSoon />} />
             <Route path="/employees" element={<EmployeeLogin />} />
@@ -116,7 +99,7 @@ function AppInner() {
 
         {!isEmployeeLogin && <Footer />}
       </div>
-    </>
+    </ReactLenis>
   );
 }
 
