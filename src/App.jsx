@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
@@ -15,16 +15,18 @@ import ScrollToTop from './components/ScrollToTop';
 import ScreenLoader from './components/ScreenLoader';
 import BottomBlurOverlay from './components/BottomBlurOverlay';
 
-// Page Components
+// Core Home Page (Eager load for instantaneous initial page render)
 import Home from './pages/Home';
-import AboutPage from './pages/About';
-import Careers from './pages/Careers';
-import ProjectsComingSoon from './pages/ProjectsComingSoon';
-import EmployeeLogin from './pages/EmployeeLogin';
-import EmployeeVerification from './pages/EmployeeVerification';
-import Terms from './pages/Terms';
-import Privacy from './pages/Privacy';
-import Disclaimer from './pages/Disclaimer';
+
+// Lazy Loaded Pages (Code-split for maximum performance)
+const AboutPage = lazy(() => import('./pages/About'));
+const Careers = lazy(() => import('./pages/Careers'));
+const ProjectsComingSoon = lazy(() => import('./pages/ProjectsComingSoon'));
+const EmployeeLogin = lazy(() => import('./pages/EmployeeLogin'));
+const EmployeeVerification = lazy(() => import('./pages/EmployeeVerification'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Disclaimer = lazy(() => import('./pages/Disclaimer'));
 
 // LOADER DURATION in ms — must be >= ScreenLoader animation total length
 const LOADER_DURATION = 2800;
@@ -82,19 +84,25 @@ function AppInner() {
         <Header />
 
         <main className="flex-grow flex flex-col">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/projects" element={<ProjectsComingSoon />} />
-            <Route path="/employees" element={<EmployeeLogin />} />
-            <Route path="/EmployeePortal" element={<EmployeeLogin />} />
-            <Route path="/employees/:id" element={<EmployeeVerification />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/disclaimer" element={<Disclaimer />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
+          <Suspense fallback={
+            <div className="flex-grow flex items-center justify-center min-h-[60vh]">
+              <div className="w-10 h-10 border-3 border-[var(--border)] border-t-[#1F6FD1] rounded-full animate-spin" />
+            </div>
+          }>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/projects" element={<ProjectsComingSoon />} />
+              <Route path="/employees" element={<EmployeeLogin />} />
+              <Route path="/EmployeePortal" element={<EmployeeLogin />} />
+              <Route path="/employees/:id" element={<EmployeeVerification />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/disclaimer" element={<Disclaimer />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Suspense>
         </main>
 
         {!isEmployeeLogin && <Footer />}
