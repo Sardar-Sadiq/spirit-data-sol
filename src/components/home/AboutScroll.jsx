@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef, Fragment } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 
 // ─── Pre-process COPY into word groups with per-char global indices ──────────
@@ -55,7 +55,7 @@ const AboutScroll = () => {
           }}
         >
           {WORDS_DATA.map((wordChars, wi) => (
-            <React.Fragment key={wi}>
+            <Fragment key={wi}>
               <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
                 {wordChars.map(({ char, globalIndex }) => (
                   <ScrollChar
@@ -67,7 +67,7 @@ const AboutScroll = () => {
                 ))}
               </span>
               {wi < WORDS_DATA.length - 1 && ' '}
-            </React.Fragment>
+            </Fragment>
           ))}
         </h1>
       </div>

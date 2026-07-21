@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, Cpu, Terminal, ShieldCheck, ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '../supabaseClient';
@@ -8,9 +8,10 @@ const BadgeCard3D = lazy(() => import('../components/BadgeCard3D'));
 const EmployeeVerification = () => {
   const { id } = useParams();
   const [employee, setEmployee] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(Boolean(id));
 
   useEffect(() => {
+    if (!id) return;
     const fetchEmployee = async () => {
       try {
         const { data, error } = await supabase
@@ -29,11 +30,7 @@ const EmployeeVerification = () => {
       }
     };
 
-    if (id) {
-      fetchEmployee();
-    } else {
-      setLoading(false);
-    }
+    fetchEmployee();
   }, [id]);
 
   if (loading) {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { TrendingUp, Terminal, Users, GraduationCap } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
 

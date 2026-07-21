@@ -1,4 +1,3 @@
-import React from 'react';
 import Hero from '../components/home/Hero';
 import AboutScroll from '../components/home/AboutScroll';
 import Contact from '../components/home/Contact';

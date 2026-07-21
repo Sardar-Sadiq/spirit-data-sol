@@ -32,21 +32,20 @@ const LOADER_DURATION = 2800;
 /** Watches route changes and re-triggers the page loader on every navigation */
 function RouteLoader() {
   const location = useLocation();
-  const [loading, setLoading] = useState(true);
-
-  // Routes that should NOT show the page loader
   const isExcluded = /^\/employees\/.+/.test(location.pathname);
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  const [loading, setLoading] = useState(!isExcluded);
+
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
+    setLoading(!isExcluded);
+  }
 
   useEffect(() => {
-    if (isExcluded) {
-      setLoading(false);
-      return;
-    }
-    // Show loader on every location change (including initial mount)
-    setLoading(true);
+    if (isExcluded || !loading) return;
     const timer = setTimeout(() => setLoading(false), LOADER_DURATION);
     return () => clearTimeout(timer);
-  }, [location.pathname]);
+  }, [location.pathname, isExcluded, loading]);
 
   return (
     <AnimatePresence mode="wait">

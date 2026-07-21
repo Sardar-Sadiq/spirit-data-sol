@@ -1,4 +1,3 @@
-import React from 'react';
 import { Rocket, Eye, Compass } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
 import Logo3D from '../Logo3D';

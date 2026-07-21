@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { UploadCloud, FileText, CheckCircle } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
@@ -8,13 +8,19 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
     fullName: '',
     email: '',
     phone: '',
-    position: '',
+    position: selectedPosition || '',
     experience: '',
     linkedin: '',
     portfolio: '',
     coverLetter: ''
   });
   
+  const [prevSelectedPosition, setPrevSelectedPosition] = useState(selectedPosition);
+  if (selectedPosition && selectedPosition !== prevSelectedPosition) {
+    setPrevSelectedPosition(selectedPosition);
+    setFormData(prev => ({ ...prev, position: selectedPosition }));
+  }
+
   const [resumeFile, setResumeFile] = useState(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -26,13 +32,6 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
   const textSecondary = { color: 'var(--text-secondary)' };
   const textMuted    = { color: 'var(--text-muted)' };
   const sectionBg   = { background: 'var(--bg)', transition: 'background 0.4s ease' };
-
-  // Sync selectedPosition from parent open roles selection
-  useEffect(() => {
-    if (selectedPosition) {
-      setFormData(prev => ({ ...prev, position: selectedPosition }));
-    }
-  }, [selectedPosition]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

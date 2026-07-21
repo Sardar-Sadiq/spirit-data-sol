@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 /**
  * Logo3D — uses Google's <model-viewer> web component.
@@ -35,7 +35,6 @@ export default function Logo3D() {
 
   return (
     <div className="relative w-full h-full">
-      {/* eslint-disable-next-line react/no-unknown-property */}
       <model-viewer
         ref={mvRef}
         src="/3Dlogo.glb"

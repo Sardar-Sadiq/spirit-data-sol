@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, Suspense } from 'react';
+import { useRef, useEffect, useState, useMemo, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment, ContactShadows } from '@react-three/drei';
 import { Physics, RigidBody, CuboidCollider, useSphericalJoint } from '@react-three/rapier';
@@ -71,11 +71,9 @@ function CameraAim({ y }) {
 
 function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
   const { scene } = useGLTF(GLB);
-  const { camera } = useThree();
   const anchorRef = useRef();
   const cardRef = useRef();
   const meshRef = useRef();
-  const [dims, setDims] = useState(null);
   const opacityRef = useRef(0);
   const hoverY = useRef(0);
   const [texture, setTexture] = useState(null);
@@ -84,29 +82,33 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
   useEffect(() => { onLoadRef.current = onLoad; }, [onLoad]);
 
   useEffect(() => {
-    if (cardImage) {
-      const loader = new THREE.TextureLoader();
-      loader.setCrossOrigin('anonymous');
-      loader.load(
-        cardImage,
-        (tex) => {
-          if (THREE.SRGBColorSpace) {
-            tex.colorSpace = THREE.SRGBColorSpace;
-          } else {
-            tex.encoding = 3001; // sRGBEncoding
-          }
-          tex.flipY = false;
-          tex.minFilter = THREE.LinearFilter;
-          setTexture(tex);
-        },
-        undefined,
-        (err) => {
-          console.error('Scene: Failed to load card image texture:', err);
-        }
-      );
-    } else {
-      setTexture(null);
+    if (!cardImage) {
+      return;
     }
+    let isMounted = true;
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+    loader.load(
+      cardImage,
+      (tex) => {
+        if (!isMounted) return;
+        if (THREE.SRGBColorSpace) {
+          tex.colorSpace = THREE.SRGBColorSpace;
+        } else {
+          tex.encoding = 3001; // sRGBEncoding
+        }
+        tex.flipY = false;
+        tex.minFilter = THREE.LinearFilter;
+        setTexture(tex);
+      },
+      undefined,
+      (err) => {
+        console.error('Scene: Failed to load card image texture:', err);
+      }
+    );
+    return () => {
+      isMounted = false;
+    };
   }, [cardImage]);
 
   useEffect(() => {
@@ -174,7 +176,8 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
     });
   }, [scene, texture]);
 
-  useEffect(() => {
+  const dims = useMemo(() => {
+    if (!scene) return null;
     try {
       scene.scale.set(1, 1, 1);
 
@@ -183,7 +186,6 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
 
       const box = new THREE.Box3().setFromObject(scene);
       const size = box.getSize(new THREE.Vector3());
-      const center = box.getCenter(new THREE.Vector3());
 
       // Get dimensions of only the card sub-component if possible
       let cardH = 1.2122; // default fallback matching the ID card
@@ -198,7 +200,6 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
         cardD = cardSize.z;
       }
 
-      const unscaledStrapTopY = strapPivot ? strapPivot.position.y : 3.2384;
       const unscaledCardPivotY = cardPivot
         ? (strapPivot ? strapPivot.position.y + cardPivot.position.y : cardPivot.position.y)
         : 2.4676;
@@ -222,7 +223,7 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
       const spawnY = anchorY - jointOffset.y;
       const spawnZ = -jointOffset.z;
 
-      const computedDims = {
+      return {
         offsetX,
         offsetY,
         halfW: (cardW / 2) * SCALE,
@@ -235,13 +236,17 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
         spawnY,
         spawnZ,
       };
-
-      setDims(computedDims);
-      if (onLoadRef.current) onLoadRef.current(computedDims);
     } catch (e) {
       console.error('Scene: Error in dims calculation:', e);
+      return null;
     }
-  }, [scene, camera]);
+  }, [scene]);
+
+  useEffect(() => {
+    if (dims && onLoadRef.current) {
+      onLoadRef.current(dims);
+    }
+  }, [dims]);
 
   useEffect(() => {
     if (started) opacityRef.current = 0;
@@ -328,7 +333,6 @@ function Scene({ motionY, started, onLoad, cardImage, isHovered }) {
 }
 
 export default function BadgeCard3D({ cardImage }) {
-  const [dims, setDims] = useState(null);
   const [started, setStarted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -336,7 +340,6 @@ export default function BadgeCard3D({ cardImage }) {
 
   const handleLoad = (computedDims) => {
     if (started) return;
-    setDims(computedDims);
 
     motionY.set(computedDims.anchorY + DROP_HEIGHT);
 

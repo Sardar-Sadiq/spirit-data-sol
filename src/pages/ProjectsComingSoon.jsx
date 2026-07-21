@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Code, Cpu, Terminal, CheckCircle2, Shield } from 'lucide-react';
@@ -69,7 +69,6 @@ const ProjectsComingSoon = () => {
   const cardStyle = { background: 'var(--bg-card)', borderColor: 'var(--border)', transition: 'background 0.4s ease, border-color 0.4s ease' };
   const textPrimary  = { color: 'var(--text-primary)' };
   const textSecondary = { color: 'var(--text-secondary)' };
-  const textMuted    = { color: 'var(--text-muted)' };
   const sectionBg   = { background: 'var(--bg)',        transition: 'background 0.4s ease' };
 
   return (

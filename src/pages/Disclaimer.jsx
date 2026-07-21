@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -75,7 +75,7 @@ const Disclaimer = () => {
                     onClick={() => handleSectionClick(section.id)}
                     className={`relative flex items-center gap-3 px-4 py-2 rounded-lg text-xs text-left transition-colors duration-200 cursor-pointer ${
                       activeSection === section.id
-                        ? 'text-primary-blue font-semibold font-medium'
+                        ? 'text-primary-blue font-semibold'
                         : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                     }`}
                   >
