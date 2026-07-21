@@ -13,6 +13,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ScreenLoader from './components/ScreenLoader';
+import BottomBlurOverlay from './components/BottomBlurOverlay';
 
 // Page Components
 import Home from './pages/Home';
@@ -72,7 +73,7 @@ function AppInner() {
       <ThemeRipple />
 
       <div
-        className="min-h-screen flex flex-col select-none"
+        className="min-h-screen flex flex-col select-none relative"
         style={{ background: 'var(--bg)', color: 'var(--text-primary)' }}
       >
         {/* DrawSVG Page Loader — fires on every route change */}
@@ -98,6 +99,7 @@ function AppInner() {
         </main>
 
         {!isEmployeeLogin && <Footer />}
+        <BottomBlurOverlay />
       </div>
     </ReactLenis>
   );

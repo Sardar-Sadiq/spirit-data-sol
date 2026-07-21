@@ -4,10 +4,10 @@ import ScrollReveal from '../ScrollReveal';
 
 const Services = () => {
   const cardStyle = { background: 'var(--bg-card)', borderColor: 'var(--border)', transition: 'background 0.4s ease, border-color 0.4s ease' };
-  const textPrimary  = { color: 'var(--text-primary)' };
+  const textPrimary = { color: 'var(--text-primary)' };
   const textSecondary = { color: 'var(--text-secondary)' };
-  const textMuted    = { color: 'var(--text-muted)' };
-  const surfaceBg   = { background: 'var(--bg-surface)', transition: 'background 0.4s ease' };
+  const textMuted = { color: 'var(--text-muted)' };
+  const surfaceBg = { background: 'var(--bg-surface)', transition: 'background 0.4s ease' };
 
   const services = [
     { icon: <Code className="h-6 w-6 text-primary-blue" />, title: "Full Stack Web Development", description: "Crafting high-performance, responsive web applications using modern frameworks like React, Next.js, and Node.js. Tailored for enterprise scalability.", tag: "WEB DEV" },
