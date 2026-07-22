@@ -1,6 +1,5 @@
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { act } from 'react';
 import Home from '../Home';
 
 // Lightweight framer-motion mock — avoids 300×useTransform calls hanging jsdom
@@ -8,9 +7,18 @@ vi.mock('framer-motion', () => {
   const mockMotion = {};
   const tags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'img', 'section', 'button', 'a'];
   tags.forEach(tag => {
-    mockMotion[tag] = ({ children, whileInView, viewport, whileHover, animate, initial, transition, exit, style, ...rest }) => {
+    mockMotion[tag] = ({ children, ...rest }) => {
+      const filteredProps = { ...rest };
+      delete filteredProps.whileInView;
+      delete filteredProps.viewport;
+      delete filteredProps.whileHover;
+      delete filteredProps.animate;
+      delete filteredProps.initial;
+      delete filteredProps.transition;
+      delete filteredProps.exit;
+      delete filteredProps.style;
       const Tag = tag;
-      return <Tag {...rest}>{children}</Tag>;
+      return <Tag {...filteredProps}>{children}</Tag>;
     };
   });
   // Return plain values (not MotionValue objects) from hooks —
@@ -62,26 +70,23 @@ vi.mock('../../components/home/AboutScroll', () => ({
 
 describe('Home', () => {
   let originalKey;
-  let setIntervalCallback;
 
   beforeEach(() => {
     originalKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
     import.meta.env.VITE_WEB3FORMS_ACCESS_KEY = 'test-access-key';
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
 
     // Mock setInterval to capture slideshow callback and prevent real background timers
-    vi.spyOn(global, 'setInterval').mockImplementation((cb) => {
-      setIntervalCallback = cb;
+    vi.spyOn(globalThis, 'setInterval').mockImplementation(() => {
       return 999;
     });
-    vi.spyOn(global, 'clearInterval').mockImplementation(() => {});
+    vi.spyOn(globalThis, 'clearInterval').mockImplementation(() => {});
   });
 
   afterEach(() => {
     cleanup();
     import.meta.env.VITE_WEB3FORMS_ACCESS_KEY = originalKey;
     vi.restoreAllMocks();
-    setIntervalCallback = undefined;
   });
 
   it('should render page sections correctly', () => {
@@ -91,7 +96,7 @@ describe('Home', () => {
   });
 
   it('should handle successful contact form submission', async () => {
-    vi.mocked(global.fetch).mockResolvedValue({
+    vi.mocked(globalThis.fetch).mockResolvedValue({
       ok: true,
       json: async () => ({ success: true }),
     });

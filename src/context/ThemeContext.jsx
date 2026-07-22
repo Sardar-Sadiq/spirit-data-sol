@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const ThemeContext = createContext(null);
@@ -7,35 +8,30 @@ export function ThemeProvider({ children }) {
     return localStorage.getItem('theme-mode') || 'system';
   });
 
-  // Derived: is dark actually active right now?
-  const [isDark, setIsDark] = useState(false);
+  // Track system preference
+  const [systemDark, setSystemDark] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
 
-  const getSystemDark = () =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  const applyTheme = useCallback((currentMode) => {
-    const dark =
-      currentMode === 'dark' ||
-      (currentMode === 'system' && getSystemDark());
-    document.documentElement.classList.toggle('dark', dark);
-    setIsDark(dark);
-  }, []);
-
-  // Initial apply & when mode changes
-  useEffect(() => {
-    applyTheme(mode);
-    localStorage.setItem('theme-mode', mode);
-  }, [mode, applyTheme]);
-
-  // Listen for system preference changes (only relevant in 'system' mode)
+  // Listen for system preference changes
   useEffect(() => {
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = () => {
-      if (mode === 'system') applyTheme('system');
+    const handler = (e) => {
+      setSystemDark(e.matches);
     };
     mql.addEventListener('change', handler);
     return () => mql.removeEventListener('change', handler);
-  }, [mode, applyTheme]);
+  }, []);
+
+  // Derived: is dark actually active right now?
+  const isDark = mode === 'dark' || (mode === 'system' && systemDark);
+
+  // Synchronize theme CSS class and localStorage
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('theme-mode', mode);
+  }, [mode, isDark]);
 
   /**
    * Switch theme with a smooth fade transition.

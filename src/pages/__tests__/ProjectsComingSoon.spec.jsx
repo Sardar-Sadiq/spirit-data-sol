@@ -27,7 +27,7 @@ vi.mock('../../components/ScrollReveal', () => ({
 describe('ProjectsComingSoon', () => {
   beforeEach(() => {
     vi.stubEnv('VITE_WEB3FORMS_ACCESS_KEY', 'test-access-key');
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
   });
 
   afterEach(() => {
@@ -44,7 +44,7 @@ describe('ProjectsComingSoon', () => {
 
   it('should handle successful subscription', async () => {
     // Mock successful fetch response
-    vi.mocked(global.fetch).mockResolvedValue({
+    vi.mocked(globalThis.fetch).mockResolvedValue({
       ok: true,
       json: async () => ({ success: true }),
     });
@@ -68,7 +68,7 @@ describe('ProjectsComingSoon', () => {
 
   it('should display error message on failed submission', async () => {
     // Mock failed fetch response
-    vi.mocked(global.fetch).mockResolvedValue({
+    vi.mocked(globalThis.fetch).mockResolvedValue({
       ok: true,
       json: async () => ({ success: false, message: 'Invalid access key' }),
     });

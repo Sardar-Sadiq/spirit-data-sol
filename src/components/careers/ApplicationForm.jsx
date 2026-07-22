@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, } from 'react';
 import { motion } from 'framer-motion';
 import { UploadCloud, FileText, CheckCircle } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
@@ -14,7 +14,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
     portfolio: '',
     coverLetter: ''
   });
-  
+
   const [prevSelectedPosition, setPrevSelectedPosition] = useState(selectedPosition);
   if (selectedPosition && selectedPosition !== prevSelectedPosition) {
     setPrevSelectedPosition(selectedPosition);
@@ -28,10 +28,10 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const cardStyle = { background: 'var(--bg-card)', borderColor: 'var(--border)', transition: 'background 0.4s ease, border-color 0.4s ease' };
-  const textPrimary  = { color: 'var(--text-primary)' };
+  const textPrimary = { color: 'var(--text-primary)' };
   const textSecondary = { color: 'var(--text-secondary)' };
-  const textMuted    = { color: 'var(--text-muted)' };
-  const sectionBg   = { background: 'var(--bg)', transition: 'background 0.4s ease' };
+  const textMuted = { color: 'var(--text-muted)' };
+  const sectionBg = { background: 'var(--bg)', transition: 'background 0.4s ease' };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,11 +53,11 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      
+
       if (validTypes.includes(file.type)) {
         setResumeFile(file);
       } else {
@@ -103,7 +103,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
       }
 
       const fileJson = await fileResponse.json();
-      
+
       if (fileJson.status !== "success" || !fileJson.data || !fileJson.data.url) {
         throw new Error("Resume upload succeeded but failed to retrieve access URL.");
       }
@@ -127,7 +127,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
       web3FormData.append("LinkedIn Profile", formData.linkedin);
       web3FormData.append("Portfolio URL", formData.portfolio || "Not Provided");
       web3FormData.append("Cover Letter / Message", formData.coverLetter || "Not Provided");
-      
+
       // Inject the resume URLs as free text fields
       web3FormData.append("Resume View Link", viewUrl);
       web3FormData.append("Resume Direct Download Link", downloadUrl);
@@ -179,7 +179,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
         <ScrollReveal delay={0.2}>
           <div className="p-6 md:p-8 rounded border shadow-level-1 text-left" style={cardStyle}>
             {submitted ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="flex flex-col items-center justify-center text-center py-16"
@@ -192,7 +192,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
               </motion.div>
             ) : (
               <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
-                
+
                 {/* Grid fields: Full Name & Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
@@ -330,7 +330,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                   <span className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
                     Resume Upload
                   </span>
-                  <div 
+                  <div
                     onDragEnter={handleDrag}
                     onDragOver={handleDrag}
                     onDragLeave={handleDrag}
@@ -414,9 +414,8 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`bg-gradient-to-b from-primary-blue to-deep-blue text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
-                  }`}
+                  className={`bg-gradient-to-b from-primary-blue to-deep-blue text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+                    }`}
                 >
                   {isSubmitting ? (
                     <>
