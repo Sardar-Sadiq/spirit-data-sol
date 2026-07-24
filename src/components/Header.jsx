@@ -39,7 +39,6 @@ const Header = () => {
     { label: 'Home', path: '/', isSection: false },
     { label: 'About', path: '/about', isSection: false },
     { label: 'Services', path: 'services', isSection: true },
-    { label: 'Gallery', path: 'gallery', isSection: true },
     { label: 'Projects', path: '/projects', isSection: false },
     { label: 'Careers', path: '/careers', isSection: false },
   ];

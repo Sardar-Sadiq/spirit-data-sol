@@ -5,6 +5,7 @@ import { useScroll, useTransform, motion } from 'framer-motion';
 const COPY = 'Spirit Data Solutions is committed to delivering quality, integrity, and excellence in everything we do. We have been building robust software systems that empower modern enterprises. Our highly skilled team of developers, designers, and QA engineers work in unison to solve complex business challenges with elegant technological solutions.';
 const TOTAL_CHARS = COPY.length;
 const WAVE_FACTOR = 0.02;
+const REVEAL_END = 0.7; // finish revealing by 70% scroll progress, hold at opacity 1 after that
 
 const WORDS_DATA = (() => {
   const words = COPY.split(' ');
@@ -16,13 +17,17 @@ const WORDS_DATA = (() => {
   });
 })();
 
-// ─── ScrollChar at module scope ──────────────────────────────────────────────
 const ScrollChar = ({ char, globalIndex, scrollYProgress }) => {
-  const start = globalIndex / Math.max(TOTAL_CHARS, 1);
-  const end   = Math.min(start + WAVE_FACTOR, 1);
+  // Map the char's position into [0, REVEAL_END] instead of [0, 1]
+  const start = (globalIndex / Math.max(TOTAL_CHARS, 1)) * REVEAL_END;
+  const end = Math.min(start + WAVE_FACTOR, REVEAL_END);
 
-  const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1]);
-  const y       = useTransform(scrollYProgress, [start, end], [20, 0]);
+  const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1], {
+    clamp: true, // ensures value stays at 1 after `end`, never resets
+  });
+  const y = useTransform(scrollYProgress, [start, end], [20, 0], {
+    clamp: true,
+  });
 
   return (
     <motion.span style={{ opacity, y, display: 'inline-block', willChange: 'opacity, transform' }}>
@@ -36,7 +41,7 @@ const ScrollChar = ({ char, globalIndex, scrollYProgress }) => {
 // eliminating scroll listeners and getBoundingClientRect reflows.
 const AboutScroll = () => {
   const sectionRef = useRef(null);
-  
+
   // Track scroll progress of the container from pin-start to pin-end
   const { scrollYProgress } = useScroll({
     target: sectionRef,
