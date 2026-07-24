@@ -1,6 +1,6 @@
-import { useState, } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { UploadCloud, FileText, CheckCircle } from 'lucide-react';
+import { CheckCircle, Info, Link2 } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
 
 const ApplicationForm = ({ selectedPosition, openRoles }) => {
@@ -12,6 +12,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
     experience: '',
     linkedin: '',
     portfolio: '',
+    resumeLink: '',
     coverLetter: ''
   });
 
@@ -21,8 +22,6 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
     setFormData(prev => ({ ...prev, position: selectedPosition }));
   }
 
-  const [resumeFile, setResumeFile] = useState(null);
-  const [isDragActive, setIsDragActive] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -38,45 +37,11 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Drag and Drop File Handlers
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setIsDragActive(true);
-    } else if (e.type === "dragleave") {
-      setIsDragActive(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-
-      if (validTypes.includes(file.type)) {
-        setResumeFile(file);
-      } else {
-        alert("Please upload a PDF or Word document (DOC/DOCX) only.");
-      }
-    }
-  };
-
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setResumeFile(file);
-    }
-  };
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!resumeFile) {
-      alert("Please upload your resume to complete your application.");
+
+    if (!formData.resumeLink.trim()) {
+      setErrorMessage("Please provide a link to your resume (Google Drive, Dropbox, etc.).");
       return;
     }
 
@@ -89,30 +54,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
         throw new Error("Web3Forms Access Key is missing or default. Please configure VITE_WEB3FORMS_ACCESS_KEY in your .env file.");
       }
 
-      // 1. Upload Resume file to tmpfiles.org to get a public URL (Bypasses Web3Forms paid attachment limit!)
-      const resumeUploadData = new FormData();
-      resumeUploadData.append("file", resumeFile);
-
-      const fileResponse = await fetch("https://tmpfiles.org/api/v1/upload", {
-        method: "POST",
-        body: resumeUploadData
-      });
-
-      if (!fileResponse.ok) {
-        throw new Error(`Failed to upload resume to temporary server (${fileResponse.statusText}).`);
-      }
-
-      const fileJson = await fileResponse.json();
-
-      if (fileJson.status !== "success" || !fileJson.data || !fileJson.data.url) {
-        throw new Error("Resume upload succeeded but failed to retrieve access URL.");
-      }
-
-      const viewUrl = fileJson.data.url;
-      // Change https://tmpfiles.org/wZwLgyEoJ9AA/resume.pdf to https://tmpfiles.org/dl/wZwLgyEoJ9AA/resume.pdf for direct download
-      const downloadUrl = viewUrl.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
-
-      // 2. Prepare Web3Forms submission (Text fields ONLY, which is 100% free!)
+      // Prepare Web3Forms submission
       const web3FormData = new FormData();
       web3FormData.append("access_key", responseKey);
       web3FormData.append("from_name", "Spirit Data Solutions (Careers Portal)");
@@ -125,13 +67,9 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
       web3FormData.append("Position", formData.position);
       web3FormData.append("Experience", `${formData.experience} Years`);
       web3FormData.append("LinkedIn Profile", formData.linkedin);
+      web3FormData.append("Resume Link", formData.resumeLink);
       web3FormData.append("Portfolio URL", formData.portfolio || "Not Provided");
       web3FormData.append("Cover Letter / Message", formData.coverLetter || "Not Provided");
-
-      // Inject the resume URLs as free text fields
-      web3FormData.append("Resume View Link", viewUrl);
-      web3FormData.append("Resume Direct Download Link", downloadUrl);
-      web3FormData.append("System Note", "To protect candidate privacy and bypass Web3Forms free tier limitations, their resume has been safely uploaded to temporary cloud storage. Click the Direct Download link above to view/save their CV.");
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -150,9 +88,9 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
           experience: '',
           linkedin: '',
           portfolio: '',
+          resumeLink: '',
           coverLetter: ''
         });
-        setResumeFile(null);
       } else {
         throw new Error(data.message || "Failed to submit application to Web3Forms. Please check your credentials.");
       }
@@ -308,6 +246,43 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                   </div>
                 </div>
 
+                {/* Resume Link Field with Instructions */}
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="resumeLink" className="text-xs font-bold uppercase tracking-wider flex items-center justify-between" style={textMuted}>
+                    <span>Resume / CV Link (Google Drive / Cloud Link)</span>
+                    <span className="text-red-500 font-bold">*</span>
+                  </label>
+                  <div className="relative flex items-center">
+                    <Link2 className="absolute left-3.5 h-4 w-4 text-slate-400 pointer-events-none" />
+                    <input
+                      type="url"
+                      id="resumeLink"
+                      name="resumeLink"
+                      required
+                      placeholder="https://drive.google.com/file/d/your-resume-id/view?usp=sharing"
+                      value={formData.resumeLink}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
+                      style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                    />
+                  </div>
+
+                  {/* Google Drive Access Instructions Card */}
+                  <div className="flex items-start gap-2.5 mt-1 p-3.5 rounded border text-xs leading-relaxed" style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+                    <Info className="h-4 w-4 text-primary-blue shrink-0 mt-0.5" />
+                    <div style={textSecondary}>
+                      <p className="font-semibold text-primary-blue mb-1">
+                        Google Drive Access Instructions:
+                      </p>
+                      <ol className="list-decimal list-inside space-y-1">
+                        <li>Upload your resume to Google Drive (or Dropbox / OneDrive).</li>
+                        <li>Click <strong>Share</strong> &rarr; under <em>General Access</em>, select <strong className="text-emerald-600 dark:text-emerald-400 font-bold">"Anyone with the link"</strong> (Viewer).</li>
+                        <li>Copy the share link and paste it into the input field above.</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Portfolio field */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="portfolio" className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
@@ -317,73 +292,12 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                     type="text"
                     id="portfolio"
                     name="portfolio"
-                    placeholder="behance.net/username"
+                    placeholder="behance.net/username or github.com/username"
                     value={formData.portfolio}
                     onChange={handleInputChange}
                     className="w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue/15 transition-all duration-200"
                     style={{ background: 'var(--input-bg)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                   />
-                </div>
-
-                {/* Drag and Drop File Upload Zone */}
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-xs font-bold uppercase tracking-wider" style={textMuted}>
-                    Resume Upload
-                  </span>
-                  <div
-                    onDragEnter={handleDrag}
-                    onDragOver={handleDrag}
-                    onDragLeave={handleDrag}
-                    onDrop={handleDrop}
-                    className="border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-3 transition-all duration-200 text-center relative hover:border-slate-300 dark:hover:border-slate-700"
-                    style={{
-                      background: isDragActive ? 'rgba(31, 111, 209, 0.05)' : 'var(--input-bg)',
-                      borderColor: isDragActive ? 'var(--toggle-active)' : 'var(--border)'
-                    }}
-                  >
-                    <input
-                      type="file"
-                      id="resume-file-input"
-                      required={!resumeFile}
-                      accept=".pdf,.doc,.docx"
-                      onChange={handleFileChange}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                    />
-                    {resumeFile ? (
-                      <div className="flex items-center gap-3 p-3 border rounded shadow-level-1 relative z-20" style={cardStyle}>
-                        <FileText className="h-8 w-8 text-primary-blue shrink-0" />
-                        <div className="text-left">
-                          <p className="text-sm font-semibold max-w-[200px] truncate" style={textPrimary}>{resumeFile.name}</p>
-                          <p className="text-xs" style={textMuted}>{(resumeFile.size / (1024 * 1024)).toFixed(2)} MB</p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setResumeFile(null);
-                          }}
-                          className="text-xs font-bold text-red-500 hover:text-red-700 ml-4 relative z-30"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="p-3 bg-primary-blue/5 rounded-full text-primary-blue">
-                          <UploadCloud className="h-6 w-6" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold" style={textPrimary}>
-                            Drag and drop your resume here, or <span className="text-primary-blue hover:underline">browse</span>
-                          </p>
-                          <p className="text-xs mt-1" style={textMuted}>
-                            PDF, DOC, DOCX (Max 10MB)
-                          </p>
-                        </div>
-                      </>
-                    )}
-                  </div>
                 </div>
 
                 {/* Message/Cover Letter Cover Text */}
