@@ -11,8 +11,8 @@ const EmployeeLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Using Cloudflare's official testing dummy key that automatically approves
-  const SITE_KEY = '1x00000000000000000000AA';
+  // Using Cloudflare Turnstile Site Key from environment variables with fallback to test key
+  const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
