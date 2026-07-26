@@ -4,25 +4,23 @@ import Home from '../Home';
 
 // Lightweight framer-motion mock — avoids 300×useTransform calls hanging jsdom
 vi.mock('framer-motion', () => {
-  const mockMotion = {};
-  const tags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'img', 'section', 'button', 'a'];
-  tags.forEach(tag => {
-    mockMotion[tag] = ({ children, ...rest }) => {
-      const filteredProps = { ...rest };
-      delete filteredProps.whileInView;
-      delete filteredProps.viewport;
-      delete filteredProps.whileHover;
-      delete filteredProps.animate;
-      delete filteredProps.initial;
-      delete filteredProps.transition;
-      delete filteredProps.exit;
-      delete filteredProps.style;
-      const Tag = tag;
-      return <Tag {...filteredProps}>{children}</Tag>;
-    };
+  const createComponent = (tag) => ({ children, ...rest }) => {
+    const filteredProps = { ...rest };
+    delete filteredProps.whileInView;
+    delete filteredProps.viewport;
+    delete filteredProps.whileHover;
+    delete filteredProps.animate;
+    delete filteredProps.initial;
+    delete filteredProps.transition;
+    delete filteredProps.exit;
+    delete filteredProps.style;
+    delete filteredProps.pathLength;
+    const Tag = tag;
+    return <Tag {...filteredProps}>{children}</Tag>;
+  };
+  const mockMotion = new Proxy({}, {
+    get: (_, prop) => createComponent(prop),
   });
-  // Return plain values (not MotionValue objects) from hooks —
-  // this prevents ScrollChar's useTransform from creating subscribers that hang
   return {
     motion: mockMotion,
     AnimatePresence: ({ children }) => <>{children}</>,
@@ -41,6 +39,7 @@ vi.mock('lucide-react', () => ({
   Cpu: () => <span data-testid="icon-cpu">Cpu</span>,
   Terminal: () => <span data-testid="icon-terminal">Terminal</span>,
   ShieldCheck: () => <span data-testid="icon-shield">Shield</span>,
+  Sparkles: () => <span data-testid="icon-sparkles">Sparkles</span>,
   MapPin: () => <span data-testid="icon-map">Map</span>,
   Mail: () => <span data-testid="icon-mail">Mail</span>,
   Phone: () => <span data-testid="icon-phone">Phone</span>,

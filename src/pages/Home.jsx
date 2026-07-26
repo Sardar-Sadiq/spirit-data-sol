@@ -1,7 +1,7 @@
 import Hero from '../components/home/Hero';
 import AboutScroll from '../components/home/AboutScroll';
 import Contact from '../components/home/Contact';
-import Services from '../components/home/Services';
+import BriefServices from '../components/home/BriefServices';
 // ─── Home page ────────────────────────────────────────────────────────────────
 const Home = () => {
 
@@ -10,7 +10,7 @@ const Home = () => {
     <div className="flex-1 w-full" style={sectionBg}>
       <Hero />
       <AboutScroll />
-      <Services />
+      <BriefServices />
       <Contact />
     </div>
   );
