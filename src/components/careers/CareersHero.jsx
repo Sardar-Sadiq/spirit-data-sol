@@ -1,4 +1,5 @@
 import { Sparkles } from 'lucide-react';
+import MagneticButton from '../MagneticButton';
 
 const CareersHero = () => {
   const textPrimary  = { color: 'var(--text-primary)' };
@@ -28,17 +29,16 @@ const CareersHero = () => {
           <p className="text-base md:text-lg mb-8 leading-relaxed" style={textSecondary}>
             Join a passionate team building innovative digital solutions for modern businesses. We're looking for thinkers, builders, and dreamers to push the boundaries of enterprise engineering.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <button 
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center">
+            <MagneticButton 
               onClick={() => scrollToSection('open-roles')}
-              className="bg-gradient-to-b from-primary-blue to-deep-blue text-white text-base font-semibold py-3 px-8 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-98 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer"
+              buttonClassName="relative rounded-lg bg-gradient-to-b from-blue-500 to-blue-700 text-white text-base font-semibold py-3 px-8 shadow-level-1 hover:shadow-level-2 transition-all duration-300 text-center cursor-pointer"
             >
               View Open Roles
-            </button>
+            </MagneticButton>
             <button 
               onClick={() => scrollToSection('benefits')}
-              className="border text-base font-semibold py-3 px-8 rounded transition-all duration-300 hover:shadow-level-1 hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer hover:opacity-90"
-              style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
+              className="border text-base font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg text-center cursor-pointer bg-white text-neutral-900 border-neutral-300 hover:bg-neutral-900 hover:text-white dark:bg-[#0c0d0e] dark:text-white dark:border-neutral-800 dark:hover:bg-white dark:hover:text-neutral-900"
             >
               Our Culture
             </button>

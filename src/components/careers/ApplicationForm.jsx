@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Info, Link2 } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
+import MagneticButton from '../MagneticButton';
 
 const ApplicationForm = ({ selectedPosition, openRoles }) => {
   const [formData, setFormData] = useState({
@@ -325,11 +326,11 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                 )}
 
                 {/* Submit Button */}
-                <button
+                <MagneticButton
                   type="submit"
                   disabled={isSubmitting}
-                  className={`bg-gradient-to-b from-primary-blue to-deep-blue text-white text-base font-semibold py-3 px-6 rounded shadow-level-1 hover:shadow-level-2 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center mt-2 w-full flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
-                    }`}
+                  className="w-full mt-2"
+                  buttonClassName={`w-full bg-gradient-to-b from-blue-500 to-blue-700 text-white text-base font-semibold py-3 px-6 rounded-lg active:scale-98 transition duration-200 text-center flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
                 >
                   {isSubmitting ? (
                     <>
@@ -342,7 +343,7 @@ const ApplicationForm = ({ selectedPosition, openRoles }) => {
                   ) : (
                     "Submit Application"
                   )}
-                </button>
+                </MagneticButton>
               </form>
             )}
           </div>

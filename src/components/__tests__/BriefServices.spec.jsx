@@ -1,28 +1,33 @@
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, cleanup, act } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import BriefServices from '../home/BriefServices';
 
 // Mock framer-motion to prevent JSDOM issues
 vi.mock('framer-motion', () => {
-  const createComponent = (tag) => ({ children, ...rest }) => {
-    const filteredProps = { ...rest };
-    delete filteredProps.whileInView;
-    delete filteredProps.viewport;
-    delete filteredProps.whileHover;
-    delete filteredProps.animate;
-    delete filteredProps.initial;
-    delete filteredProps.transition;
-    delete filteredProps.exit;
-    delete filteredProps.style;
-    delete filteredProps.pathLength;
-    const Tag = tag;
-    return <Tag {...filteredProps}>{children}</Tag>;
+  const cache = new Map();
+  const getComponent = (tag) => {
+    if (!cache.has(tag)) {
+      cache.set(tag, ({ children, ...rest }) => {
+        const filteredProps = { ...rest };
+        delete filteredProps.whileInView;
+        delete filteredProps.viewport;
+        delete filteredProps.whileHover;
+        delete filteredProps.animate;
+        delete filteredProps.initial;
+        delete filteredProps.transition;
+        delete filteredProps.exit;
+        delete filteredProps.style;
+        delete filteredProps.pathLength;
+        const Tag = tag;
+        return <Tag {...filteredProps}>{children}</Tag>;
+      });
+    }
+    return cache.get(tag);
   };
-  const mockMotion = new Proxy({}, {
-    get: (_, prop) => createComponent(prop),
-  });
   return {
-    motion: mockMotion,
+    motion: new Proxy({}, {
+      get: (_, prop) => getComponent(prop),
+    }),
   };
 });
 
@@ -64,10 +69,15 @@ describe('BriefServices', () => {
     render(<BriefServices />);
 
     const input = screen.getByPlaceholderText('Enter your email here');
-    fireEvent.change(input, { target: { value: 'client@company.com' } });
+    const submitButton = screen.getByRole('button', { name: /book a demo/i });
 
-    const form = input.closest('form');
-    fireEvent.submit(form);
+    await act(async () => {
+      fireEvent.change(input, { target: { value: 'client@company.com' } });
+    });
+
+    await act(async () => {
+      fireEvent.click(submitButton);
+    });
 
     await waitFor(() => {
       expect(globalThis.fetch).toHaveBeenCalledWith(
@@ -90,10 +100,15 @@ describe('BriefServices', () => {
     render(<BriefServices />);
 
     const input = screen.getByPlaceholderText('Enter your email here');
-    fireEvent.change(input, { target: { value: 'client@company.com' } });
+    const submitButton = screen.getByRole('button', { name: /book a demo/i });
 
-    const form = input.closest('form');
-    fireEvent.submit(form);
+    await act(async () => {
+      fireEvent.change(input, { target: { value: 'client@company.com' } });
+    });
+
+    await act(async () => {
+      fireEvent.click(submitButton);
+    });
 
     await waitFor(() => {
       expect(screen.getByText(/invalid access key/i)).toBeInTheDocument();

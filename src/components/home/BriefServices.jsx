@@ -88,8 +88,8 @@ export default function BriefServices() {
 
         try {
             const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-            if (!accessKey) {
-                throw new Error("Web3Forms Access Key is missing. Please configure VITE_WEB3FORMS_ACCESS_KEY in your .env file.");
+            if (!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
+                throw new Error("Web3Forms Access Key is missing or default. Please configure VITE_WEB3FORMS_ACCESS_KEY in your .env file.");
             }
 
             const formData = new FormData();
@@ -122,7 +122,7 @@ export default function BriefServices() {
     return (
         <motion.section
             id="services"
-            className="relative isolate w-full overflow-hidden min-h-screen flex flex-col justify-between pt-10 pb-20 sm:pt-16 sm:pb-32"
+            className="relative isolate w-full overflow-hidden min-h-fit md:min-h-screen flex flex-col justify-start md:justify-between items-center pt-8 pb-12 sm:pt-16 sm:pb-32"
             style={{ background: "var(--bg)", transition: "background 0.4s ease" }}
             initial={{ opacity: 0, filter: "blur(12px)", y: 24 }}
             whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
@@ -138,7 +138,7 @@ export default function BriefServices() {
                     src="/bg-services.png"
                     alt=""
                     aria-hidden
-                    className="md:h-[80%] h-[83%] w-full object-cover object-bottom transition-opacity duration-500 opacity-90 dark:opacity-75 dark:brightness-[0.75] dark:contrast-[1.1]"
+                    className="md:h-[80%] h-[88%] w-full object-cover object-bottom transition-opacity duration-500 opacity-90 dark:opacity-75 dark:brightness-[0.75] dark:contrast-[1.1]"
                 />
                 {/* Top mask fading into page background */}
                 <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-[var(--bg)]/30 to-transparent h-2/5 pointer-events-none" />
@@ -158,7 +158,7 @@ export default function BriefServices() {
                 </p>
 
                 {/* Email / Web3Forms Demo Request Form */}
-                <form onSubmit={handleSubmit} className="mx-auto flex flex-col items-center w-full max-w-xs sm:max-w-lg mb-8 sm:mb-14">
+                <form onSubmit={handleSubmit} className="mx-auto flex flex-col items-center w-full max-w-xs sm:max-w-lg mb-6 sm:mb-10 md:mb-12">
                     <div className="flex w-full items-center gap-2 sm:gap-3">
                         <input
                             type="email"
@@ -171,7 +171,7 @@ export default function BriefServices() {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="shrink-0 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-900 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer rounded-lg disabled:opacity-60 flex items-center gap-2"
+                            className="border text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg transition-all duration-300 hover:shadow-lg text-center cursor-pointer shrink-0 disabled:opacity-60 min-h-[38px] sm:min-h-[42px] bg-neutral-900 text-white border-neutral-900 hover:bg-white hover:text-neutral-900 hover:border-neutral-300 dark:bg-white dark:text-neutral-900 dark:border-white dark:hover:bg-[#0c0d0e] dark:hover:text-white dark:hover:border-neutral-800"
                         >
                             {isSubmitting ? "Sending..." : "Book a demo"}
                         </button>
@@ -190,7 +190,7 @@ export default function BriefServices() {
             </div>
 
             {/* Circuit Line Animation Stage Container */}
-            <div className="relative z-10 w-full max-w-[850px] mx-auto px-2 sm:px-6 md:px-8 mt-2 sm:mt-8 pb-14 sm:pb-24">
+            <div className="relative z-10 w-full max-w-[850px] mx-auto px-2 sm:px-6 md:px-8 mt-6 sm:mt-10 md:mt-14 pb-8 sm:pb-16 md:pb-24">
                 <div className="relative aspect-[734/405] w-full">
                     {/* SVG Circuit Lines */}
                     <svg
