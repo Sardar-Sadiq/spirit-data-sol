@@ -4,6 +4,12 @@ import Gallery from '../components/home/Gallery';
 import Contact from '../components/home/Contact';
 import ScrollReveal from '../components/ScrollReveal';
 
+// Newly added About Page Sections
+import WhyChooseUs from '../components/about/WhyChooseUs';
+import ServicesSnapshot from '../components/about/ServicesSnapshot';
+// import MeetOurTeam from '../components/about/MeetOurTeam';
+import FAQSection from '../components/about/FAQSection';
+
 const AboutPage = () => {
   const aboutSectionRef = useRef(null);
 
@@ -24,14 +30,14 @@ const AboutPage = () => {
         {/* Main Content */}
         <div className="flex flex-col items-center justify-center max-w-5xl mx-auto w-full select-none">
           <ScrollReveal>
-            <h1 className="bebas-neue text-[clamp(4.8rem,24vw,300px)] leading-[0.85] tracking-[-0.01em] uppercase" style={textPrimary}>
-              ABOUT <span className='text-primary-blue'>US</span>
+            <h1 className="bebas-neue text-[clamp(4.8rem,24vw,300px)] leading-[0.85] tracking-[-0.01em] uppercase text-center" style={textPrimary}>
+              ABOUT <span className="text-primary-blue">US</span>
             </h1>
           </ScrollReveal>
 
           <ScrollReveal delay={0.25}>
-            <p className="text-lg sm:text-xl md:text-2xl font-normal mt-6 leading-relaxed" style={textSecondary}>
-              We pleased to welcome you to <br className="sm:hidden" />
+            <p className="text-lg sm:text-xl md:text-2xl font-normal mt-6 leading-relaxed text-center" style={textSecondary}>
+              We are pleased to welcome you to <br className="sm:hidden" />
               <span className="text-primary-blue font-semibold transition-all duration-300 hover:text-secondary-blue">
                 Spirit Data Solutions.
               </span>
@@ -54,19 +60,32 @@ const AboutPage = () => {
             <span className="text-base animate-bounce">↓</span>
           </button>
         </ScrollReveal>
-      </section >
+      </section>
 
-      {/* About Section wrapper */}
-      < div ref={aboutSectionRef} >
+      {/* Core About Section wrapper */}
+      <div ref={aboutSectionRef}>
         <About />
-      </div >
+      </div>
+
+      {/* Why Choose Us Section */}
+      <WhyChooseUs />
+
+      {/* Services Snapshot (Small Cards linking to services/projects) */}
+      <ServicesSnapshot />
+
+      {/* Meet Our Team (Leadership, Department Heads, Team Photos)
+      <MeetOurTeam />
+      */}
+
+      {/* FAQs (Development Process, Support, Pricing Approach, Timelines) */}
+      <FAQSection />
 
       {/* Gallery Section */}
-      < Gallery />
+      <Gallery />
 
       {/* Get in Touch (Contact) Section */}
-      < Contact />
-    </div >
+      <Contact />
+    </div>
   );
 };
 

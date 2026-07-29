@@ -159,7 +159,8 @@
 :root {
   --bg: #f7fafc;
   --bg-card: #ffffff;
-  --bg-surface: #f7fafc;
+  --bg-surface: #f1f4f8;
+  --bg-surface-elevated: #e7ecf2;
   --text-primary: #181c1e;
   --text-secondary: #414752;
   --text-muted: #727784;
@@ -180,8 +181,9 @@
 
 html.dark {
   --bg: #0E0E0E;
-  --bg-card: #0E0E0E;
-  --bg-surface: #0E0E0E;
+  --bg-card: #141518;
+  --bg-surface: #17181c;
+  --bg-surface-elevated: #1d1e24;
   --text-primary: #eef1f3;
   --text-secondary: #b0b8c4;
   --text-muted: #6b7280;
