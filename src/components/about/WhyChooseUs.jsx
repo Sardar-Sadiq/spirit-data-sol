@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  Zap, 
-  Award, 
-  Layers, 
-  Users, 
-  Lock, 
-  CheckCircle2, 
-  TrendingUp, 
-  Building2 
+import {
+  ShieldCheck,
+  Zap,
+  Award,
+  Layers,
+  Users,
+  Lock,
+  CheckCircle2,
+  TrendingUp,
+  Building2
 } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
 
@@ -100,7 +100,7 @@ const WhyChooseUs = () => {
         </ScrollReveal>
 
         {/* Key Metrics Counter Bar */}
-        <ScrollReveal delay={0.1}>
+        {/* <ScrollReveal delay={0.1}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16 p-6 md:p-8 rounded-2xl border shadow-level-1 backdrop-blur-md"
             style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
             {stats.map((stat, index) => (
@@ -120,7 +120,7 @@ const WhyChooseUs = () => {
               </div>
             ))}
           </div>
-        </ScrollReveal>
+        </ScrollReveal> */}
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
