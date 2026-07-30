@@ -82,17 +82,10 @@ describe('Header', () => {
     expect(screen.queryByTestId('x-icon')).not.toBeInTheDocument();
   });
 
-  it('should scroll to the corresponding section when a section nav link is clicked', () => {
-    const scrollMock = vi.fn();
-    const mockElement = { scrollIntoView: scrollMock };
-    const getElementSpy = vi.spyOn(document, 'getElementById').mockReturnValue(mockElement);
-
+  it('should render Services as a navigation route link', () => {
     render(<Header />);
-    
-    const servicesButton = screen.getByRole('button', { name: 'Services' });
-    fireEvent.click(servicesButton);
-
-    expect(getElementSpy).toHaveBeenCalledWith('services');
-    expect(scrollMock).toHaveBeenCalledWith({ behavior: 'smooth' });
+    const servicesLink = screen.getByText('Services');
+    expect(servicesLink).toBeInTheDocument();
+    expect(servicesLink.getAttribute('href')).toBe('/services');
   });
 });

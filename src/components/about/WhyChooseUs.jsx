@@ -13,12 +13,6 @@ import {
 } from 'lucide-react';
 import ScrollReveal from '../ScrollReveal';
 
-const stats = [
-  { label: 'Client Satisfaction', value: '99.8%', desc: 'Proven enterprise satisfaction rate' },
-  { label: 'Projects Delivered', value: '150+', desc: 'Robust full-stack applications' },
-  { label: 'Uptime SLA Guarantee', value: '99.99%', desc: 'Reliable cloud & microservices' },
-  { label: 'Tech Experts', value: '45+', desc: 'Engineers, architects & QA leads' },
-];
 
 const reasons = [
   {
@@ -99,28 +93,6 @@ const WhyChooseUs = () => {
           </div>
         </ScrollReveal>
 
-        {/* Key Metrics Counter Bar */}
-        {/* <ScrollReveal delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16 p-6 md:p-8 rounded-2xl border shadow-level-1 backdrop-blur-md"
-            style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center p-2 relative group">
-                {index !== stats.length - 1 && (
-                  <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-12 w-[1px] bg-[var(--border)]" />
-                )}
-                <div className="text-3xl md:text-4xl font-extrabold text-primary-blue tracking-tight mb-1 group-hover:scale-105 transition-transform duration-300">
-                  {stat.value}
-                </div>
-                <div className="text-sm font-semibold mb-0.5" style={textPrimary}>
-                  {stat.label}
-                </div>
-                <div className="text-xs hidden sm:block" style={textMuted}>
-                  {stat.desc}
-                </div>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal> */}
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

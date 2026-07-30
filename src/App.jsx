@@ -20,6 +20,7 @@ import Home from './pages/Home';
 
 // Lazy Loaded Pages (Code-split for maximum performance)
 const AboutPage = lazy(() => import('./pages/About'));
+const ServicesPage = lazy(() => import('./pages/Services'));
 const Careers = lazy(() => import('./pages/Careers'));
 const ProjectsComingSoon = lazy(() => import('./pages/ProjectsComingSoon'));
 const EmployeeLogin = lazy(() => import('./pages/EmployeeLogin'));
@@ -92,6 +93,7 @@ function AppInner() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/projects" element={<ProjectsComingSoon />} />
               <Route path="/employees" element={<EmployeeLogin />} />
