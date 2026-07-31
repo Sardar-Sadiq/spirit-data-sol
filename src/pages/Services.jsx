@@ -57,14 +57,16 @@ const ServicesPage = () => {
               Explore Services
             </span>
             <span className="hero-scroll-dot" />
-            <span className="text-base animate-bounce">↓</span>
+            <span className="text-base transition-transform duration-300 group-hover:translate-y-1">↓</span>
           </button>
         </ScrollReveal>
       </section>
 
 
       {/* 3. Service Categories Section */}
-      <ServiceCategories />
+      <div ref={deliverablesSectionRef}>
+        <ServiceCategories />
+      </div>
 
       {/* 4. Our Process Section (Discovery -> Planning -> Design -> Development -> Testing -> Deployment -> Support) */}
       <OurProcess />

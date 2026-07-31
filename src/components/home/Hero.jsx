@@ -203,7 +203,7 @@ const Hero = () => {
       <div className="flex flex-col items-center gap-1 pb-32" style={{ color: 'var(--text-muted)' }}>
         <span className="text-sm tracking-widest uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Scroll Down</span>
         <span className="hero-scroll-dot" />
-        <span className="text-base animate-bounce">↓</span>
+        <span className="text-base transition-transform duration-300 group-hover:translate-y-1">↓</span>
       </div>
     </section>
   );

@@ -97,14 +97,14 @@ describe('ServicesPage', () => {
     expect(screen.getByRole('heading', { level: 1, name: /OUR SERVICES/i })).toBeInTheDocument();
   });
 
-  it('renders What We Deliver section with BriefServices content', () => {
+  it('renders Service Categories section with engineering disciplines', () => {
     render(<ServicesPage />);
-    expect(screen.getByText(/STRATEGIC ENGINEERING SERVICES/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Web Development/i)[0]).toBeInTheDocument();
-    expect(screen.getAllByText(/Full Stack Java/i)[0]).toBeInTheDocument();
-    expect(screen.getAllByText(/Full Stack Python/i)[0]).toBeInTheDocument();
-    expect(screen.getAllByText(/Automation & Testing/i)[0]).toBeInTheDocument();
-    expect(screen.getAllByText(/Gen-AI Solutions/i)[0]).toBeInTheDocument();
+    expect(screen.getByText(/CORE ENGINEERING DISCIPLINES/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Full Stack Web Development/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Full Stack Java Development/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Full Stack Python & AI Services/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Automation & Selenium QA Testing/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Gen-AI & Intelligent Solutions/i)[0]).toBeInTheDocument();
   });
 
   it('renders Service Categories section and allows switching active tabs', () => {

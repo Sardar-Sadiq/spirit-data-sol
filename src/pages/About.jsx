@@ -57,7 +57,7 @@ const AboutPage = () => {
               Scroll Down
             </span>
             <span className="hero-scroll-dot" />
-            <span className="text-base animate-bounce">↓</span>
+            <span className="text-base transition-transform duration-300 group-hover:translate-y-1">↓</span>
           </button>
         </ScrollReveal>
       </section>

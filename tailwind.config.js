@@ -63,7 +63,7 @@ export default {
         'surface-variant': '#e0e3e5',
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
       },
       borderRadius: {
         sm: '0.25rem', // 4px

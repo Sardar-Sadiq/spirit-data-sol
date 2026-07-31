@@ -181,7 +181,7 @@ const Contact = () => {
             />
           </div>
           <div className="mt-3 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-primary-blue animate-bounce flex-shrink-0" />
+            <MapPin className="h-4 w-4 text-primary-blue flex-shrink-0" />
             <span className="text-xs font-bold" style={textPrimary}>Spirit Data Solutions Office</span>
           </div>
         </ScrollReveal>

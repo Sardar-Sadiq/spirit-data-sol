@@ -152,7 +152,7 @@ const ServiceCategories = () => {
                     }`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-primary-blue'}`} />
-                  <span>{service.title.split(' ')[0]} {service.title.split(' ')[1]}</span>
+                  <span>{service.title}</span>
                 </button>
               );
             })}

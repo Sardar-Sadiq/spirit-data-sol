@@ -92,7 +92,7 @@ const Privacy = () => {
                     {activeSection === section.id && (
                       <motion.div
                         layoutId="activePillPrivacy"
-                        className="absolute inset-0 bg-primary-blue/10 rounded-lg border-l-4 border-primary-blue"
+                        className="absolute inset-0 bg-primary-blue/10 rounded-lg border border-primary-blue/20"
                         style={{ zIndex: 0 }}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
@@ -437,7 +437,7 @@ const Privacy = () => {
                 <p>
                   You may update, amend, or delete Your information at any time by signing in to Your Account, if you have one, and visiting the account settings section that allows you to manage Your personal information. You may also contact Us to request access to, correct, or delete any Personal Data that You have provided to Us.
                 </p>
-                <p className="p-3 bg-primary-blue/5 rounded border-l-4 border-primary-blue text-xs md:text-sm">
+                <p className="p-3.5 bg-primary-blue/5 rounded-lg border border-primary-blue/20 text-xs md:text-sm">
                   Please note, however, that We may need to retain certain information when we have a legal obligation or lawful basis to do so.
                 </p>
               </div>

@@ -12,6 +12,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.claude 
+.agents
+.codex
+PRODUCT.md
 
 # Custom ignores requested by user
 env

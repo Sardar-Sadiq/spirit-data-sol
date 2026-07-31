@@ -16,11 +16,10 @@ describe('About Page New Sections', () => {
   });
 
   describe('WhyChooseUs Component', () => {
-    it('should render section title and stats', () => {
+    it('should render section title and enterprise description', () => {
       render(<WhyChooseUs />);
       expect(screen.getByText(/WHY CHOOSE SPIRIT DATA SOLUTIONS/i)).toBeInTheDocument();
-      expect(screen.getByText(/Client Satisfaction/i)).toBeInTheDocument();
-      expect(screen.getByText('99.8%')).toBeInTheDocument();
+      expect(screen.getByText(/Engineering Standards Built for/i)).toBeInTheDocument();
     });
 
     it('should render reason cards correctly', () => {

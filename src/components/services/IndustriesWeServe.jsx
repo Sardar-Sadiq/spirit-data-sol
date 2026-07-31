@@ -122,7 +122,7 @@ const IndustriesWeServe = () => {
                       <div className="p-3 bg-primary-blue/10 rounded-xl text-primary-blue group-hover:bg-primary-blue group-hover:text-white transition-colors duration-300">
                         <Icon className="w-6 h-6" />
                       </div>
-                      <span className="text-[10px] font-mono font-bold tracking-wider px-2.5 py-1 rounded bg-[var(--bg-surface)] border"
+                      <span className="text-xs font-mono font-bold tracking-wider px-2.5 py-1 rounded bg-[var(--bg-surface)] border"
                         style={{ color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                         {ind.tag}
                       </span>
@@ -143,7 +143,7 @@ const IndustriesWeServe = () => {
                       {ind.solutions.map((sol, i) => (
                         <span
                           key={i}
-                          className="text-[11px] font-medium px-2.5 py-1 rounded bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border)]"
+                          className="text-xs font-medium px-2.5 py-1 rounded bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border)]"
                         >
                           {sol}
                         </span>

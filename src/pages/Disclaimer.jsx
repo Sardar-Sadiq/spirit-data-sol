@@ -82,7 +82,7 @@ const Disclaimer = () => {
                     {activeSection === section.id && (
                       <motion.div
                         layoutId="activePillDisclaimer"
-                        className="absolute inset-0 bg-primary-blue/10 rounded-lg border-l-4 border-primary-blue"
+                        className="absolute inset-0 bg-primary-blue/10 rounded-lg border border-primary-blue/20"
                         style={{ zIndex: 0 }}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
@@ -203,7 +203,7 @@ const Disclaimer = () => {
                 <p>
                   The Service may contain links to external websites that are not provided or maintained by or in any way affiliated with the Company.
                 </p>
-                <p className="p-3 bg-primary-blue/5 rounded border-l-4 border-primary-blue text-xs md:text-sm">
+                <p className="p-3.5 bg-primary-blue/5 rounded-lg border border-primary-blue/20 text-xs md:text-sm">
                   Please note that the Company does not guarantee the accuracy, relevance, timeliness, or completeness of any information on these external websites.
                 </p>
               </div>

@@ -83,7 +83,7 @@ const Terms = () => {
                     {activeSection === section.id && (
                       <motion.div
                         layoutId="activePillTerms"
-                        className="absolute inset-0 bg-primary-blue/10 rounded-lg border-l-4 border-primary-blue"
+                        className="absolute inset-0 bg-primary-blue/10 rounded-lg border border-primary-blue/20"
                         style={{ zIndex: 0 }}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
@@ -190,7 +190,7 @@ const Terms = () => {
                 <p>
                   You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.
                 </p>
-                <p className="p-3 bg-primary-blue/5 rounded border-l-4 border-primary-blue text-xs md:text-sm">
+                <p className="p-3.5 bg-primary-blue/5 rounded-lg border border-primary-blue/20 text-xs md:text-sm">
                   Your access to and use of the Service is also subject to Our{' '}
                   <Link to="/privacy" className="text-primary-blue hover:underline font-semibold">
                     Privacy Policy
